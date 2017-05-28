@@ -30,8 +30,8 @@
         </div>
         {% if active_page != 'index' or active_page != 'account' %}
         <div class="breadcrumb">
-            {% if sub != None %}
-                <a href="/sb/{{ sub['_id'] }}">{{ sub['title'] }}</a>/<a href="/ps/{{ post['_id'] }}">{{ post['title'] }}</a>
+            {% if sub is defined %}
+                <a href="/sb/{{ sub['_id'] }}">{{ sub['title'] }}</a>/{% if post is defined %}<a href="/ps/{{ post['_id'] }}">{{ post['title'] }}</a>{% endif %}
             {% endif %}
         </div>
         {% endif %}

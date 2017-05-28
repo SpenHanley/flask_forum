@@ -23,12 +23,12 @@ def hello_world():
         sub['posts'] = posts_coll
         subs.append(sub)
 
-    return render_template('index.html', subs=subs, sub=None, user=g.get('user', None))
+    return render_template('index.html', subs=subs, user=g.get('user', None))
 
 
 @app.route('/s', methods=['GET'])
 def search():
-    return render_template('results.html', res=None)
+    return render_template('results.html')
 
 
 @app.route('/acc/')
@@ -49,7 +49,7 @@ def sub_id(id):
         sub['type'] = 'post'
         sub['posts'] = get_comments(bson.objectid.ObjectId(sub['_id'])).count()
         sb.append(sub)
-    return render_template('index.html', subs=sb, sub=curr[0], post=None, user=g.get('user', None))
+    return render_template('index.html', subs=sb, sub=curr[0], user=g.get('user', None))
 
 
 @app.route('/ps/<id>')
@@ -75,15 +75,16 @@ def register():
             err = 'Failed to register'
             return redirect('/reg/')
     else:
-        return render_template('register.html', sub=None, user=g.get('user', None))
+        return render_template('register.html', user=g.get('user', None))
+
 
 @app.route('/lg/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if login(request.form):
+        if user_login(request.form):
             return redirect('/')
     else:
-        return render_template('login.html', user=g.get('user', None), sub=None)
+        return render_template('login.html', user=g.get('user', None))
 
 
 def get_posts(id):
@@ -104,17 +105,21 @@ def register_user(req):
     if conf != email:
         return False
     else:
-        users = db['users']
-        user = users.find({'username': username}).count()
-        print(user)
-        if user > 0:
-            return False
+        if len(username.trim()) > 0:
+            users = db['users']
+            user = users.find({'username': username}).count()
+            print(user)
+            if user > 0:
+                return False
+            else:
+                resp = users.insert({'username': username, 'password': password, 'email': email})
+                print(resp)
+                return True
         else:
-            resp = users.insert({'username':username, 'password': password, 'email': email})
-            print(resp)
-            return True
+            return False
 
-def login(req):
+
+def user_login(req):
     username = req['username']
     password = req['password']
     user = db['users'].find({'username': username}).limit(1)
