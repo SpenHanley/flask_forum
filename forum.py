@@ -123,9 +123,12 @@ def user_login(req):
     username = req['username']
     password = req['password']
     user = db['users'].find({'username': username}).limit(1)
-    if user[0]['password'] == password:
-        g.set('user', user)
-        return True
+    if user.count() > 0:
+        if user[0]['password'] == password:
+            g.set('user', user)
+            return True
+        else:
+            return False
     else:
         return False
 

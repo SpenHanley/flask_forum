@@ -1,3 +1,10 @@
 {% extends 'layout.html' %}
 {% block container %}
+    {% if user is defined %}
+        <div class="profile">
+            Username: {{ user['username'] }}
+            Password: {{ user['password'] }}
+            Email: {{ user['email'] }}
+        </div>
+    {% endif %}
 {% endblock %}
