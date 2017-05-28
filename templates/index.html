@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block container %}
+    {% for sub in subs %}
+{#        {% include 'sub.html' %}#}
+        <div class="sub">
+            <div class="sub-data">
+                <a class="sub-title" href="/{{ sub['redir'] }}/{{ sub['_id'] }}">{{ sub['title'] }}</a>
+                <p>
+                    {% if sub['type'] == 'sub' %}
+                        {{ sub['description'] }}
+                    {% elif sub['type'] == 'post' %}
+                        {{ sub['content'] }}
+                    {% endif %}
+                </p>
+                <p>
+                    {{ sub['modified'] }}
+                </p>
+            </div>
+            <div class="icons">
+                <p>
+                    {{ sub['posts'] }} <i class="fa fa-comments" aria-hidden="true"></i>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{%  endblock %}

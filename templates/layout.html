@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flask Forum</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+<nav>
+    <div class="container">
+        <div class="left">
+            <h1 class="title">
+                Flask Forum
+            </h1>
+            <ul class="nav">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Forum</a>
+                </li>
+                <li>
+                    <a href="#">Potato</a>
+                </li>
+                <li>
+                    <a href="#">Green</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <form action="/s" method="get">
+                <label>
+                    <input type="search" placeholder="Search" class="search">
+                </label>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container">
+{% block container %}
+
+{% endblock %}
+<footer>
+    &copy; 2017 Spen Hanley. All Rights Reserved.
+</footer>
+</div>
+</body>
+</html>

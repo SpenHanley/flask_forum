@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block container %}
+<div class="post">
+    <h2 class="post-title">{{ post['title'] }}</h2>
+    <p>
+        {{ post['content'] }}
+    </p>
+    <p>
+        By {{ post['author'] }} on {{ post['timestamp'] }}
+    </p>
+</div>
+    {% for comment in comments %}
+        <div class="comment">
+        <p>
+            {{ comment['comment'] }}
+        </p>
+        <p>
+            By {{ comment['author'] }} - {{ comment['timestamp'] }}
+        </p>
+        </div>
+    {% endfor %}
+{% endblock %}

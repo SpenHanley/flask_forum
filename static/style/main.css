@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+    margin: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+nav {
+    overflow-x: hidden;
+    height: 40px;
+    width: 100vw;
+    display: inline;
+    text-transform: uppercase;
+    border-bottom: 1px solid #F2F2F2;
+    padding: 10px;
+}
+
+nav .container {
+    width: 100vw;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px;
+    word-spacing: 3px;
+}
+
+nav .container .left,.right {
+}
+
+.left {
+    color: darkcyan;
+    font-weight: bolder;
+    display:inline-flex;
+}
+
+.right {
+    padding-right: 20px;
+}
+
+.left ul li {
+    display:inline;
+    vertical-align: -45%;
+    line-height: 100%;
+}
+
+.left ul li a {
+    color: chocolate;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.right .search {
+    vertical-align: -30%;
+    font-size: 19px;
+}
+
+footer {
+    bottom: 0;
+    position: absolute;
+    padding: 10px;
+    color: darkgray;
+    font-weight: bold;
+}
+
+.title {
+    display: inline;
+    color: darkcyan;
+    margin-right: 20px;
+}
+
+input[type='search'] {
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    padding: 3px;
+    font-family: inherit;
+}
+
+.post {
+    border: 1px solid #F2F2F2;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.sub {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icons {
+    right: 0;
+    vertical-align: -45%;
+    height: 100%;
+    margin: auto 0;
+}
+
+.sub-title {
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.post {
+    border: 1px solid #F2F2F2;
+}
+
+.post-title {
+    font-family:inherit;
+}
