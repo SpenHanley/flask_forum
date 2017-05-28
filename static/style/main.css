@@ -3,12 +3,18 @@
     padding: 0;
 }
 
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
 body {
     font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
     margin: 0;
     min-width: 100vw;
     min-height: 100vh;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
+    overflow: hidden;
 }
 
 nav {
@@ -47,6 +53,7 @@ nav .container .left,.right {
     display:inline;
     vertical-align: -45%;
     line-height: 100%;
+    margin: 10px;
 }
 
 .left ul li a {
@@ -81,12 +88,6 @@ input[type='search'] {
     font-family: inherit;
 }
 
-.post {
-    border: 1px solid #F2F2F2;
-    max-width: 600px;
-    margin-top: 20px;
-}
-
 .sub {
     border: 1px solid #F2F2F2;
     margin: 10px;
@@ -111,8 +112,61 @@ input[type='search'] {
 
 .post {
     border: 1px solid #F2F2F2;
+    margin: 10px;
+    margin-right: 20px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.active {
+    border-bottom: 3px solid darkcyan;
 }
 
 .post-title {
     font-family:inherit;
+    margin-left: 10px;
+}
+
+.post p {
+    margin: 10px;
+}
+
+.breadcrumb a {
+    text-transform: lowercase;
+    color: chocolate;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.breadcrumb {
+   color: chocolate;
+    line-height: 100%;
+    margin: 10px;
+}
+
+.vert {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+.vert input {
+    font-family: inherit;
+    font-size: 18px;
+    margin: 5px;
+}
+
+.vert button {
+    font-family: inherit;
+    margin: 5px 5px;
+    font-size: 18px;
+}
+
+.user {
+    text-transform: uppercase;
 }

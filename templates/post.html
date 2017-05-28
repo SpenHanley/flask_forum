@@ -6,11 +6,10 @@
         {{ post['content'] }}
     </p>
     <p>
-        By {{ post['author'] }} on {{ post['timestamp'] }}
+        By {{ post['author'] }} - {{ post['timestamp'] }}
     </p>
-</div>
     {% for comment in comments %}
-        <div class="comment">
+        <div class="post">
         <p>
             {{ comment['comment'] }}
         </p>
@@ -19,4 +18,5 @@
         </p>
         </div>
     {% endfor %}
+</div>
 {% endblock %}
