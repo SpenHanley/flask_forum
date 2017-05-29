@@ -6,6 +6,9 @@
             <input name="title" placeholder="Post Title">
             <textarea name="content" rows="10" placeholder="Post Content"></textarea>
             {% include 'inc/sub_select.html' %}
+            <label>
+                <input type="checkbox" name="anonymous"> Post Anonymously
+            </label>
             <button type="submit">Publish</button>
         </form>
     </div>

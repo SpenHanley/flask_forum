@@ -2,20 +2,31 @@
 {% block container %}
     <div class="post">
         <h2 class="post-title">{{ post['title'] }}</h2>
+        {% if session['id'] is defined %}
+            {% if session['id'] == post['author'] %}
+                <a>Edit <i class="fa fa-pencil-square-o"></i></a>
+            {% endif %}
+        {% endif %}
         <p>
             {{ post['content'] }}
         </p>
-        <p>
-            By {{ post['author'] }} - {{ post['timestamp'] }}
+        <p id="post-footer">
+            By {{ post['author'] }} -
         </p>
-
+        <script>
+            var post = document.getElementById('post-footer')
+            var utc = {{ post['timestamp'] }}
+            var d = new Date(0)
+            d.setUTCSeconds(utc)
+            post.innerHTML += d.toUTCString()
+        </script>
         {% if session['user'] is defined %}
             <div class="wrap">
                 <p>Add Comment</p>
                 <form action="/cm/" method="post" class="sub-v">
                     <textarea name="comment" placeholder="Comment" rows="4"></textarea>
                     <input type="hidden" value="{{ post['_id'] }}" name="post_id">
-                    <input type="hidden" value="/ps/{{ post['_id'] }}" name="path">
+                    <input type="hidden" value="/ps/{{ post['route'] }}" name="path">
                     <button type="submit">Post Comment</button>
                 </form>
             </div>

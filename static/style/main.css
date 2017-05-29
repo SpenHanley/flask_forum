@@ -125,6 +125,7 @@ input[type='search'] {
     vertical-align: -45%;
     height: 100%;
     margin: auto 0;
+    color: black;
 }
 
 .sub-title {
@@ -249,4 +250,21 @@ textarea, select {
     font-size: 18px;
     margin: 5px;
     resize: none;
+}
+
+.icons {
+    padding-right: 10px;
+}
+
+
+.icons a {
+    color: black;
+}
+
+.pinned {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
