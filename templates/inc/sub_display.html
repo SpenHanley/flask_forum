@@ -1,0 +1,14 @@
+{# subs file #}
+{% for sub in subs %}
+    <div class="sub">
+        <div class="sub-data">
+            <a href="/{{ sub['redir'] }}/{{ sub['_id'] }}">{{ sub['title'] }}</a>
+            <p>
+                {{ sub['description'] }}
+            </p>
+            <p>
+                Last Post: {{ sub['modified'] }}
+            </p>
+        </div>
+    </div>
+{% endfor %}

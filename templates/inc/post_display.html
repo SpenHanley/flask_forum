@@ -1,0 +1,19 @@
+{# posts file #}
+{% for post in posts %}
+    <div class="sub">
+        <div class="sub-data">
+            <a href="/{{ post['redir'] }}/{{ post['_id'] }}/">{{ post['title'] }}</a>
+            <p>
+                {{ post['content'] }} {# This will be limited to only show a few lines of text #}
+            </p>
+            <p>
+                Modified: {{ post['modified'] }}
+            </p>
+        </div>
+        <div class="icons">
+            <p>
+                {{ post['comments'] }} <i class="fa fa-comments" aria-hidden="true"></i>
+            </p>
+        </div>
+    </div>
+{% endfor %}

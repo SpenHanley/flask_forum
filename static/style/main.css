@@ -62,6 +62,21 @@ nav .container .left,.right {
     text-decoration: none;
 }
 
+.right {
+    display: flex;
+}
+
+.right p {
+    font-size: 19px;
+    color: chocolate;
+    font-weight: bold;
+    vertical-align: -45%;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 100%;
+}
+
 .right .search {
     vertical-align: -30%;
     font-size: 19px;
@@ -96,6 +111,15 @@ input[type='search'] {
     justify-content: space-between;
 }
 
+.sub a {
+    color: darkcyan;
+    text-decoration: none;
+}
+
+.sub a:hover {
+    text-decoration: underline;
+}
+
 .icons {
     right: 0;
     vertical-align: -45%;
@@ -113,7 +137,6 @@ input[type='search'] {
 .post {
     border: 1px solid #F2F2F2;
     margin: 10px;
-    margin-right: 20px;
     padding: 5px;
     display: flex;
     flex-direction: column;
@@ -142,8 +165,10 @@ input[type='search'] {
 
 .breadcrumb {
     color: chocolate;
+    padding-left: 20.5%;
     line-height: 100%;
     margin: 10px;
+    flex-grow: 2;
 }
 
 .vert {
@@ -155,13 +180,29 @@ input[type='search'] {
     font-size: 18px;
 }
 
+.wrap {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+}
+
+.sub-v {
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+.sub-v button {
+    max-width: 592px;
+}
+
 .vert input {
     font-family: inherit;
     font-size: 18px;
     margin: 5px;
 }
 
-.vert button {
+button {
     font-family: inherit;
     margin: 5px 5px;
     font-size: 18px;
@@ -176,6 +217,7 @@ input {
     border: 1px solid lightgray;
     padding: 2px;
     border-radius: 2px;
+    font-size: 18px;
 }
 
 button {
@@ -191,4 +233,20 @@ button {
     padding: 5px;
     display: flex;
     flex-direction: column;
+    font-family: inherit;
+    align-items: center;
+}
+
+.lcol {
+    text-align: right;
+}
+
+textarea, select {
+    background: transparent;
+    border: 1px solid lightgray;
+    max-width: 590px;
+    font-family: inherit;
+    font-size: 18px;
+    margin: 5px;
+    resize: none;
 }

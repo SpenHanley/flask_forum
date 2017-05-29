@@ -1,22 +1,35 @@
 {% extends 'layout.html' %}
 {% block container %}
-<div class="post">
-    <h2 class="post-title">{{ post['title'] }}</h2>
-    <p>
-        {{ post['content'] }}
-    </p>
-    <p>
-        By {{ post['author'] }} - {{ post['timestamp'] }}
-    </p>
-    {% for comment in comments %}
-        <div class="post">
+    <div class="post">
+        <h2 class="post-title">{{ post['title'] }}</h2>
         <p>
-            {{ comment['comment'] }}
+            {{ post['content'] }}
         </p>
         <p>
-            By {{ comment['author'] }} - {{ comment['timestamp'] }}
+            By {{ post['author'] }} - {{ post['timestamp'] }}
         </p>
-        </div>
-    {% endfor %}
-</div>
+
+        {% if session['user'] is defined %}
+            <div class="wrap">
+                <p>Add Comment</p>
+                <form action="/cm/" method="post" class="sub-v">
+                    <textarea name="comment" placeholder="Comment" rows="4"></textarea>
+                    <input type="hidden" value="{{ post['_id'] }}" name="post_id">
+                    <input type="hidden" value="/ps/{{ post['_id'] }}" name="path">
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        {% endif %}
+        {% for comment in comments %}
+            <div class="post">
+                <p>
+                    {{ comment['comment'] }}
+                </p>
+                <p>
+                    By {{ comment['author'] }} - {{ comment['timestamp'] }}
+                </p>
+            </div>
+        {% endfor %}
+
+    </div>
 {% endblock %}

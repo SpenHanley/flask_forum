@@ -1,0 +1,8 @@
+{% if subs is defined %}
+    <select name="sub">
+        <option selected>Select One...</option>
+        {% for sub in subs %}
+            <option value="{{ sub['_id'] }}">{{ sub['title'] }}</option>
+        {% endfor %}
+    </select>
+{% endif %}

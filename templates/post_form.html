@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% set title = "Create Post" %}
+{% block container %}
+    <div>
+        <form class="vert" action="/cp" method="post">
+            <input name="title" placeholder="Post Title">
+            <textarea name="content" rows="10" placeholder="Post Content"></textarea>
+            {% include 'inc/sub_select.html' %}
+            <button type="submit">Publish</button>
+        </form>
+    </div>
+{% endblock %}

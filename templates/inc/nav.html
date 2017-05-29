@@ -1,0 +1,50 @@
+{% if session['user'] is defined %}
+{% set navigation_bar = [
+        ('/', 'index', 'Home'),
+        ('/acc/', 'account', 'Account'),
+        ('/lo/', 'logout', 'Logout')
+    ]
+%}
+{% else %}
+{% set navigation_bar = [
+        ('/', 'index', 'Home'),
+        ('/reg/', 'register', 'Register'),
+        ('/lg/', 'login', 'Login')
+    ]
+%}
+{% endif %}
+<nav>
+    <div class="container">
+        <div class="left">
+            <h1 class="title">
+                Flask Forum
+            </h1>
+            <ul class="nav">
+                {% for href, id, caption in navigation_bar %}
+                <li {% if id == active_page %} class="active" {% endif %}>
+                    <a href="{{ href }}" title="{{ id }}">{{caption}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if sub is defined %}
+            <div class="breadcrumb">
+                <a href="/sb/{{ sub['_id'] }}">{{ sub['title'] }}</a>/{% if post is defined %}<a href="/ps/{{ post['_id'] }}">{{ post['title'] }}</a>{% endif %}
+            </div>
+        {% elif title is defined %}
+            <div  class="breadcrumb">
+                <p>{{ title }}</p>
+            </div>
+        {% endif %}
+        <div class="right">
+            <form action="/s/" method="get">
+                <label>
+                    <input type="search" placeholder="Search" class="search">
+                </label>
+            </form>
+            {% if session['user'] is defined %}
+                <p class="user">{{ session['user']['username'] }}</p>
+            {% endif %}
+        </div>
+    </div>
+</nav>

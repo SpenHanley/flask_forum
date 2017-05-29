@@ -1,10 +1,18 @@
 {% extends 'layout.html' %}
+{% set active_page = 'account' %}
 {% block container %}
-    {% if user is defined %}
+    {% if session['user'] is defined %}
         <div class="profile">
-            Username: {{ user['username'] }}
-            Password: {{ user['password'] }}
-            Email: {{ user['email'] }}
+            <table>
+                <tr>
+                    <td class="lcol">Username: </td>
+                    <td>{{ session['user']['username'] }}</td>
+                </tr>
+                <tr>
+                    <td class="lcol">Email: </td>
+                    <td>{{ session['user']['email'] }}</td>
+                </tr>
+            </table>
         </div>
     {% endif %}
 {% endblock %}
