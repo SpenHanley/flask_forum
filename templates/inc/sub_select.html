@@ -1,8 +1,11 @@
 {% if subs is defined %}
     <select name="sub">
-        <option selected>Select One...</option>
         {% for sub in subs %}
-            <option value="{{ sub['_id'] }}">{{ sub['title'] }}</option>
+            {% if sub['_id'] == selected['_id'] %}
+                <option value="{{ sub['_id'] }}" selected>{{ sub['title'] }}</option>
+            {% else %}
+                <option value="{{ sub['_id'] }}">{{ sub['title'] }}</option>
+            {% endif %}
         {% endfor %}
     </select>
 {% endif %}

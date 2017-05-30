@@ -36,13 +36,13 @@ nav .container {
     word-spacing: 3px;
 }
 
-nav .container .left,.right {
+nav .container .left, .right {
 }
 
 .left {
     color: darkcyan;
     font-weight: bolder;
-    display:inline-flex;
+    display: inline-flex;
 }
 
 .right {
@@ -50,7 +50,7 @@ nav .container .left,.right {
 }
 
 .left ul li {
-    display:inline;
+    display: inline;
     vertical-align: -45%;
     line-height: 100%;
     margin: 10px;
@@ -149,7 +149,7 @@ input[type='search'] {
 }
 
 .post-title {
-    font-family:inherit;
+    font-family: inherit;
     margin-left: 10px;
 }
 
@@ -254,8 +254,8 @@ textarea, select {
 
 .icons {
     padding-right: 10px;
+    min-width: 47px;
 }
-
 
 .icons a {
     color: black;
@@ -267,4 +267,10 @@ textarea, select {
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+.sub .content {
+    max-height: 50px;
+    overflow: hidden;
+    margin: 5px 0;
 }

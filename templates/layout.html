@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script>
+        function convert(ts) {
+            var utc = ts;
+            var d = new Date(0);
+            d.setUTCSeconds(utc);
+            return d.toUTCString();
+        }
+
+        function limit(length, text) {
+            var container = document.getElementById('content');
+            return text.substring(0, length);
+        }
+    </script>
 </head>
 <body>
 {% include 'inc/nav.html' %}

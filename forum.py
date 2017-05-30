@@ -1,21 +1,46 @@
 from flask import Flask, render_template, g, redirect, request, session
 from datetime import datetime
 from pymongo import MongoClient
-import pymongo
 from utils import Utils
+from config import Config
+from functools import wraps
+import random
+import pymongo
+import string
+
+conf = Config()
 
 app = Flask(__name__)
 key = None
-with open('/home/spen/keyfile', 'r') as kf:
+with open('keyfile', 'r') as kf:
     key = kf.read()
 
 app.secret_key = key
 
-global err
-client = MongoClient('localhost', 27017)
+client = MongoClient(conf.config.get('mongo_db', 'host'), int(conf.config.get('mongo_db', 'port')))
+print(conf.config.get('mongo_db', 'db_name'))
+db = client[conf.config.get('mongo_db', 'db_name')]
 db = client['forum']
 
 utils = Utils(db)
+
+
+def random_string(length):
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase+string.ascii_lowercase+string.digits) for _ in range(length))
+
+
+def validate_token(f):
+    @wraps(f)
+    def wrapper(existing_token, *args, **kwargs):
+        if 'token' in session:
+            if session['token'] != existing_token:
+                print('User token is invalid')
+            else:
+                print('User token is valid')
+        else:
+            session['token'] = random_string(32)
+
+
 
 
 @app.route('/')
@@ -24,7 +49,7 @@ def hello_world():
     subs_coll = sub_coll.find().sort("pinned", pymongo.DESCENDING)
     subs = []
     for sub in subs_coll:
-        sub['modified'] = utils.convert_timestamp(sub['modified'])
+        sub['modified'] = sub['modified']
         sub['id'] = sub['route']
         sub['redir'] = 'sb'
         sub['type'] = 'sub'
@@ -60,17 +85,17 @@ def sub_id(id):
         post['redir'] = 'ps'
         post['pinned_post'] = 'pinned' in post
         post['posts'] = utils.get_comments(utils.convert_to_object_id(post['_id'])).count()
-        post['modified'] = utils.convert_timestamp(post['timestamp'])
+        post['modified'] = post['timestamp']
         post['comments'] = utils.get_comments(post['_id']).count()
         ps.append(post)
     return render_template('post_list.html', sub=curr, posts=ps)
 
 
-@app.route('/pf/')
-def create_post():
+@app.route('/pf/<id>')
+def create_post(id):
     if session.get('user'):
-        subs = db['subs'].find()
-        return render_template('post_form.html', subs=subs)
+        prev = db['subs'].find({'_id': utils.convert_to_object_id(id)}).limit(1)[0]
+        return render_template('post_form.html', allow_anon=conf.config.getboolean('ui_ctl', 'AllowAnonymous'), selected=prev)
     else:
         return redirect('/lg/')
 
@@ -109,7 +134,7 @@ def view_post(id):
     comments = utils.get_comments(post['_id'])
     cs = []
     for comment in comments:
-        comment['timestamp'] = utils.convert_timestamp(comment['timestamp'])
+        comment['timestamp'] = comment['timestamp']
         comment['author'] = utils.get_author(comment['author'])['username']
         cs.append(comment)
     return render_template('post.html', post=post, comments=cs, sub=sub)
@@ -177,14 +202,14 @@ def pin_sub(id):
 
 @app.route('/pnp/<id>')
 def pin_post(id):
-    id = utils.convert_to_object_id(id)
-    post = db['posts'].find({'_id': id}).limit(1)[0]
+    post = db['posts'].find({'route': id}).limit(1)[0]
+    sub = db['subs'].find({'_id': post['sub_id']}).limit(1)[0]
     if 'pinned' in post:
         db['posts'].update_one({'_id': post['_id']}, {"$unset": {'pinned': ""}})
-        return redirect('/sb/'+str(post['sub_id']))
+        return redirect('/sb/' + str(sub['route']))
     else:
         db['posts'].update_one({'_id': post['_id']}, {"$set": {'pinned': True}})
-        return redirect('/sb/'+str(post['sub_id']))
+        return redirect('/sb/' + str(sub['route']))
 
 
 def register_user(req):

@@ -50,5 +50,6 @@ class Utils:
         for post in posts:
             for keyword in post['keywords']:
                 if args['kw'].lower() == keyword.lower():
+                    post['modified'] = self.convert_timestamp(post['timestamp'])
                     resp.append(post)
         return resp

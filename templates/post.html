@@ -12,22 +12,19 @@
         </p>
         <p id="post-footer">
             By {{ post['author'] }} -
+            <script>
+                document.write(convert({{ post['timestamp'] }}))
+                console.log(convert({{ post['timestamp'] }}))
+            </script>
         </p>
-        <script>
-            var post = document.getElementById('post-footer')
-            var utc = {{ post['timestamp'] }}
-            var d = new Date(0)
-            d.setUTCSeconds(utc)
-            post.innerHTML += d.toUTCString()
-        </script>
         {% if session['user'] is defined %}
             <div class="wrap">
-                <p>Add Comment</p>
+                <p> Add Comment </p>
                 <form action="/cm/" method="post" class="sub-v">
-                    <textarea name="comment" placeholder="Comment" rows="4"></textarea>
+                    <textarea name="comment" placeholder="Comment" rows="4"> </textarea>
                     <input type="hidden" value="{{ post['_id'] }}" name="post_id">
                     <input type="hidden" value="/ps/{{ post['route'] }}" name="path">
-                    <button type="submit">Post Comment</button>
+                    <button type="submit"> Post Comment</button>
                 </form>
             </div>
         {% endif %}
@@ -37,7 +34,10 @@
                     {{ comment['comment'] }}
                 </p>
                 <p>
-                    By {{ comment['author'] }} - {{ comment['timestamp'] }}
+                    By {{ comment['author'] }} -
+                    <script>
+                        document.write(convert({{ comment['timestamp'] }}))
+                    </script>
                 </p>
             </div>
         {% endfor %}

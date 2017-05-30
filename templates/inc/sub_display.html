@@ -12,7 +12,7 @@
                 {{ sub['description'] }}
             </p>
             <p>
-                Last Post: {{ sub['modified'] }}
+                Last Post: <script>document.write(convert({{ sub['modified'] }}))</script>
             </p>
         </div>
         <div class="icons">
