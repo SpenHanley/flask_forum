@@ -1,0 +1,10 @@
+{% import 'bootstrap/utils.html' as utils %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'layout.html' %}
+{% set active_page = 'login' %}
+{% block container %}
+    <div class="error">
+        {{ utils.flashed_messages() }}
+    </div>
+    {{ wtf.quick_form(form, extra_classes='vert') }}
+{% endblock %}

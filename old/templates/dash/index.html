@@ -1,0 +1,13 @@
+{% extends 'dash/layout.html' %}
+{% set headings = [
+    ('/users', 'users', 'Users'),
+    ('/rep', 'reports', 'Reports'),
+    ('/err', 'error logs', 'Error Logs')
+] %}
+{% block container %}
+    {% for url, label, caption in headings %}
+        <div class="sub">
+            <a href="{{ url }}" title="{{ label }}">{{ caption }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}

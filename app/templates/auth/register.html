@@ -1,0 +1,6 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'layout.html' %}
+{% set active_page = 'register' %}
+{% block container %}
+    {{ wtf.quick_form(form, extra_classes='vert') }}
+{% endblock %}

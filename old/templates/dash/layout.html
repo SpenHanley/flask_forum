@@ -1,0 +1,14 @@
+{# dash/layout.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
+    <title>Dash - {{ page }}</title>
+</head>
+<body>
+{% include 'dash/nav.html' %}
+{% block container %}
+{% endblock %}
+</body>
+</html>

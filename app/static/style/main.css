@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+body {
+    font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
+    margin: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    /*overflow-x: hidden;*/
+    overflow: hidden;
+}
+
+nav {
+    overflow-x: hidden;
+    height: 40px;
+    width: 100vw;
+    display: inline;
+    text-transform: uppercase;
+    border-bottom: 1px solid #F2F2F2;
+    padding: 10px;
+}
+
+nav .container {
+    width: 100vw;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px;
+    word-spacing: 3px;
+}
+
+nav .container .left, .right {
+}
+
+.left {
+    color: darkcyan;
+    font-weight: bolder;
+    display: inline-flex;
+}
+
+.right {
+    padding-right: 20px;
+}
+
+.left ul li {
+    display: inline;
+    vertical-align: -45%;
+    line-height: 100%;
+    margin: 10px;
+}
+
+.left ul li a {
+    color: chocolate;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.right {
+    display: flex;
+}
+
+.right p {
+    font-size: 19px;
+    color: chocolate;
+    font-weight: bold;
+    vertical-align: -45%;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 100%;
+}
+
+.right .search {
+    vertical-align: -30%;
+    font-size: 19px;
+}
+
+footer {
+    bottom: 0;
+    position: absolute;
+    padding: 10px;
+    color: darkgray;
+    font-weight: bold;
+}
+
+.title {
+    display: inline;
+    color: darkcyan;
+    margin-right: 20px;
+}
+
+input[type='search'] {
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    padding: 3px;
+    font-family: inherit;
+}
+
+.sub {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub a {
+    color: darkcyan;
+    text-decoration: none;
+}
+
+.sub a:hover {
+    text-decoration: underline;
+}
+
+.icons {
+    right: 0;
+    vertical-align: -45%;
+    height: 100%;
+    margin: auto 0;
+    color: black;
+}
+
+.sub-title {
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.post {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.active {
+    border-bottom: 3px solid darkcyan;
+}
+
+.post-title {
+    font-family: inherit;
+    margin-left: 10px;
+}
+
+.post p {
+    margin: 10px;
+}
+
+.breadcrumb a {
+    text-transform: lowercase;
+    color: chocolate;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.breadcrumb {
+    color: chocolate;
+    padding-left: 20.5%;
+    line-height: 100%;
+    margin: 10px;
+    flex-grow: 2;
+}
+
+.vert {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+.wrap {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+}
+
+.sub-v {
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    font-size: 18px;
+}
+
+.sub-v button {
+    max-width: 592px;
+}
+
+.form-control {
+    font-family: inherit;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 5px;
+}
+
+.btn {
+    font-family: inherit;
+    margin: 5px 5px;
+    font-size: 18px;
+}
+
+.user {
+    text-transform: uppercase;
+}
+
+input {
+    background: transparent;
+    border: 1px solid lightgray;
+    padding: 2px;
+    border-radius: 2px;
+    font-size: 18px;
+}
+
+button {
+    background: transparent;
+    border: 1px solid lightgray;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.profile {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    align-items: center;
+}
+
+.lcol {
+    text-align: right;
+}
+
+textarea, select {
+    background: transparent;
+    border: 1px solid lightgray;
+    max-width: 590px;
+    font-family: inherit;
+    font-size: 18px;
+    margin: 5px;
+    resize: none;
+}
+
+.icons {
+    padding-right: 10px;
+    min-width: 47px;
+}
+
+.icons a {
+    color: black;
+}
+
+.pinned {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.sub .content {
+    max-height: 50px;
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+label {
+    display: none;
+}
+
+.error {
+    border: 1px solid red;
+    background: lightyellow;
+}

@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div>
+        <form class="vert" action="{{ url_for('auth.create_sub') }}" method="post">
+            {{ form.title }}
+            {{ form.description }}
+            {{ form.url }}
+            {{ form.submit }}
+        </form>
+    </div>
+{% endblock %}
