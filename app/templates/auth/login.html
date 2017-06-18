@@ -1,10 +1,11 @@
-{% import 'bootstrap/utils.html' as utils %}
-{% import 'bootstrap/wtf.html' as wtf %}
 {% extends 'layout.html' %}
 {% set active_page = 'login' %}
 {% block container %}
-    <div class="error">
-        {{ utils.flashed_messages() }}
+    <div>
+        <form class="vert vert-form" action="{{ url_for('auth.login') }}" method="post">
+            {% for field in form %}
+                {{ field(placeholder=field.label.text) }}
+            {% endfor %}
+        </form>
     </div>
-    {{ wtf.quick_form(form, extra_classes='vert') }}
 {% endblock %}

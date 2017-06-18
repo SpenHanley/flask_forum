@@ -1,17 +1,15 @@
 {% if current_user.is_authenticated %}
-{% set navigation_bar = [
+    {% set navigation_bar = [
         (url_for('home.homepage'), 'index', 'Home'),
         (url_for('home.dash'), 'account', 'Account'),
         (url_for('auth.logout'), 'logout', 'Logout')
-    ]
-%}
+    ] %}
 {% else %}
-{% set navigation_bar = [
+    {% set navigation_bar = [
         (url_for('home.homepage'), 'index', 'Home'),
         (url_for('auth.register'), 'register', 'Register'),
         (url_for('auth.login'), 'login', 'Login')
-    ]
-%}
+    ] %}
 {% endif %}
 <nav>
     <div class="container">
@@ -21,26 +19,25 @@
             </h1>
             <ul class="nav">
                 {% for href, id, caption in navigation_bar %}
-                <li {% if id == active_page %} class="active" {% endif %}>
-                    <a href="{{ href }}" title="{{ id }}">{{caption}}</a>
-                </li>
+                    <li {% if id == active_page %} class="active" {% endif %}>
+                        <a href="{{ href }}" title="{{ id }}">{{ caption }}</a>
+                    </li>
                 {% endfor %}
             </ul>
         </div>
-        {% if sub is defined %}
-            <div class="breadcrumb">
-                <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.name }}</a>/{% if post is defined %}<a href="{{ url_for('home.view_post', route=post.route)}}">{{ post.name }}</a>{% endif %}
-            </div>
-        {% elif title is defined %}
-            <div  class="breadcrumb">
+        <div class="breadcrumb">
+            {% if sub is defined %}
+                <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.name }}</a>/{% if post is defined %}
+                <a href="{{ url_for('home.view_post', route=post.route) }}">{{ post.name }}</a>{% endif %}
+            {% elif title is defined %}
                 <p>{{ title }}</p>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
         <div class="right">
-            <form action="/s/" method="get">
-                <label>
-                    <input type="search" placeholder="Search" class="search" name="kw">
-                </label>
+            <form action="{{ url_for('home.search') }}" method="post">
+                {% for field in search_form %}
+                    {{ field(placeholder=field.label.text) }}
+                {% endfor %}
             </form>
         </div>
     </div>

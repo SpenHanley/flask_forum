@@ -1,0 +1,5 @@
+{% if posts is defined %}
+    {% for post in posts %}
+        {% include 'home/sub.html' %}
+    {% endfor %}
+{% endif %}

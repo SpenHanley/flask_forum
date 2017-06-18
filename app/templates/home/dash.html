@@ -10,7 +10,7 @@
                 Email: {{ current_user.email }}
             </p>
             <p>
-                New Messages: <a href="{{ url_for('home.view_inbox') }}">{{ message_count }}</a>
+                New Messages: {{ message_count }} <a href="{{ url_for('home.view_inbox') }}">View Inbox</a>
             </p>
         </div>
     {% endif %}

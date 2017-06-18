@@ -10,8 +10,7 @@ class PostForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     post_content = TextAreaField('Post Content', validators=[DataRequired()])
     # This only hides the username from standard users, admins can still see the username
-    anonymous = BooleanField('Post Anonymously')
-    pinned = BooleanField('Pin Post')
+    anonymous = BooleanField('Post Anonymously', default=False)
     submit = SubmitField('Create Post')
 
     def validate_title(self, field):
@@ -21,6 +20,11 @@ class PostForm(FlaskForm):
 
 class DestroyPostForm(FlaskForm):
     reason = TextAreaField('Reason for deletion')
+    submit = SubmitField('Delete Comment')
+
+
+class DeleteCommentForm(FlaskForm):
+    reason = TextAreaField('Reason for deletion')
     submit = SubmitField('Delete Post')
 
 
@@ -29,6 +33,10 @@ class MessageForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     message = TextAreaField('Message', validators=[DataRequired()])
     send = SubmitField('Send Message')
+
+
+class SearchForm(FlaskForm):
+    search = StringField('Search')
 
 
 class RegistrationForm(FlaskForm):
@@ -64,6 +72,7 @@ class CommentForm(FlaskForm):
 class SubForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    pinned = BooleanField('Pin Sub Forum')
     submit = SubmitField('Create Sub Forum')
 
     def validate_title(self, field):

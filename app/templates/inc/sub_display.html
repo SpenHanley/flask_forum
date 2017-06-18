@@ -1,6 +1,6 @@
 {# subs file #}
 {% if current_user.is_authenticated %}
-    <div class="sub">
+    <div class="control">
         <a href="{{ url_for('auth.create_sub') }}">Create Sub Forum</a>
     </div>
 {% endif %}

@@ -1,11 +1,18 @@
 {% extends 'layout.html' %}
 {% block container %}
     <div>
-        <form class="vert" action="{{ url_for('auth.create_sub') }}" method="post">
-            {{ form.title }}
-            {{ form.description }}
-            {{ form.hidden_tag() }}
-            {{ form.submit }}
+        <form class="vert vert-form" action="{{ url_for('auth.create_sub') }}" method="post">
+            {% for field in form %}
+                {% if field.type == 'BooleanField' %}
+                    <div class="inline">
+                        {{ field }}{{ field.label }}
+                    </div>
+                {% elif field.type == 'SubmitField' %}
+                    {{ field }}
+                {% else %}
+                    {{ field(placeholder=field.label.text) }}
+                {% endif %}
+            {% endfor %}
         </form>
     </div>
 {% endblock %}

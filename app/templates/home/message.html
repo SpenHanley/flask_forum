@@ -1,13 +1,19 @@
 {% extends 'layout.html' %}
 {% block container %}
-    <div class="sub">
+    <div class="control">
         <a href="{{ url_for('home.view_inbox') }}">Return to Inbox</a>
     </div>
-    <div class="vert-sub">
-        <h2>
-            {{ message.subject }}
-        </h2>
+    <div class="message message-v">
         <p>
+            From: {{ message.sender_username }}
+        </p>
+        <p>
+            Subject: {{ message.subject }}
+        </p>
+        {% include 'inc/msg_tools.html' %}
+        <p>
+            Message:
+            <br>
             {{ message.message }}
         </p>
     </div>

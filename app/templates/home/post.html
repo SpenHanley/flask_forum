@@ -2,7 +2,7 @@
 {% block container %}
     {% if post is defined %}
         <div class="post">
-            <h2 class="post-title">{{ post.title }}</h2>
+            <h2 class="post-title">{{ post.name }}</h2>
             {# Controls will be implemented here if the person viewing the post is the author
                 This is to allow them to update or edit the post as necessary. #}
             <p>
@@ -14,7 +14,8 @@
         </div>
     {% endif %}
     <div class="post">
-        <form action="{{ url_for('home.view_post', route=post.route) }}" method="post">
+        <h3 class="post-title">Create Comment</h3>
+        <form action="{{ url_for('home.view_post', route=post.route) }}" class="vert-sub" method="post">
             {{ form.comment }}
             {{ form.hidden_tag() }}
             {{ form.submit }}
@@ -23,12 +24,21 @@
     {% if comments is defined %}
         {% for comment in comments %}
             <div class="post">
-                <p>
-                    {{ comment.content }}
-                </p>
-                <p>
-                    By {{ comment.author }} - {{ comment.date }}
-                </p>
+                <div class="post-data">
+                    <p>
+                        {{ comment.content }}
+                    </p>
+                    <p>
+                        By {{ comment.author }} - {{ comment.date }}
+                    </p>
+                </div>
+                <div class="icons">
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.username == comment.author or current_user.is_admin %}
+                            <a href="{{ url_for('auth.delete_comment', id=comment.id) }}"><i class="fa fa-trash"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     {% endif %}

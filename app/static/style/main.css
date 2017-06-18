@@ -1,3 +1,4 @@
+/* Defaults */
 * {
     margin: 0;
     padding: 0;
@@ -13,10 +14,10 @@ body {
     margin: 0;
     min-width: 100vw;
     min-height: 100vh;
-    /*overflow-x: hidden;*/
     overflow: hidden;
 }
 
+/* Navigation */
 nav {
     overflow-x: hidden;
     height: 40px;
@@ -34,9 +35,6 @@ nav .container {
     justify-content: space-between;
     padding-top: 10px;
     word-spacing: 3px;
-}
-
-nav .container .left, .right {
 }
 
 .left {
@@ -82,6 +80,22 @@ nav .container .left, .right {
     font-size: 19px;
 }
 
+nav .breadcrumb a {
+    text-transform: lowercase;
+    color: chocolate;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.breadcrumb {
+    color: chocolate;
+    padding-left: 20.5%;
+    line-height: 100%;
+    margin: 10px;
+    flex-grow: 2;
+}
+
+/* generic */
 footer {
     bottom: 0;
     position: absolute;
@@ -135,15 +149,6 @@ input[type='search'] {
     text-transform: uppercase;
 }
 
-.post {
-    border: 1px solid #F2F2F2;
-    margin: 10px;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .active {
     border-bottom: 3px solid darkcyan;
 }
@@ -155,21 +160,6 @@ input[type='search'] {
 
 .post p {
     margin: 10px;
-}
-
-.breadcrumb a {
-    text-transform: lowercase;
-    color: chocolate;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.breadcrumb {
-    color: chocolate;
-    padding-left: 20.5%;
-    line-height: 100%;
-    margin: 10px;
-    flex-grow: 2;
 }
 
 .vert {
@@ -239,17 +229,14 @@ button {
     align-items: center;
 }
 
-.lcol {
-    text-align: right;
-}
-
 textarea, select {
     background: transparent;
     border: 1px solid lightgray;
-    max-width: 590px;
+    max-width: 600px;
     font-family: inherit;
     font-size: 18px;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     resize: none;
 }
 
@@ -277,20 +264,117 @@ textarea, select {
 }
 
 .error {
-    border: 1px solid red;
+    border: 1px solid darkorange;
     background: lightyellow;
-}
-
-.post form {
-    display: block;
 }
 
 .vert-sub {
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    margin: 0 auto;
     font-family: inherit;
     font-size: 18px;
     margin-top: 5px;
+}
+
+.vert-form {
+    margin-top: 5px;
+}
+
+.vert-form input {
+    margin: 5px 0;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.inline label {
+    padding-left: 5px;
+}
+
+.profile a, .profile a:visited {
+    color: black;
+    text-decoration: underline;
+}
+
+.message {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-v {
+    display: flex;
+    flex-direction: column;
+}
+
+.message a {
+    color: darkcyan;
+}
+
+.message.msg-icons a {
+    color: black;
+}
+
+.sub-data a {
+    color: darkcyan;
+}
+
+.control {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    padding: 5px;
+}
+
+.control a {
+    color: darkcyan;
+    text-decoration: none;
+}
+
+.control a:hover {
+    text-decoration: underline;
+}
+
+.msg-icons {
+    border: 1px solid #F2F2F2;
+    padding: 4px;
+    margin: 5px 0;
+    color: black;
+}
+
+.post-data {
+    /*margin: 5px;*/
+}
+
+.post-data a {
+    margin-left: 0;
+    color: darkcyan;
+    text-transform: capitalize;
+    font-size: 18px;
+}
+
+.post-data a:hover {
+    text-decoration: underline;
+}
+
+.post {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.post-small {
+    border: 1px solid #F2F2F2;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post .icons {
+    padding: 10px;
 }

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block container %}
-    <form class="vert vert-form" action="{{ url_for('auth.del_post', route=route) }}" method="post">
+    <form class="vert vert-form" action="{{ url_for('auth.delete_comment', id=id) }}" method="post">
         {{ form.reason }}
         {{ form.hidden_tag() }}
         {{ form.submit }}
