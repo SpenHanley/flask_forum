@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html' %}
+{% block container %}
+    <div>
+        <form class="vert vert-form" action="{{ url_for('admin.edit_user', id=user.id) }}" method="post">
+            {{ form.email(value=user.email) }}
+            {{ form.username(value=user.username) }}
+            <div class="inline">
+                {{ form.admin(checked=user.is_admin) }}{{ form.admin.label }}
+            </div>
+            <div class="inline">
+                {{ form.confirmed(checked=user.is_confirmed) }}{{ form.confirmed.label }}
+            </div>
+            {{ form.hidden_tag() }}
+            {{ form.submit }}
+        </form>
+    </div>
+{% endblock %}

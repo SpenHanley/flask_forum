@@ -15,7 +15,7 @@
     {% endif %}
     <div class="post">
         <h3 class="post-title">Create Comment</h3>
-        <form action="{{ url_for('home.view_post', route=post.route) }}" class="vert-sub" method="post">
+        <form action="{{ url_for('home.view_post', route=post.route) }}" class="form" method="post">
             {{ form.comment }}
             {{ form.hidden_tag() }}
             {{ form.submit }}

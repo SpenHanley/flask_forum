@@ -378,3 +378,10 @@ textarea, select {
 .post .icons {
     padding: 10px;
 }
+
+.post .form {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}

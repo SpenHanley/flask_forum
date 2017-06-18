@@ -1,0 +1,34 @@
+{% extends 'admin/layout.html' %}
+{% block container %}
+    {% if users is defined %}
+        <table class="users">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Admin</th>
+                <th>Confirmed</th>
+                <th>Confirmed On</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.is_admin }}</td>
+                    <td>{{ user.is_confirmed }}</td>
+                    <td>{{ user.confirmed_on }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_user', id=user.id ) }}"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ url_for('admin.delete_user', id=user.id) }}"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

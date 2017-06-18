@@ -5,6 +5,14 @@ from wtforms.validators import DataRequired, Email, EqualTo
 from ..models import User, Post, SubForum
 
 
+class EditUserForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
+    admin = BooleanField('Admin')
+    confirmed = BooleanField('Set Confirmed')
+    submit = SubmitField('Edit')
+
+
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
