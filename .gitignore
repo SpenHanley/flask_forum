@@ -1,3 +1,7 @@
 
 \.idea/
-\.venv/
+\venv/
+
+migrations/versions/
+
+__pycache__/
