@@ -1,6 +1,6 @@
 
 \.idea/
-\venv/
+venv/
 
 migrations/versions/
 
