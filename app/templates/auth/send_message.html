@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <form class="vert" action="{{ url_for('auth.send_message') }}" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.subject }}
+        {{ form.recipient }}
+        {{ form.message }}
+        {{ form.send }}
+    </form>
+{% endblock %}

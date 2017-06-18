@@ -276,11 +276,21 @@ textarea, select {
     margin: 5px 0;
 }
 
-label {
-    display: none;
-}
-
 .error {
     border: 1px solid red;
     background: lightyellow;
+}
+
+.post form {
+    display: block;
+}
+
+.vert-sub {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: inherit;
+    font-size: 18px;
+    margin-top: 5px;
 }

@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div class="sub">
+        <a href="{{ url_for('home.view_inbox') }}">Return to Inbox</a>
+    </div>
+    <div class="vert-sub">
+        <h2>
+            {{ message.subject }}
+        </h2>
+        <p>
+            {{ message.message }}
+        </p>
+    </div>
+{% endblock %}

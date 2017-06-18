@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block container %}
+    {% if post is defined %}
+        <div class="post">
+            <h2 class="post-title">{{ post.title }}</h2>
+            {# Controls will be implemented here if the person viewing the post is the author
+                This is to allow them to update or edit the post as necessary. #}
+            <p>
+                {{ post.content }}
+            </p>
+            <p class="post-footer">
+                By {{ post.author }} - {{ post.created_on }}
+            </p>
+        </div>
+    {% endif %}
+    <div class="post">
+        <form action="{{ url_for('home.view_post', route=post.route) }}" method="post">
+            {{ form.comment }}
+            {{ form.hidden_tag() }}
+            {{ form.submit }}
+        </form>
+    </div>
+    {% if comments is defined %}
+        {% for comment in comments %}
+            <div class="post">
+                <p>
+                    {{ comment.content }}
+                </p>
+                <p>
+                    By {{ comment.author }} - {{ comment.date }}
+                </p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

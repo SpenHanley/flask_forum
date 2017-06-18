@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, HiddenField, TextAreaField, DateTimeField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..models import User, Post, SubForum
@@ -9,12 +9,26 @@ class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     post_content = TextAreaField('Post Content', validators=[DataRequired()])
-    url = StringField('Forum URL')
-    submit = SubmitField('Create Sub Forum')
+    # This only hides the username from standard users, admins can still see the username
+    anonymous = BooleanField('Post Anonymously')
+    pinned = BooleanField('Pin Post')
+    submit = SubmitField('Create Post')
 
     def validate_title(self, field):
         if Post.query.filter_by(name=field.data).first():
             raise ValidationError('Post name already in use')
+
+
+class DestroyPostForm(FlaskForm):
+    reason = TextAreaField('Reason for deletion')
+    submit = SubmitField('Delete Post')
+
+
+class MessageForm(FlaskForm):
+    recipient = StringField('Recipient Username', validators=[DataRequired()])
+    subject = StringField('Subject', validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+    send = SubmitField('Send Message')
 
 
 class RegistrationForm(FlaskForm):
@@ -43,10 +57,7 @@ class LoginForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    author = HiddenField('Author')  # Author of post
-    post = HiddenField('Post')  # ID of post that comment belongs to
     comment = TextAreaField('Comment')
-    date = DateTimeField('timestamp')
     submit = SubmitField('Post Comment')
 
 

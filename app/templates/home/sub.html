@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div class="sub">
+        <a href="{{ url_for('auth.create_post', p=sub.route) }}">Create Post</a>
+    </div>
+    {% for post in posts %}
+        <div class="sub">
+            <div class="sub-data">
+                <a class="sub-title" href="{{ url_for('home.view_post', route=post.route) }}">{{ post.name }}</a>
+                <p>
+                    {{ post.description }}
+                </p>
+                <p>
+                    {{ post.created_on }}
+                </p>
+            </div>
+            <div class="icons">
+                <p>
+                    {{ post.count }} <i class="fa fa-comments" aria-hidden="true"></i>
+                    {% if current_user.is_authenticated and current_user.is_admin %}
+                        <a href="{{ url_for('auth.del_post', route=post.route)}}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="{{ url_for('home.pin_post', route=post.route) }}">
+                            {% if post.is_pinned %}
+                                <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        {% if sub.is_pinned %}
+                            <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
+                        {% endif %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

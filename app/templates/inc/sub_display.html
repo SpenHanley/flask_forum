@@ -1,31 +1,31 @@
 {# subs file #}
-{% if current_user.is_authenticated and current_user.is_admin %}
+{% if current_user.is_authenticated %}
     <div class="sub">
-        <a href="{{ url_for('auth.create_subn') }}">Create Sub Forum</a>
+        <a href="{{ url_for('auth.create_sub') }}">Create Sub Forum</a>
     </div>
 {% endif %}
-{% for sub in subs %}
+{% for sub in forums %}
     <div class="sub">
         <div class="sub-data">
-            <a href="/sb/{{ sub['route'] }}">{{ sub['title'] }}</a>
+            <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.name }}</a>
             <p>
-                {{ sub['description'] }}
-            </p>
-            <p>
-                Last Post: <script>document.write(convert({{ sub['modified'] }}))</script>
+                {{ sub.description }}
             </p>
         </div>
         <div class="icons">
             <p>
-                {{ sub['posts'] }} <i class="fa fa-comments" aria-hidden="true"></i>
                 {% if current_user.is_authenticated and current_user.is_admin %}
-                    <a href="/pn/{{ sub['_id'] }}" title="Pin Post" >
-                    {% if sub['pinned_sub'] %}
-                        <i class="fa fa-thumb-tack pinned" aria-hidden="true" ></i>
-                    {% else %}
-                        <i class="fa fa-thumb-tack" aria-hidden="true" ></i>
-                    {% endif %}
+                    <a href="{{ url_for('home.pin_sub', route=sub.route) }}">
+                        {% if sub.is_pinned %}
+                            <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
+                        {% else %}
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                        {% endif %}
                     </a>
+                {% else %}
+                    {% if sub.is_pinned %}
+                        <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
+                    {% endif %}
                 {% endif %}
             </p>
         </div>

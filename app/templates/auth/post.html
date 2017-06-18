@@ -1,9 +1,12 @@
 {% extends 'layout.html' %}
 {% block container %}
     <div>
-        <form class="vert" action="{{ url_for('auth.create_sub') }}" method="post">
+        <form class="vert" action="{{ url_for('auth.create_post', p=p) }}" method="post">
             {{ form.title }}
             {{ form.description }}
+            {{ form.post_content }}
+            {{ form.anonymous }} Post Anonymously
+            {{ form.pinned }} Pin Post
             {{ form.hidden_tag() }}
             {{ form.submit }}
         </form>

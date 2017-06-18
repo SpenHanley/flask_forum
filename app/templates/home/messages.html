@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block container %}
+    <div class="sub">
+        <a href="{{ url_for('auth.send_message') }}">Send New Message</a>
+    </div>
+    {% for message in messages %}
+        <div class="sub">
+            <div class="vert-sub">
+                <p>
+                    Sender: {{ message.sender_username }}
+                </p>
+                <p>
+                    Subject: <a href="{{ url_for('home.view_message', id=message.id) }}">{{ message.subject }}</a>
+                </p>
+            </div>
+            <div class="icons">
+                {% if message.is_read %}
+                    <i class="fa fa-envelope-open-o"></i>
+                {% else %}
+                    <i class="fa fa-envelope-o"></i>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -50,7 +50,9 @@ class SubForum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     description = db.Column(db.String(128))
-    url = db.Column(db.String(8), unique=True)
+    route = db.Column(db.String(8), unique=True)
+    modified = db.Column(db.DateTime)
+    is_pinned = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return 'Sub Name: {}'.format(self.name)
@@ -63,9 +65,13 @@ class Post(db.Model):
     name = db.Column(db.String(64), unique=True)
     description = db.Column(db.String(192))
     content = db.Column(db.String(1024))
-    url = db.Column(db.String(6), unique=True)
+    route = db.Column(db.String(8), unique=True)
     sub_id = db.Column(db.Integer, db.ForeignKey('subs.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     anonymous = db.Column(db.Boolean, default=False)
+    created_on = db.Column(db.DateTime)
+    is_pinned = db.Column(db.Boolean, nullable=False, default=False)
+    is_deleted = db.Column(db.Boolean, default=False)
 
 
 class Comment(db.Model):
@@ -76,3 +82,15 @@ class Comment(db.Model):
     content = db.Column(db.String(256))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     date = db.Column(db.DateTime)
+
+
+class Message(db.Model):
+    __tablename__ = 'messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    recipient = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    sender = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    subject = db.Column(db.String(64), nullable=False)
+    message = db.Column(db.String(256), nullable=False)
+    is_read = db.Column(db.Boolean, default=False)
+    sent = db.Column(db.DateTime)

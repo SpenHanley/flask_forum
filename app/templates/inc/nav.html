@@ -29,7 +29,7 @@
         </div>
         {% if sub is defined %}
             <div class="breadcrumb">
-                <a href="/sb/{{ sub['route'] }}">{{ sub['title'] }}</a>/{% if post is defined %}<a href="/ps/{{ post['route'] }}">{{ post['title'] }}</a>{% endif %}
+                <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.name }}</a>/{% if post is defined %}<a href="{{ url_for('home.view_post', route=post.route)}}">{{ post.name }}</a>{% endif %}
             </div>
         {% elif title is defined %}
             <div  class="breadcrumb">

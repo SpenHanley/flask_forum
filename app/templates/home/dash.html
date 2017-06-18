@@ -3,16 +3,15 @@
 {% block container %}
     {% if current_user.is_authenticated %}
         <div class="profile">
-            <table>
-                <tr>
-                    <td class="lcol">Username: </td>
-                    <td>{{ current_user.username }}</td>
-                </tr>
-                <tr>
-                    <td class="lcol">Email: </td>
-                    <td>{{ current_user.email }}</td>
-                </tr>
-            </table>
+            <p>
+                Username: {{ current_user.username }}
+            </p>
+            <p>
+                Email: {{ current_user.email }}
+            </p>
+            <p>
+                New Messages: <a href="{{ url_for('home.view_inbox') }}">{{ message_count }}</a>
+            </p>
         </div>
     {% endif %}
 {% endblock %}
