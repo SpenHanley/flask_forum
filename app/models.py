@@ -94,3 +94,12 @@ class Message(db.Model):
     message = db.Column(db.String(256), nullable=False)
     is_read = db.Column(db.Boolean, default=False)
     sent = db.Column(db.DateTime)
+
+
+class ErrorLogs(db.Model):
+    __tablename__ = 'logs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    error = db.Column(db.String(16))
+    details = db.Column(db.String(128))
+    timestamp = db.Column(db.DateTime)
