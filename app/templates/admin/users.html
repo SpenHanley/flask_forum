@@ -1,6 +1,9 @@
 {% extends 'admin/layout.html' %}
 {% block container %}
     {% if users is defined %}
+        <div class="control">
+            <a href="{{ url_for('admin.create_user') }}">Create User</a>
+        </div>
         <table class="users">
             <thead>
             <tr>

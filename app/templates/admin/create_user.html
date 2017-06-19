@@ -1,0 +1,18 @@
+{% extends 'admin/layout.html' %}
+{% block container %}
+    <div>
+        <form class="vert vert-form" action="{{ url_for('admin.create_user') }}" method="POST">
+            {% for field in form %}
+                {% if field.type == 'BooleanField' %}
+                    <div class="inline">
+                        {{ field }}{{ field.label }}
+                    </div>
+                {% elif field.type == 'SubmitField' %}
+                    {{ field }}
+                {% else %}
+                    {{ field(placeholder=field.label.text) }}
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
+{% endblock %}

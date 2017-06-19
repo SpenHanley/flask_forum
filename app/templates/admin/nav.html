@@ -2,7 +2,7 @@
     {% set navigation_bar = [
         (url_for('admin.homepage'), 'index', 'Admin Home'),
         (url_for('home.homepage'), 'account', 'Site Home'),
-        (url_for('admin.users'), 'users', 'Users'),
+        (url_for('admin.show_users'), 'users', 'Users'),
         (url_for('auth.logout'), 'logout', 'Logout')
     ] %}
 {% endif %}

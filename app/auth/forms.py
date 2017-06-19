@@ -13,6 +13,24 @@ class EditUserForm(FlaskForm):
     submit = SubmitField('Edit')
 
 
+class CreateUserForm(FlaskForm):
+    # None of this should have any effect on the form attempting to submit before data has been entered
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    admin = BooleanField('Admin')
+    confirmed = BooleanField('Set Confirmed')
+    submit = SubmitField('Create')
+
+    def validate_email(self, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email is already in use')
+
+    def validate_username(self, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Username is already in use')
+
+
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
