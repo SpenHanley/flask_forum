@@ -1,0 +1,12 @@
+extends 'layout'
+block container
+    .control
+        a(href=url_for('home.view_inbox')) Return to Inbox
+    .message.message-v
+        p From:
+            - message.sender_username
+        p Subject:
+            - message.subject
+        include 'inc/msg_tools'
+        p Message:
+            - message.message

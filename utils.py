@@ -4,10 +4,10 @@ from datetime import datetime
 
 
 class Utils:
-
     @staticmethod
     def generate_url(length):
-        return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
+        return ''.join(
+            random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
 
     @staticmethod
     def generate_timestamp():

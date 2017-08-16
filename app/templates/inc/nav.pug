@@ -1,0 +1,34 @@
+if current_user.is_authenticated
+    set navigation_bar =
+        url_for('home.homepage'), 'index', 'Home'),
+        url_for('home.dash'), 'account', 'Account'),
+        url_for('auth.logout'), 'logout', 'Logout')
+else
+    set navigation_bar =
+        url_for('home.homepage'), 'index', 'Home',
+        url_for('auth.register'), 'register', 'Register',
+        url_for('auth.login'), 'login', 'Login'
+nav
+    .container
+        .left
+            .title
+                | Flask Forum
+            ul.nav
+                for href, id, caption in navigation_bar
+                    if id == active_page
+                        li.active
+                            a(href="{{ href }}" title="{{ id }}") {{ caption }}
+                    else
+                        li
+                            a(href="{{ href }}" title="{{ id }}") {{ caption }}
+        .breadcrumb
+            if sub is defined
+                a(href="{{ url_for('home.view_sub', route=sub.route) }}") {{ sub.name }}</a>/
+                if post is defined
+                    a(href="{{ url_for('home.view_post', route=post.route) }}") {{ post.name }}
+            else if title is defined
+                p {{ title }}
+        .right
+            form(action="{{ url_for('home.search') }}" method="post")
+                for field in search_form
+                    field(placeholder=field.label.text)
