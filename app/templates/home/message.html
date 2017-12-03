@@ -1,1 +1,19 @@
-<!--Created by spen on 16/08/2017.-->
+{% extends "layout.html" %}
+{% set active_page = 'account' %}
+{% block container %}
+<div class="control">
+    <a href="{{ url_for('home.view_inbox') }}">Return to Inbox</a>
+</div>
+{% include 'inc/msg_tools.html' %}
+<div class="message message-v">
+    <p>
+        From: {{ message.sender_username }}
+    </p>
+    <p>
+        Subject: {{ message.subject }}
+    </p>
+    <p>
+        Message:{{ message.message }}
+    </p>
+</div>
+{% endblock %}

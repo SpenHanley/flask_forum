@@ -11,7 +11,12 @@ from . import home
 @home.route('/')
 def homepage():
     sub_forums = SubForum.query.order_by('is_pinned desc')
-    return render_template('home/index.html', title='Flask Forum', forums=sub_forums, search_form=SearchForm())
+    return render_template(
+                            'home/index.html',
+                            title='Flask Forum',
+                            forums=sub_forums,
+                            search_form=SearchForm()
+                        )
 
 
 @home.route('/acc')
@@ -22,7 +27,12 @@ def dash():
     for message in messages:
         if not message.is_read:
             msg_count += 1
-    return render_template('home/dash.html', title='Flask Forum', message_count=msg_count, search_form=SearchForm())
+    return render_template(
+                            'home/dash.html',
+                            title='Flask Forum',
+                            message_count=msg_count,
+                            search_form=SearchForm()
+                        )
 
 
 @home.route('/post/<route>', methods=['GET', 'POST'])
@@ -33,8 +43,12 @@ def view_post(route):
     form = CommentForm()
 
     if form.validate_on_submit():
-        comment = Comment(post_id=post.id, author=current_user.id, content=form.comment.data,
-                          date=Utils.get_datetime())
+        comment = Comment(
+                        post_id=post.id,
+                        author=current_user.id,
+                        content=form.comment.data,
+                        date=Utils.get_datetime()
+                    )
         db.session.add(comment)
         db.session.commit()
 
@@ -49,7 +63,15 @@ def view_post(route):
                 'id': comment.id
             }
             comments.append(comm)
-    return render_template('home/post.html', post=post, comments=comments, form=form, sub=sub, search_form=SearchForm(), include_control=True)
+    return render_template(
+                            'home/post.html',
+                            post=post,
+                            comments=comments,
+                            form=form,
+                            sub=sub,
+                            search_form=SearchForm(),
+                            include_control=True
+                        )
 
 
 @home.route('/sb/<route>')
@@ -62,7 +84,13 @@ def view_sub(route):
             if not p.is_deleted:
                 p.count = Comment.query.filter_by(post_id=p.id).count()
                 posts.append(p)
-    return render_template('home/sub.html', sub=sub, posts=posts, search_form=SearchForm(), include_control=True)
+    return render_template(
+                            'home/sub.html',
+                            sub=sub,
+                            posts=posts,
+                            search_form=SearchForm(),
+                            include_control=True
+                        )
 
 
 @home.route('/pns/<route>', methods=['GET', 'POST'])
@@ -94,7 +122,9 @@ def pin_post(route):
 @home.route('/inb')
 def view_inbox():
     if current_user.is_authenticated:
-        messages_db = Message.query.filter_by(recipient=current_user.id).order_by('is_read desc')
+        messages_db = Message.query.filter_by(
+                                            recipient=current_user.id
+                                        ).order_by('is_read desc')
         count = 0
         messages = []
         for message in messages_db:
@@ -128,13 +158,21 @@ def view_message(id):
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        print('Search term passed | {}'.format(form.search.data ))
-        posts = Post.query.filter(Post.name.like("%" + form.search.data + "%")).all()
+        print('Search term passed | {}'.format(form.search.data))
+        posts = Post.query.filter(
+            Post.name.like("%" + form.search.data + "%")
+        ).all()
         subs = []
         for post in posts:
             sub = SubForum.query.filter_by(id=post.sub_id)
             subs.append(sub)
-        return render_template('home/results.html', posts=posts, term=form.search.data, search_form=form, subs=subs)
+        return render_template(
+                                'home/results.html',
+                                posts=posts,
+                                term=form.search.data,
+                                search_form=form,
+                                subs=subs
+                            )
     else:
         print(form.errors)
     return render_template('home/results.html')

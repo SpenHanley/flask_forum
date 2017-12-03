@@ -1,9 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy, create_engine
-from sqlalchemy import scoped_session, session_maker
-from sqlalchemy.ext.declarative import declarative_base
+from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
 from config import app_config

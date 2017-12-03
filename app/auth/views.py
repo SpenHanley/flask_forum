@@ -13,7 +13,11 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         print('Form submitted')
-        user = User(email=form.email.data, username=form.username.data, password=form.password.data)
+        user = User(
+            email=form.email.data,
+            username=form.username.data,
+            password=form.password.data
+        )
         db.session.add(user)
         db.session.commit()
         flash('Registered')
@@ -24,14 +28,19 @@ def register():
 @auth.route('/lg', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print 'Showing form'
     if form.validate_on_submit():
+        print 'Form validated'
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             if request.args.get('next'):
+                print 'Redirecting to next'
                 return redirect(request.args.get('next'))
+            print 'Redirecting to home'
             return redirect(url_for('home.dash'))
         else:
+            print 'Invalid information'
             flash('Invalid email or password')
     return render_template('auth/login.html', form=form)
 
@@ -51,8 +60,12 @@ def create_sub():
         form = SubForm()
         if form.validate_on_submit():
             sUrl = Utils.generate_url(length=8)
-            forum = SubForum(name=form.title.data, description=form.description.data, route=sUrl,
-                             modified=Utils.get_datetime())
+            forum = SubForum(
+                name=form.title.data,
+                description=form.description.data,
+                route=sUrl,
+                modified=Utils.get_datetime()
+            )
             db.session.add(forum)
             db.session.commit()
             print('It worked')
@@ -75,9 +88,16 @@ def create_post(p):
         sub = SubForum.query.filter_by(route=p).first()
         if form.validate_on_submit():
             sUrl = Utils.generate_url(8)
-            post = Post(name=form.title.data, description=form.description.data, content=form.post_content.data,
-                        anonymous=form.anonymous.data, route=sUrl, sub_id=sub.id, created_on=Utils.get_datetime(),
-                        author_id=current_user.id)
+            post = Post(
+                name=form.title.data,
+                description=form.description.data,
+                content=form.post_content.data,
+                anonymous=form.anonymous.data,
+                route=sUrl,
+                sub_id=sub.id,
+                created_on=Utils.get_datetime(),
+                author_id=current_user.id
+            )
             db.session.add(post)
             db.session.commit()
             flash('Post Created')
@@ -95,8 +115,16 @@ def del_post(route):
         if form.validate_on_submit():
             post = Post.query.filter_by(route=route).first()
             post.is_deleted = True
-            message = Message(recipient=post.author_id, sender=current_user.id, subject='Post Deletion',
-                              message='Your post: ' + post.name + ' was deleted for: ' + form.reason.data + '.')
+
+            message = Message(
+                recipient=post.author_id,
+                sender=current_user.id,
+                subject='Post Deletion',
+                message='Your post: ' +
+                post.name + ' was deleted for: ' +
+                form.reason.data + '.'
+            )
+
             db.session.add(message)
             db.session.commit()
             sub = SubForum.query.filter_by(id=post.sub_id).first()
@@ -112,8 +140,15 @@ def send_message():
     form = MessageForm()
     if form.validate_on_submit():
         rec = User.query.filter_by(username=form.recipient.data).first()
-        message = Message(recipient=rec.id, sender=current_user.id, message=form.message.data,
-                          sent=Utils.get_datetime(), subject=form.subject.data)
+
+        message = Message(
+            recipient=rec.id,
+            sender=current_user.id,
+            message=form.message.data,
+            sent=Utils.get_datetime(),
+            subject=form.subject.data
+        )
+
         db.session.add(message)
         db.session.commit()
         flash('Message sent')
@@ -128,8 +163,15 @@ def send_message_with_rec(id):
     recipient = User.query.filter_by(id=id).first()
     form.recipient.data = recipient.username
     if form.validate_on_submit():
-        message = Message(recipient=recipient.id, sender=current_user.id, message=form.message.data,
-                          sent=Utils.get_datetime(), subject=form.subject.data)
+
+        message = Message(
+            recipient=recipient.id,
+            sender=current_user.id,
+            message=form.message.data,
+            sent=Utils.get_datetime(),
+            subject=form.subject.data
+        )
+
         db.session.add(message)
         db.session.commit()
         flash('Message sent')
@@ -159,8 +201,16 @@ def delete_comment(id):
     form = DeleteCommentForm()
 
     if form.validate_on_submit():
-        message = Message(recipient=comment.author, sender=current_user.id, subject='Post Deletion',
-                          message='Your comment on: ' + post.name + ' was deleted for: ' + form.reason.data + '.')
+
+        message = Message(
+            recipient=comment.author,
+            sender=current_user.id,
+            subject='Post Deletion',
+            message='Your comment on: ' +
+            post.name + ' was deleted for: ' +
+            form.reason.data + '.'
+        )
+        
         Comment.query.filter_by(id=id).delete()
         db.session.commit()
         return redirect(url_for('home.view_post', route=post.route))

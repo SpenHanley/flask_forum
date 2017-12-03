@@ -1,1 +1,38 @@
-<!--Created by spen on 16/08/2017.-->
+{% if session['user_id'] is defined %} {% set navigation_bar = [ ('/', 'index', 'Home'), ('/acc', 'account', 'Account'),
+('/lo', 'logout', 'Logout') ] %} {% else %} {% set navigation_bar = [ ('/', 'index', 'Home'), ('/lg', 'login', 'Login'),
+('/register', 'register', 'Register') ] %} {% endif %}
+<nav>
+    <div class="left">
+        <h1 class="title">
+            Flask<span class='tail'>Forum</span>
+        </h1>
+        <ul class="nav">
+            {% for href, id, caption in navigation_bar %}
+            <li>
+                <a href="{{ href }}" title="{{ id }}"  {% if id == active_page %} class="active" {% endif %} >{{caption}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="breadcrumb">
+        {% if title is defined %}
+        <p>{{ title }}</p>
+        {% elif sub is defined and post is defined %}
+        <p>{{ sub.name }} &gt; {{ post.name }}</p>
+        {% elif sub is defined and post is undefined %}
+        <p>{{ sub.name }}</p>
+        {% else %}
+        <p>Page Unknown</p>
+        {% endif %}
+    </div>
+    <div class="right">
+        <form action="/s/" method="get">
+            <div class="form-group">
+                <label>
+                    <input type="search" placeholder="Search" class="search form-control" name="kw">
+                </label>
+            </div>
+        </form>
+        <i class="fa fa-search" aria-hidden="true" onclick="toggle()"></i>
+    </div>
+</nav>

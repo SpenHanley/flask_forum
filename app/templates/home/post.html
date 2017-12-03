@@ -13,6 +13,7 @@
             </p>
         </div>
     {% endif %}
+    {% if session['user_id'] is defined %}
     <div class="post">
         <h3 class="post-title">Create Comment</h3>
         <form action="{{ url_for('home.view_post', route=post.route) }}" class="form" method="post">
@@ -21,6 +22,7 @@
             {{ form.submit }}
         </form>
     </div>
+    {% endif %}
     {% if comments is defined %}
         {% for comment in comments %}
             <div class="post">
