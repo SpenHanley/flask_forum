@@ -1,6 +1,6 @@
-from sql_alchemy import create_engine
-from sql_alchemy.orm import scoped_session, sessionmaker
-from sql_alchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine('mysql+pymysql://root:root@localhost/fforum_db', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
@@ -15,3 +15,5 @@ def init_db():
 
 	import app.models
 	Base.metadata.create_all(bind=engine)
+
+init_db()
