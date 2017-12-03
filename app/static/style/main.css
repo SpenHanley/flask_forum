@@ -1,79 +1,107 @@
-/* Defaults */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 * {
     margin: 0;
     padding: 0;
-    font-family: "Ubuntu Beta", "Bitstream Vera Sans", DejaVu Sans, Tahoma, sans-serif;
 }
 
-nav {
-    max-height: 50px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    padding: 5px;
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+nav .brand {
+    color: darkcyan;
+    padding: 0 0.6rem;
     border-bottom: 1px solid #f2f2f2;
-}
-
-nav .left {
     display: flex;
+    flex-direction: row;
 }
 
-nav .title {
-    color: darkcyan;
+nav .brand h1 {
+    margin-bottom: 0;
+    width: 90vw;
 }
 
-nav .title .tail {
-    color: chocolate;
+nav .brand a {
+    cursor: pointer;
 }
 
-nav .left .nav {
-    margin-left: 10px;
-}
-
-nav .left .nav li{
-    display: inline;
-    list-style-type: none;
-}
-
-nav .left .nav li a {
-    color: darkcyan;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 21px;
-    text-decoration: none;
-    line-height: 30px;
-}
-
-nav .left .nav li:nth-child(even) {
-    margin: 0 5px;
-}
-
-nav .left .nav li .active{
-    border-bottom: 2px solid chocolate;
+nav .brand i {
+    margin: 0.67em 0;
+    margin-bottom: 0;
+    font-size: 2em;
 }
 
 nav .breadcrumb {
-    color: chocolate;
-    font-weight: bold;
-    font-size: 21px;
-    text-transform: lowercase;
-    line-height: 30px;
+    display: none;
 }
 
-nav .right {
-    display: flex;
-}
-
-nav .right input[type=search] {
-    border: 1px solid #f2f2f2;
-    line-height: 30px;
-    font-size: 21px;
+nav .search {
     background: transparent;
+    border: none;
+    width: 90vw;
+    /* margin: 0 .4rem; */
 }
 
-nav .right i {
+nav .nav-search {
+    display: flex;
+    flex-direction: row;
+    padding: .6rem;
+    border-bottom: 1px solid #f2f2f2;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+nav .nav-search i {
     color: chocolate;
-    padding: 0 5px;
-    line-height: 30px;
-    font-size: 21px;
+}
+
+nav .nav-search button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+nav .nav li {
+   padding: 0.6rem;
+   border-bottom: 1px solid #f2f2f2;
+}
+
+nav .nav li a {
+    color: chocolate;
+    text-decoration: none;
+}
+
+footer {
+   bottom: 0;
+   position: fixed;
+   color: chocolate;
+   border-top: 1px solid #f2f2f2;
+   padding: 0.6rem 0;
+   width: 100vw;
+   text-align: center;
+}
+
+.sub, .control {
+    border: 1px solid #f2f2f2;
+    padding: .6rem;
+    margin: .4rem;
+}
+
+.sub a {
+    color: darkcyan;
+    /* text-transform: uppercase; */
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.control a {
+    color: chocolate;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sub a:hover {
+    text-decoration: underline;
 }

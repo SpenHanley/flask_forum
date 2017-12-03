@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_bower import Bower
 
 from config import app_config
 
@@ -17,6 +18,7 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     app.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
 
+    Bower(app)
     Bootstrap(app)
     db.init_app(app)
 

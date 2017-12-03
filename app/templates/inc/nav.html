@@ -3,13 +3,18 @@
 ('/register', 'register', 'Register') ] %} {% endif %}
 <nav>
     <div class="left">
-        <h1 class="title">
-            Flask<span class='tail'>Forum</span>
-        </h1>
+        <div class="brand">
+            <h1 class="title">
+                Flask<span class='tail'>Forum</span>
+            </h1>
+            <a>
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
         <ul class="nav">
             {% for href, id, caption in navigation_bar %}
             <li>
-                <a href="{{ href }}" title="{{ id }}"  {% if id == active_page %} class="active" {% endif %} >{{caption}}</a>
+                <a href="{{ href }}" title="{{ id }}" {% if id == active_page %} class="active" {% endif %}>{{caption}}</a>
             </li>
             {% endfor %}
         </ul>
@@ -27,12 +32,11 @@
     </div>
     <div class="right">
         <form action="/s/" method="get">
-            <div class="form-group">
-                <label>
-                    <input type="search" placeholder="Search" class="search form-control" name="kw">
-                </label>
+            <div class="nav-search">
+                <label></label>
+                <input type="search" placeholder="Search" class="search form-control" name="kw">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true" onclick="toggle()"></i></button>
             </div>
         </form>
-        <i class="fa fa-search" aria-hidden="true" onclick="toggle()"></i>
     </div>
 </nav>

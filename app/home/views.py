@@ -7,6 +7,15 @@ from utils import Utils
 
 from . import home
 
+# TEMP ROUTING
+
+
+@home.route('/nav')
+def navigation():
+    return render_template('nav.html')
+
+# END TEMP ROUTING
+
 
 @home.route('/')
 def homepage():

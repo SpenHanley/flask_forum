@@ -7,3 +7,15 @@ function toggle()
     else
         searchBar.style.display = 'initial'
 }
+
+function convert(ts) {
+    var utc = ts;
+    var d = new Date(0);
+    d.setUTCSeconds(utc);
+    return d.toUTCString();
+}
+
+function limit(length, text) {
+    var container = document.getElementById('content');
+    return text.substring(0, length);
+}

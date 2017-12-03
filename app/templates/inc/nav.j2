@@ -1,0 +1,13 @@
+{% if current_user is defined %}
+{% set navigation_bar = [
+    ('/', 'home', 'Home'),
+    ('/acc', 'account', 'Account'),
+    ('/lo', 'logout', 'Logout'),
+] %}
+{% else %}
+{% set navigation_bar = [
+    ('/', 'home', 'Home'),
+    ('/acc', 'account', 'Account'),
+    ('/lo', 'logout', 'Logout'),
+] %}
+{% endif %}

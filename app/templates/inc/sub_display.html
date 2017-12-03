@@ -13,21 +13,19 @@
             </p>
         </div>
         <div class="icons">
-            <p>
-                {% if current_user.is_authenticated and current_user.is_admin %}
-                    <a href="{{ url_for('home.pin_sub', route=sub.route) }}">
-                        {% if sub.is_pinned %}
-                            <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
-                        {% else %}
-                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
-                        {% endif %}
-                    </a>
-                {% else %}
+            {% if current_user.is_authenticated and current_user.is_admin %}
+                <a href="{{ url_for('home.pin_sub', route=sub.route) }}">
                     {% if sub.is_pinned %}
                         <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
+                    {% else %}
+                        <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                     {% endif %}
+                </a>
+            {% else %}
+                {% if sub.is_pinned %}
+                    <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
                 {% endif %}
-            </p>
+            {% endif %}
         </div>
     </div>
 {% endfor %}

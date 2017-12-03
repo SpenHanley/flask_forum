@@ -7,10 +7,11 @@
     <title>{{ title }}</title>
     {% endif %}
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/normalize.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
 
@@ -21,20 +22,7 @@
             &copy; 2017 Spen Hanley. All Rights Reserved.
         </footer>
     </div>
-
-    <script>
-        function convert(ts) {
-            var utc = ts;
-            var d = new Date(0);
-            d.setUTCSeconds(utc);
-            return d.toUTCString();
-        }
-
-        function limit(length, text) {
-            var container = document.getElementById('content');
-            return text.substring(0, length);
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
