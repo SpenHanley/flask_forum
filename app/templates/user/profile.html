@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% set active_page = 'account' %}
+{% block container %}
+    {% if current_user is defined %}
+        <div class="profile">
+            <table>
+                <tr>
+                    <td class="lcol">Username: </td>
+                    <td>{{ user.username }}</td>
+                </tr>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

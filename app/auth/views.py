@@ -33,7 +33,7 @@ def login():
             login_user(user)
             if request.args.get('next'):
                 return redirect(request.args.get('next'))
-            return redirect(url_for('user.account'))
+            return redirect(url_for('user.homepage'))
         else:
             flash('Invalid email or password')
     return render_template('auth/login.html', form=form)

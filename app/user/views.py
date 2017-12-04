@@ -34,7 +34,7 @@ def homepage():
 def inbox_page():
     messages = Message.query.filter_by(
         recipient=current_user.id
-    ).order_by('is_read desc')
+    ).order_by("is_read desc")
     count = 0
     inbox = []
     for message in messages:
@@ -51,7 +51,7 @@ def inbox_page():
 
 @user.route('/message/<id>')
 @login_required
-def message_page():
+def message_page(id):
     message = Message.query.get(id)
     sender = User.query.filter_by(id=message.sender).first()
     message.is_read = True
@@ -61,4 +61,10 @@ def message_page():
     return render_template('user/message.html', message=message)
 
 
-
+@user.route('/profile/<id>')
+def profile_page(id):
+    userProfile = User.query.get(id)
+    print(userProfile)
+    if userProfile is None:
+        return redirect(url_for('user.homepage'))
+    return render_template('user/profile.html', user=userProfile)
