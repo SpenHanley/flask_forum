@@ -1,16 +1,6 @@
-{% extends 'layout.html' %} {% set active_page = 'login' %} {% block container %}
-<div>
-    <form class="vert vert-form" action="{{ url_for('auth.login') }}" method="post">
-        {% for field in form %} {% if field.id != 'csrf_token' %}
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" data-upgraded=",MaterialTextfield">
-            {% if field.id != 'submit' %}
-                {{ field(class='mdl-textfield__input') }}
-                <label for="{{ field.id }}" class='mdl-textfield__label'>{{ field.label.text }}</label>
-            {% else %}
-                {{ field(class='mdl-button mdl-js-button mdl-button--raised') }}
-            {% endif %}
-        </div>
-        {% endif %} {% endfor %}
-    </form>
-</div>
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'layout.html' %}
+{% set active_page = 'login' %}
+{% block container %}
+    {{ wtf.quick_form(form, extra_classes='vert') }}
 {% endblock %}

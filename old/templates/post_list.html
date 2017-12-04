@@ -1,9 +1,0 @@
-{% extends 'layout.html' %}
-{% block container %}
-    {% if session['user'] is defined %}
-        <div class="sub">
-            <a href="/pf/{{ sub['_id'] }}">Create Post</a>
-        </div>
-    {% endif %}
-    {% include 'inc/post_display.html' %}
-{% endblock %}

@@ -66,13 +66,19 @@ class SearchForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField(
+        'Email',
+        validators=[
+            DataRequired(),
+            Email()
+        ]
+    )
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[
+    password = PasswordField('Password')
+    confirm_password = PasswordField('Confirm Password', validators=[
         DataRequired(),
-        EqualTo('confirm_password')
+        EqualTo('password', message='Passwords must match')
     ])
-    confirm_password = PasswordField('Confirm Password')
     submit = SubmitField('Register')
 
     def validate_email(self, field):

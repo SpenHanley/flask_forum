@@ -12,7 +12,6 @@ from utils import Utils
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        print('Form submitted')
         user = User(
             email=form.email.data,
             username=form.username.data,
@@ -25,27 +24,22 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-@auth.route('/lg', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    print 'Showing form'
     if form.validate_on_submit():
-        print 'Form validated'
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             if request.args.get('next'):
-                print 'Redirecting to next'
                 return redirect(request.args.get('next'))
-            print 'Redirecting to home'
-            return redirect(url_for('home.dash'))
+            return redirect(url_for('user.account'))
         else:
-            print 'Invalid information'
             flash('Invalid email or password')
     return render_template('auth/login.html', form=form)
 
 
-@auth.route('/lo')
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -53,7 +47,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/cs', methods=['GET', 'POST'])
+@auth.route('/create_sub', methods=['GET', 'POST'])
 @login_required
 def create_sub():
     if current_user.is_authenticated:
@@ -80,7 +74,7 @@ def create_sub():
         return redirect(url_for('home.homepage'))
 
 
-@auth.route('/cp/<p>', methods=['GET', 'POST'])
+@auth.route('/create_post/<p>', methods=['GET', 'POST'])
 @login_required
 def create_post(p):
     if current_user.is_authenticated:
@@ -107,7 +101,7 @@ def create_post(p):
         return redirect(url_for('home.homepage'))
 
 
-@auth.route('/dp/<route>', methods=['GET', 'POST'])
+@auth.route('/delete_post/<route>', methods=['GET', 'POST'])
 @login_required
 def del_post(route):
     if current_user.is_authenticated and current_user.is_admin:
@@ -134,7 +128,7 @@ def del_post(route):
         return redirect(url_for('home.homepage'))
 
 
-@auth.route('/snd', methods=['GET', 'POST'])
+@auth.route('/send', methods=['GET', 'POST'])
 @login_required
 def send_message():
     form = MessageForm()
@@ -156,7 +150,7 @@ def send_message():
     return render_template('auth/send_message.html', form=form)
 
 
-@auth.route('/snd/<id>', methods=['GET', 'POST'])
+@auth.route('/send/<id>', methods=['GET', 'POST'])
 @login_required
 def send_message_with_rec(id):
     form = MessageForm()
@@ -182,19 +176,19 @@ def send_message_with_rec(id):
     return render_template('auth/send_message.html', form=form)
 
 
-@auth.route('/msd/<id>')
+@auth.route('/delete_message/<id>')
 def delete_message(id):
     Message.query.filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('home.view_inbox'))
 
 
-@auth.route('/msr/<id>')
+@auth.route('/reply_message/<id>')
 def reply_message(id):
     return redirect(url_for('auth.send_message_with_rec', id=id))
 
 
-@auth.route('/dc/<id>', methods=['GET', 'POST'])
+@auth.route('/delete_comment/<id>', methods=['GET', 'POST'])
 def delete_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     post = Post.query.filter_by(id=comment.post_id).first()
@@ -210,7 +204,7 @@ def delete_comment(id):
             post.name + ' was deleted for: ' +
             form.reason.data + '.'
         )
-        
+
         Comment.query.filter_by(id=id).delete()
         db.session.commit()
         return redirect(url_for('home.view_post', route=post.route))

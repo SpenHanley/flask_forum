@@ -10,6 +10,7 @@ class DevelopmentConfig(Config):
     Development configuration options
     """
     DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class ProductionConfig(Config):
@@ -18,6 +19,7 @@ class ProductionConfig(Config):
     """
     DEBUG = False
     SQLALCHEMY_DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 app_config = {

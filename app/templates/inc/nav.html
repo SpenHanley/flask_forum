@@ -1,42 +1,10 @@
-{% if session['user_id'] is defined %} {% set navigation_bar = [ ('/', 'index', 'Home'), ('/acc', 'account', 'Account'),
-('/lo', 'logout', 'Logout') ] %} {% else %} {% set navigation_bar = [ ('/', 'index', 'Home'), ('/lg', 'login', 'Login'),
-('/register', 'register', 'Register') ] %} {% endif %}
-<nav>
-    <div class="left">
-        <div class="brand">
-            <h1 class="title">
-                Flask<span class='tail'>Forum</span>
-            </h1>
-            <a>
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
-        <ul class="nav">
-            {% for href, id, caption in navigation_bar %}
-            <li>
-                <a href="{{ href }}" title="{{ id }}" {% if id == active_page %} class="active" {% endif %}>{{caption}}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="breadcrumb">
-        {% if title is defined %}
-        <p>{{ title }}</p>
-        {% elif sub is defined and post is defined %}
-        <p>{{ sub.name }} &gt; {{ post.name }}</p>
-        {% elif sub is defined and post is undefined %}
-        <p>{{ sub.name }}</p>
-        {% else %}
-        <p>Page Unknown</p>
-        {% endif %}
-    </div>
-    <div class="right">
-        <form action="/s/" method="get">
-            <div class="nav-search">
-                <label></label>
-                <input type="search" placeholder="Search" class="search form-control" name="kw">
-                <button type="submit"><i class="fa fa-search" aria-hidden="true" onclick="toggle()"></i></button>
-            </div>
-        </form>
-    </div>
-</nav>
+{% if current_user is defined %}
+    {% include 'inc/authenticated.html' %}
+{% else %}
+    {% include 'inc/unauthenticated.html' %}
+{% endif %}
+<div class="container">
+    {% for url, label, caption in navigation_bar %}
+        <a href="{{ url }}" title='{{ label }}'>{{ caption }}</a>
+    {% endfor %}
+</div>

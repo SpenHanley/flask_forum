@@ -11,7 +11,7 @@
                     Sender: {{ message.sender }}
                 </p>
                 <p>
-                    Subject: <a href="{{ url_for('home.view_message', id=message.id) }}">{{ message.subject }}</a>
+                    Subject: <a href="{{ url_for('user.message_page', id=message.id) }}">{{ message.subject }}</a>
                 </p>
             </div>
             <div class="icons">

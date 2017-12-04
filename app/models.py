@@ -67,7 +67,8 @@ class Post(db.Model):
     content = db.Column(db.String(1024))
     route = db.Column(db.String(8), unique=True)
     sub_id = db.Column(db.Integer, db.ForeignKey('subs.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    author_id = db.Column(
+        db.Integer, db.ForeignKey('users.id'), nullable=False)
     anonymous = db.Column(db.Boolean, default=False)
     created_on = db.Column(db.DateTime)
     is_pinned = db.Column(db.Boolean, nullable=False, default=False)
@@ -88,7 +89,11 @@ class Message(db.Model):
     __tablename__ = 'messages'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipient = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    recipient = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id'),
+        nullable=False
+    )
     sender = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     subject = db.Column(db.String(64), nullable=False)
     message = db.Column(db.String(256), nullable=False)
