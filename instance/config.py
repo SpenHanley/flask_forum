@@ -10,4 +10,4 @@ else:
     with open('s.key', 'r') as key:
         SECRET_KEY = key.read()
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://ff_admin:ffadmin17@localhost/fforum_db'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/fforum_db'
