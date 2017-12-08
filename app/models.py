@@ -7,13 +7,41 @@ from app import db, login_manager
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(64), index=True, unique=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
-    is_admin = db.Column(db.Boolean, default=False)
-    is_confirmed = db.Column(db.Boolean, default=False)
-    confirmed_on = db.Column(db.DateTime, nullable=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    email = db.Column(
+        db.String(64),
+        index=True,
+        unique=True
+    )
+
+    username = db.Column(
+        db.String(64),
+        index=True,
+        unique=True
+    )
+
+    password_hash = db.Column(
+        db.String(128)
+    )
+
+    is_admin = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    is_confirmed = db.Column(
+        db.Boolean,
+        default=False
+    )
+
+    confirmed_on = db.Column(
+        db.DateTime,
+        nullable=True
+    )
 
     @property
     def password(self):
@@ -83,6 +111,8 @@ class Comment(db.Model):
     content = db.Column(db.String(256))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     date = db.Column(db.DateTime)
+    updated = db.Column(db.DateTime) # Displays when the comment was updated
+    edited = db.Column(db.Boolean)
 
 
 class Message(db.Model):

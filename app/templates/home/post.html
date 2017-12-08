@@ -36,8 +36,9 @@
                 </div>
                 <div class="icons">
                     {% if current_user.is_authenticated %}
-                        {% if current_user.username == comment.author or current_user.is_admin %}
+                        {% if current_user.username == comment.author %}
                             <a href="{{ url_for('auth.delete_comment', id=comment.id) }}"><i class="fa fa-trash"></i></a>
+                            <a href="{{ url_for('auth.update_comment', id=comment.id) }}"><i class="fa fa-pencil"></i></a>
                         {% endif %}
                     {% endif %}
                 </div>

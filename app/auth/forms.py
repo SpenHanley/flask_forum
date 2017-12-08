@@ -61,6 +61,10 @@ class MessageForm(FlaskForm):
     send = SubmitField('Send Message')
 
 
+class EditCommentForm(FlaskForm):
+    content = StringField('Comment')
+    submit = SubmitField('Update Comment')
+
 class SearchForm(FlaskForm):
     search = StringField('Search')
 

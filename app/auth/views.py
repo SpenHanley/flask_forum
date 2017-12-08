@@ -183,6 +183,14 @@ def delete_message(id):
     return redirect(url_for('home.view_inbox'))
 
 
+@auth.route('/delete_comment/<id>', methods=['GET', 'POST'])
+def edit_comment(id):
+    Message.query.filter_by(id=id)
+    form = EditCommentForm()
+    # if (form.validated)
+
+
+
 @auth.route('/reply_message/<id>')
 def reply_message(id):
     return redirect(url_for('auth.send_message_with_rec', id=id))
