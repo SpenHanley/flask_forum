@@ -6,7 +6,7 @@
     {% for post in posts %}
         <div class="post-small">
             <div class="post-data">
-                <a class="post-title" href="{{ url_for('home.view_post', route=post.route) }}">{{ post.name }}</a>
+                <a class="post-title" href="{{ url_for('home.view_post', route=post.route) }}">{{ post.title }}</a>
                 <p>
                     {{ post.description }}
                 </p>
@@ -22,14 +22,14 @@
                             <i class="fa fa-trash"></i>
                         </a>
                         <a href="{{ url_for('home.pin_post', route=post.route) }}">
-                            {% if post.is_pinned %}
+                            {% if post.pinned %}
                                 <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
                             {% else %}
                                 <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                             {% endif %}
                         </a>
                     {% else %}
-                        {% if post.is_pinned %}
+                        {% if post.pinned %}
                             <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
                         {% endif %}
                     {% endif %}

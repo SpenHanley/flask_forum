@@ -24,6 +24,10 @@
                         <a href="{{ url_for('user.inbox_page') }}">{{ new_message_count }}/{{ message_count }}</a>
                     </td>
                 </tr>
+                <tr>
+                    <td>Profile URL:</td>
+                    <td>{{ profile_url }}</td>
+                </tr>
             </table>
         </div>
     {% endif %}

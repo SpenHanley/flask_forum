@@ -1,5 +1,5 @@
 <ul>
     <li><a href="{{ url_for('home.homepage') }}" title="index">Home</a></li>
-    <li><a href="{{ url_for('user.homepage') }}" title="account">Account</a></li>
+    <li><a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" title="account">Account</a></li>
     <li><a href="{{ url_for('auth.logout') }}" title="logout">Logout</a></li>
 </ul>

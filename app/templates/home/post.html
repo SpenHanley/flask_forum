@@ -2,7 +2,7 @@
 {% block container %}
     {% if post is defined %}
         <div class="post">
-            <h2 class="post-title">{{ post.name }}</h2>
+            <h2 class="post-title">{{ post.title }}</h2>
             {# Controls will be implemented here if the person viewing the post is the author
                 This is to allow them to update or edit the post as necessary. #}
             <p>
@@ -13,7 +13,7 @@
             </p>
         </div>
     {% endif %}
-    {% if session['user_id'] is defined %}
+    {% if current_user.is_authenticated %}
     <div class="post">
         <h3 class="post-title">Create Comment</h3>
         <form action="{{ url_for('home.view_post', route=post.route) }}" class="form" method="post">
@@ -31,7 +31,20 @@
                         {{ comment.content }}
                     </p>
                     <p>
-                        By {{ comment.author }} - {{ comment.date }}
+                        By 
+                            {% if current_user.username != comment.author %}
+                                <a href="{{ url_for('user.profile_page', route=comment.route) }}">{{ comment.author }}</a>
+                            {% else %}
+                                You
+                            {% endif %}
+                            
+                            - 
+
+                            {% if comment.updated != None %}
+                                {{ comment.updated }}
+                            {% else %}
+                                {{ comment.date }}
+                            {% endif %}
                     </p>
                 </div>
                 <div class="icons">

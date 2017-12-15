@@ -1,5 +1,7 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
+from utils import Utils as utils
 
 from app import db, login_manager
 
@@ -28,12 +30,21 @@ class User(UserMixin, db.Model):
         db.String(128)
     )
 
+    registered_on = db.Column(
+        db.DateTime,
+        nullable=False
+    )
+
+    profile_route = db.Column(
+        db.String(6), unique=True
+    )
+
     is_admin = db.Column(
         db.Boolean,
         default=False
     )
 
-    is_confirmed = db.Column(
+    confirmed = db.Column(
         db.Boolean,
         default=False
     )
@@ -42,6 +53,17 @@ class User(UserMixin, db.Model):
         db.DateTime,
         nullable=True
     )
+
+    def __init__(self, email, username, password, confirmed, paid=False, admin=False, confirmed_on=None):
+        self.email = email
+        self.username = username
+        self.password = password
+        self.registered_on = datetime.datetime.utcnow()
+        # This is generated here as it makes no sense to generate it in the route file
+        self.profile_route = utils.generate_url(6)
+        self.admin = admin
+        self.confirmed = confirmed
+        self.confirmed_on = confirmed_on
 
     @property
     def password(self):
@@ -76,31 +98,53 @@ class SubForum(db.Model):
     __tablename__ = 'subs'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    title = db.Column(db.String(64), unique=True)
     description = db.Column(db.String(128))
     route = db.Column(db.String(8), unique=True)
     modified = db.Column(db.DateTime)
-    is_pinned = db.Column(db.Boolean, default=False)
+    pinned = db.Column(db.Boolean)
+
+    def __init__(self, title, description, pinned=False):
+        self.title = title
+        self.description = description
+        self.route = utils.generate_url(8)
+        self.modified = datetime.datetime.utcnow()
+        self.pinned = pinned
 
     def __repr__(self):
-        return 'Sub Name: {}'.format(self.name)
+        return 'Sub Name: {}'.format(self.title)
 
 
 class Post(db.Model):
     __tablename__ = 'posts'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    description = db.Column(db.String(192))
+    title = db.Column(db.String(64), unique=True)
     content = db.Column(db.String(1024))
     route = db.Column(db.String(8), unique=True)
     sub_id = db.Column(db.Integer, db.ForeignKey('subs.id'))
+    
     author_id = db.Column(
-        db.Integer, db.ForeignKey('users.id'), nullable=False)
-    anonymous = db.Column(db.Boolean, default=False)
+        db.Integer,
+        db.ForeignKey('users.id'),
+        nullable=False
+    )
+
+    anonymous = db.Column(db.Boolean)
     created_on = db.Column(db.DateTime)
-    is_pinned = db.Column(db.Boolean, nullable=False, default=False)
-    is_deleted = db.Column(db.Boolean, default=False)
+    pinned = db.Column(db.Boolean, nullable=False)
+    is_deleted = db.Column(db.Boolean)
+
+    def __init__(self, title, content, sub_id, author_id, anonymous=False, pinned=False, is_deleted=False):
+        self.title = title
+        self.content = content
+        self.sub_id = sub_id
+        self.author_id = author_id
+        self.anonymous = anonymous
+        self.created_on = datetime.datetime.utcnow()
+        self.route = utils.generate_url(8)
+        self.pinned = pinned
+        self.is_deleted = is_deleted
 
 
 class Comment(db.Model):
@@ -112,7 +156,13 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     date = db.Column(db.DateTime)
     updated = db.Column(db.DateTime) # Displays when the comment was updated
-    edited = db.Column(db.Boolean)
+    edited = db.Column(db.Boolean, default=False)
+
+    def __init__(self, author, content, post_id, edited=False):
+        self.author = author
+        self.content = content
+        self.post_id = post_id
+        self.edited = edited
 
 
 class Message(db.Model):
@@ -129,6 +179,14 @@ class Message(db.Model):
     message = db.Column(db.String(256), nullable=False)
     is_read = db.Column(db.Boolean, default=False)
     sent = db.Column(db.DateTime)
+
+    def __init__(self, recipient, sender, subject, message, is_read=False):
+        self.recipient = recipient
+        self.sender = sender
+        self.subject = subject
+        self.message = message
+        self.is_read = is_read
+        self.sent = datetime.datetime.utcnow()
 
 
 class ErrorLogs(db.Model):

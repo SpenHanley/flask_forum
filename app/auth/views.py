@@ -1,3 +1,5 @@
+import re
+import datetime
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 
@@ -6,6 +8,7 @@ from .forms import *
 from .. import db
 from ..models import User, Message, Comment
 from utils import Utils
+from ..token import generate_confirmation_token, confirm_token
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -15,13 +18,36 @@ def register():
         user = User(
             email=form.email.data,
             username=form.username.data,
-            password=form.password.data
+            password=form.password.data,
+            confirmed=False
         )
         db.session.add(user)
         db.session.commit()
+
+        token = generate_confirmation_token(user.email)
+
         flash('Registered')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
+
+
+@auth.route('/confirm/<token>')
+@login_required
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('Confirmation token invalid or has expired.', 'danger')
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = True
+        user.confirmed_on = datetime.datetime.utcnow()
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('user.home', route=user.profile_route))
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -33,7 +59,7 @@ def login():
             login_user(user)
             if request.args.get('next'):
                 return redirect(request.args.get('next'))
-            return redirect(url_for('user.homepage'))
+            return redirect(url_for('user.homepage', route=user.profile_route))
         else:
             flash('Invalid email or password')
     return render_template('auth/login.html', form=form)
@@ -53,12 +79,9 @@ def create_sub():
     if current_user.is_authenticated:
         form = SubForm()
         if form.validate_on_submit():
-            sUrl = Utils.generate_url(length=8)
             forum = SubForum(
-                name=form.title.data,
-                description=form.description.data,
-                route=sUrl,
-                modified=Utils.get_datetime()
+                title=form.title.data,
+                description=form.description.data
             )
             db.session.add(forum)
             db.session.commit()
@@ -74,28 +97,24 @@ def create_sub():
         return redirect(url_for('home.homepage'))
 
 
-@auth.route('/create_post/<p>', methods=['GET', 'POST'])
+@auth.route('/create_post/<sub_route>', methods=['GET', 'POST'])
 @login_required
-def create_post(p):
+def create_post(sub_route):
     if current_user.is_authenticated:
         form = PostForm()
-        sub = SubForum.query.filter_by(route=p).first()
+        sub = SubForum.query.filter_by(route=sub_route).first()
         if form.validate_on_submit():
-            sUrl = Utils.generate_url(8)
             post = Post(
-                name=form.title.data,
-                description=form.description.data,
+                title=form.title.data,
                 content=form.post_content.data,
-                anonymous=form.anonymous.data,
-                route=sUrl,
                 sub_id=sub.id,
-                created_on=Utils.get_datetime(),
-                author_id=current_user.id
+                author_id=current_user.id,
+                anonymous=form.anonymous.data
             )
             db.session.add(post)
             db.session.commit()
             flash('Post Created')
-            return redirect(url_for('home.view_post', route=sUrl))
+            return redirect(url_for('home.view_post', post.route))
         return render_template('auth/post.html', form=form, p=p)
     else:
         return redirect(url_for('home.homepage'))
@@ -115,7 +134,7 @@ def del_post(route):
                 sender=current_user.id,
                 subject='Post Deletion',
                 message='Your post: ' +
-                post.name + ' was deleted for: ' +
+                post.title + ' was deleted for: ' +
                 form.reason.data + '.'
             )
 
@@ -138,9 +157,8 @@ def send_message():
         message = Message(
             recipient=rec.id,
             sender=current_user.id,
-            message=form.message.data,
-            sent=Utils.get_datetime(),
-            subject=form.subject.data
+            subject=form.subject.data,
+            message=form.message.data
         )
 
         db.session.add(message)
@@ -161,9 +179,8 @@ def send_message_with_rec(id):
         message = Message(
             recipient=recipient.id,
             sender=current_user.id,
-            message=form.message.data,
-            sent=Utils.get_datetime(),
-            subject=form.subject.data
+            subject=form.subject.data,
+            message=form.message.data
         )
 
         db.session.add(message)
@@ -181,14 +198,6 @@ def delete_message(id):
     Message.query.filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('home.view_inbox'))
-
-
-@auth.route('/delete_comment/<id>', methods=['GET', 'POST'])
-def edit_comment(id):
-    Message.query.filter_by(id=id)
-    form = EditCommentForm()
-    # if (form.validated)
-
 
 
 @auth.route('/reply_message/<id>')
@@ -209,7 +218,7 @@ def delete_comment(id):
             sender=current_user.id,
             subject='Post Deletion',
             message='Your comment on: ' +
-            post.name + ' was deleted for: ' +
+            post.title + ' was deleted for: ' +
             form.reason.data + '.'
         )
 
@@ -223,3 +232,27 @@ def delete_comment(id):
         Comment.query.filter_by(id=id).delete()
         db.session.commit()
         return redirect(url_for('home.view_post', route=post.route))
+
+
+@auth.route('/update_comment/<id>', methods=['GET', 'POST'])
+def update_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+
+    print(comment)
+
+    form = EditCommentForm()
+
+    if form.validate_on_submit():
+        print('Form validated')
+        comment.content = form.content.data
+        comment.edited = True
+        comment.updated = Utils.get_datetime()
+
+        print(Utils.get_datetime())
+
+        db.session.add(comment)
+        db.session.commit()
+    else:
+        print('Comment not updated, form did not validate!')
+
+    return render_template('auth/update_comment.html', form=form, comment=comment)

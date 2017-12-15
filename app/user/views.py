@@ -4,14 +4,16 @@ from ..models import Comment, Message, User
 from ..auth.forms import CommentForm
 from .. import db
 from utils import Utils
+from sqlalchemy import desc
 
 from . import user
 
 
-@user.route('/')
+@user.route('/<route>')
 @login_required
-def homepage():
+def homepage(route):
     messages = Message.query.filter_by(recipient=current_user.id)
+    user = User.query.filter_by(profile_route=route)
     new_msg_count = 0
     msg_count = 0
     for message in messages:
@@ -25,7 +27,8 @@ def homepage():
         'user/index.html',
         title='Account',
         message_count=msg_count,
-        new_message_count=new_msg_count
+        new_message_count=new_msg_count,
+        profile_url=current_user.profile_route
     )
 
 
@@ -34,7 +37,7 @@ def homepage():
 def inbox_page():
     messages = Message.query.filter_by(
         recipient=current_user.id
-    ).order_by("is_read desc")
+    ).order_by(desc('is_read'))
     count = 0
     inbox = []
     for message in messages:
@@ -61,10 +64,29 @@ def message_page(id):
     return render_template('user/message.html', message=message)
 
 
-@user.route('/profile/<id>')
-def profile_page(id):
-    userProfile = User.query.get(id)
+@user.route('/<route>/profile')
+@login_required
+def profile_page(route):
+    userProfile = User.query.filter_by(profile_route=route).first()
     print(userProfile)
+    user = {
+        'username': userProfile.username
+    }
     if userProfile is None:
         return redirect(url_for('user.homepage'))
-    return render_template('user/profile.html', user=userProfile)
+
+    return render_template('user/profile.html', user=user)
+
+
+@user.route('/<route>/edit_profile')
+@login_required
+def edit_profile(route):
+    user = User.query.filter_by(profile_route=route)
+    template = '''
+    <h1>Not Implemented</h1>
+    <p>
+    This feature has yet to be implemented
+    </p>
+    '''
+    return template
+    

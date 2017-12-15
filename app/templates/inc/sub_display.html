@@ -7,7 +7,7 @@
 {% for sub in forums %}
     <div class="sub">
         <div class="sub-data">
-            <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.name }}</a>
+            <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.title }}</a>
             <p>
                 {{ sub.description }}
             </p>
@@ -15,14 +15,14 @@
         <div class="icons">
             {% if current_user.is_authenticated and current_user.is_admin %}
                 <a href="{{ url_for('home.pin_sub', route=sub.route) }}">
-                    {% if sub.is_pinned %}
+                    {% if sub.pinned %}
                         <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
                     {% else %}
                         <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                     {% endif %}
                 </a>
             {% else %}
-                {% if sub.is_pinned %}
+                {% if sub.pinned %}
                     <i class="fa fa-thumb-tack pinned" aria-hidden="true"></i>
                 {% endif %}
             {% endif %}

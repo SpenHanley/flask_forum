@@ -4,6 +4,7 @@ Read class level docstring
 '''
 import random
 import string
+from yaml import load, dump
 from datetime import datetime
 
 
@@ -40,3 +41,36 @@ class Utils(object):
         date = str(datetime.date(datetime.utcnow()))
         time = str(datetime.time(datetime.utcnow())).split('.')[0]
         return date + ' ' + time
+
+    @staticmethod
+    def generate_validation_url(life=1440):
+        '''
+        Generates a url that the user can use to validate and active their account
+        :param: life - This is the life of the url in minutes, after this the url will not be valid,
+                        and the user will need to start the registration process again
+        '''
+        
+class Config:
+    def __init__(self, filename='config.yml'):
+        self.filename = filename
+        self.conf = None
+
+    def load_config(self):
+        with open(self.filename, 'r') as conf:
+            self.conf = load(conf)
+    
+    def get(self, key=None):
+        """
+        Get a value from configuration object
+        """
+        if key is None:
+            return None
+        else:
+            return self.conf[key]
+
+    def set(self, key, value):
+        """
+        Add a key to the configuration options.
+        Possible this will never be used
+        """
+        pass
