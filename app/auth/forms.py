@@ -33,14 +33,12 @@ class CreateUserForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
     post_content = TextAreaField('Post Content', validators=[DataRequired()])
-    # This only hides the username from standard users, admins can still see the username
     anonymous = BooleanField('Post Anonymously', default=False)
     submit = SubmitField('Create Post')
 
     def validate_title(self, field):
-        if Post.query.filter_by(name=field.data).first():
+        if Post.query.filter_by(title=field.data).first():
             raise ValidationError('Post name already in use')
 
 
@@ -70,6 +68,7 @@ class SearchForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
+
     email = StringField(
         'Email',
         validators=[
@@ -77,12 +76,19 @@ class RegistrationForm(FlaskForm):
             Email()
         ]
     )
+
+    # TODO: Attempt to check email as it is being entered to ensure that it is available
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password')
-    confirm_password = PasswordField('Confirm Password', validators=[
-        DataRequired(),
-        EqualTo('password', message='Passwords must match')
-    ])
+    
+    confirm_password = PasswordField(
+        'Confirm Password',
+        validators=[
+            DataRequired(),
+            EqualTo('password', message='Passwords must match')
+        ]
+    )
+    
     submit = SubmitField('Register')
 
     def validate_email(self, field):

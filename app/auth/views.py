@@ -9,6 +9,7 @@ from .. import db
 from ..models import User, Message, Comment
 from utils import Utils
 from ..token import generate_confirmation_token, confirm_token
+from ..email import send_mail
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -21,13 +22,19 @@ def register():
             password=form.password.data,
             confirmed=False
         )
+
         db.session.add(user)
         db.session.commit()
 
         token = generate_confirmation_token(user.email)
+        confirm_url = url_for('auth.confirm_email', token=token, _external=True)
+        html = render_template('emails/confirm.html', confirm_url=confirm_url)
+        subject = 'Please confirm your email!'
+        asd = send_mail(user.email, subject, html)
 
-        flash('Registered')
+        flash('Confirmation email sent', 'Success')
         return redirect(url_for('auth.login'))
+    
     return render_template('auth/register.html', form=form)
 
 
@@ -100,51 +107,46 @@ def create_sub():
 @auth.route('/create_post/<sub_route>', methods=['GET', 'POST'])
 @login_required
 def create_post(sub_route):
-    if current_user.is_authenticated:
-        form = PostForm()
-        sub = SubForum.query.filter_by(route=sub_route).first()
-        if form.validate_on_submit():
-            post = Post(
-                title=form.title.data,
-                content=form.post_content.data,
-                sub_id=sub.id,
-                author_id=current_user.id,
-                anonymous=form.anonymous.data
-            )
-            db.session.add(post)
-            db.session.commit()
-            flash('Post Created')
-            return redirect(url_for('home.view_post', post.route))
-        return render_template('auth/post.html', form=form, p=p)
-    else:
-        return redirect(url_for('home.homepage'))
+    form = PostForm()
+    sub = SubForum.query.filter_by(route=sub_route).first()
+
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data,
+            content=form.post_content.data,
+            sub_id=sub.id,
+            author_id=current_user.id,
+            anonymous=form.anonymous.data
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash('Post Created')
+        return redirect(url_for('home.view_post', route=post.route))
+    return render_template('auth/post.html', form=form, sub=sub)
 
 
 @auth.route('/delete_post/<route>', methods=['GET', 'POST'])
 @login_required
 def del_post(route):
-    if current_user.is_authenticated and current_user.is_admin:
-        form = DestroyPostForm()
-        if form.validate_on_submit():
-            post = Post.query.filter_by(route=route).first()
-            post.is_deleted = True
+    form = DestroyPostForm()
+    if form.validate_on_submit():
+        post = Post.query.filter_by(route=route).first()
+        post.is_deleted = True
 
-            message = Message(
-                recipient=post.author_id,
-                sender=current_user.id,
-                subject='Post Deletion',
-                message='Your post: ' +
-                post.title + ' was deleted for: ' +
-                form.reason.data + '.'
-            )
+        message = Message(
+            recipient=post.author_id,
+            sender=current_user.id,
+            subject='Post Deletion',
+            message='Your post: ' +
+            post.title + ' was deleted for: ' +
+            form.reason.data + '.'
+        )
 
-            db.session.add(message)
-            db.session.commit()
-            sub = SubForum.query.filter_by(id=post.sub_id).first()
-            return redirect(url_for('home.view_sub', route=sub.route))
-        return render_template('auth/del_post.html', form=form, route=route)
-    else:
-        return redirect(url_for('home.homepage'))
+        db.session.add(message)
+        db.session.commit()
+        sub = SubForum.query.filter_by(id=post.sub_id).first()
+        return redirect(url_for('home.view_sub', route=sub.route))
+    return render_template('auth/del_post.html', form=form, route=route)
 
 
 @auth.route('/send', methods=['GET', 'POST'])

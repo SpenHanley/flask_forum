@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block container %}
     <div>
-        <form class="vert vert-form" action="{{ url_for('auth.create_post', p=p) }}" method="post">
+        <form class="vert vert-form" action="{{ url_for('auth.create_post', sub_route=sub.route) }}" method="post">
             {% for field in form %}
                 {% if field.type == 'BooleanField' %}
                     <div class="inline">

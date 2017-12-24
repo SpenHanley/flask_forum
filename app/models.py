@@ -123,7 +123,7 @@ class Post(db.Model):
     content = db.Column(db.String(1024))
     route = db.Column(db.String(8), unique=True)
     sub_id = db.Column(db.Integer, db.ForeignKey('subs.id'))
-    
+
     author_id = db.Column(
         db.Integer,
         db.ForeignKey('users.id'),
@@ -155,7 +155,7 @@ class Comment(db.Model):
     content = db.Column(db.String(256))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     date = db.Column(db.DateTime)
-    updated = db.Column(db.DateTime) # Displays when the comment was updated
+    updated = db.Column(db.DateTime)  # Displays when the comment was updated
     edited = db.Column(db.Boolean, default=False)
 
     def __init__(self, author, content, post_id, edited=False):

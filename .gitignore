@@ -177,4 +177,10 @@ venv.bak/
 !.vscode/extensions.json
 .history
 
+# instance files
+*.key
+
+# Windows files
+desktop.ini
+
 # End of https://www.gitignore.io/api/python,pycharm,visualstudiocode

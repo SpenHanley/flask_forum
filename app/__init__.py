@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_mail import Mail
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -8,6 +9,8 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from config import app_config
 
 db = SQLAlchemy()
+app = Flask(__name__, instance_relative_config=True)
+mail = Mail(app)
 
 login_manager = LoginManager()
 

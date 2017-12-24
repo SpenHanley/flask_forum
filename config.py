@@ -1,16 +1,18 @@
 from utils import Config as config
 import os
+import random
+import string
 
 
 def load_secret_key():
-    if not os.path.isfile('s.key'):
+    if not os.path.isfile('secret.key'):
         s = ''.join(
             random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in
             range(64))
-        with open('s.key', 'w') as key:
+        with open('secret.key', 'w') as key:
             key.write(s)
     else:
-        with open('s.key', 'r') as key:
+        with open('secret.key', 'r') as key:
             s = key.read()
     return s
 

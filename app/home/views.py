@@ -37,12 +37,13 @@ def view_post(route):
     form = CommentForm()
 
     if form.validate_on_submit():
+
         comment = Comment(
-            post_id=post.id,
             author=current_user.id,
             content=form.comment.data,
-            date=Utils.get_datetime()
+            post_id=post.id
         )
+
         db.session.add(comment)
         db.session.commit()
 
@@ -59,6 +60,7 @@ def view_post(route):
                 'route': user.profile_route
             }
             comments.append(comm)
+
     return render_template(
         'home/post.html',
         post=post,
@@ -73,14 +75,19 @@ def view_post(route):
 @home.route('/sub/<route>')
 def view_sub(route):
     sub = SubForum.query.filter_by(route=route).first()
+    
     posts_arr = Post.query.filter_by(
-        sub_id=sub.id).order_by(str('pinned desc'))
+        sub_id=sub.id
+    ).order_by(desc('pinned'))
+
     posts = []
+
     if posts_arr:
         for p in posts_arr:
             if not p.is_deleted:
                 p.count = Comment.query.filter_by(post_id=p.id).count()
                 posts.append(p)
+
     return render_template(
         'home/sub.html',
         sub=sub,
@@ -89,7 +96,7 @@ def view_sub(route):
         include_control=True
     )
 
-
+# TODO: Reimplement pinning sub forums
 @home.route('/pin_sub/<route>', methods=['GET', 'POST'])
 def pin_sub(route):
     sub = SubForum.query.filter_by(route=route).first()
@@ -102,7 +109,7 @@ def pin_sub(route):
     db.session.commit()
     return redirect(url_for('home.homepage'))
 
-
+# TODO: Reimplement pinning posts
 @home.route('/pin_post/<route>', methods=['GET', 'POST'])
 def pin_post(route):
     post = Post.query.filter_by(route=route).first()
@@ -115,15 +122,17 @@ def pin_post(route):
     db.session.commit()
     return redirect(url_for('home.homepage'))
 
-
+# TODO: Reimplement search functionality
 @home.route('/search', methods=['POST', 'GET'])
 def search():
     form = SearchForm()
     if form.validate_on_submit():
+
         print('Search term passed | {}'.format(form.search.data))
         posts = Post.query.filter(
             Post.title.like("%" + form.search.data + "%")
         ).all()
+
         subs = []
         for post in posts:
             sub = SubForum.query.filter_by(id=post.sub_id)
