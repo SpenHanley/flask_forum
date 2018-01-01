@@ -19,6 +19,7 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 
+flask_env/
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
