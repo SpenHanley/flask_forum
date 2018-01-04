@@ -1,10 +1,20 @@
-$font-stack: "Ubuntu", sans-serif
-$primary: #008b8b
-$secondary: #4e2e28
-$border: #f2f2f2
+$button-background-active: rgb(0, 139, 139)
+$navbar-light-active-color: rgb(210, 105, 30)
+$navbar-light-color: rgb(0, 139, 139)
 
-*
-    box-sizing: border-box
+.sub .h4
+  color: $navbar-light-color
 
-body
-    font: 100% $font-stack
+.sub .icons a
+  font-size: 1rem
+  color: #000
+
+button :hover
+  background-color: $button-background-active
+
+.footer
+  bottom: 0
+  position: fixed
+
+.brand
+  color: $navbar-light-active-color

@@ -1,9 +1,8 @@
-from flask import render_template, request, url_for, redirect
-from flask_login import login_required, current_user
-from ..models import Post, SubForum, Comment, Message, User
-from ..auth.forms import CommentForm, SearchForm
+from flask import render_template, url_for, redirect
+from flask_login import current_user
+from ..models import Post, SubForum, Comment, User
+from app.forms import CommentForm, SearchForm
 from .. import db
-from utils import Utils
 from sqlalchemy import desc
 
 from . import home

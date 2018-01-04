@@ -1,26 +1,32 @@
 {% extends 'layout.html' %}
 {% set active_page = 'account' %}
-{% block container %}
-    <div class="control">
-        <a href="{{ url_for('auth.send_message') }}">Send New Message</a>
+{% block content %}
+    <div class="m-1 border p-2">
+        <a href="{{ url_for('auth.send_message') }}" class="h6">Send New Message</a>
     </div>
-    {% for message in messages %}
-        <div class="message">
-            <div class="vert-sub">
-                <p>
-                    Sender: {{ message.message_sender_name }}
-                </p>
-                <p>
-                    Subject: <a href="{{ url_for('user.message_page', id=message.message_id) }}">{{ message.message_subject }}</a>
-                </p>
+    <div class="border m-1 p-2">
+    {% if messages|length > 0 %}
+        {% for message in messages %}
+            <div class="message">
+                <div class="vert-sub">
+                    <p>
+                        Sender: {{ message.message_sender_name }}
+                    </p>
+                    <p>
+                        Subject: <a href="{{ url_for('user.message_page', id=message.message_id) }}">{{ message.message_subject }}</a>
+                    </p>
+                </div>
+                <div class="icons">
+                    {% if message.message_is_read %}
+                        <i class="fa fa-envelope-open-o"></i>
+                    {% else %}
+                        <i class="fa fa-envelope-o"></i>
+                    {% endif %}
+                </div>
             </div>
-            <div class="icons">
-                {% if message.message_is_read %}
-                    <i class="fa fa-envelope-open-o"></i>
-                {% else %}
-                    <i class="fa fa-envelope-o"></i>
-                {% endif %}
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="h5">No messages</div>
+    {% endif %}
+    </div>
 {% endblock %}

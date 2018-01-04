@@ -1,10 +1,9 @@
-import re
 import datetime
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 
 from . import auth
-from .forms import *
+from ..forms import *
 from .. import db
 from ..models import User, Message, Comment
 from utils import Utils
@@ -54,7 +53,7 @@ def confirm_email(token):
         db.session.add(user)
         db.session.commit()
         flash('You have confirmed your account. Thanks!', 'success')
-    return redirect(url_for('user.home', route=user.profile_route))
+    return redirect(url_for('registered_user.home', route=user.profile_route))
 
 
 @auth.route('/login', methods=['GET', 'POST'])

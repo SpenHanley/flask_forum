@@ -1,8 +1,22 @@
-{% import 'bootstrap/wtf.html' as wtf %}
 {% extends 'layout.html' %}
 {% set active_page = 'register' %}
 {% block content %}
     <div class="container">
-        {{ wtf.quick_form(form, extra_classes='vert') }}
+        <form class="mt-2" action="">
+            {% for field in form %}
+                {% if field.type == 'SubmitField' %}
+                    <div class="form-group">
+                        {{ field(class='form-control btn btn-outline-primary') }}
+                    </div>
+                {% elif field.type != 'CSRFTokenField' %}
+                    <div class="form-group">
+                        {{ field.label }}
+                        {{ field(class='form-control') }}
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+        </form>
     </div>
 {% endblock %}

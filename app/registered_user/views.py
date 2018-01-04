@@ -1,9 +1,8 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, url_for, redirect
 from flask_login import login_required, current_user
-from ..models import Comment, Message, User
-from ..auth.forms import CommentForm, ProfileForm
+from ..models import Message, User
+from app.forms import ProfileForm
 from .. import db
-from utils import Utils
 from sqlalchemy import desc
 
 from . import user
@@ -14,7 +13,6 @@ from . import user
 def homepage(route):
     messages = Message.query.filter_by(recipient=current_user.id)
     user = User.query.filter_by(profile_route=route)
-    form = ProfileForm
     new_msg_count = 0
     msg_count = 0
     for message in messages:
@@ -30,8 +28,23 @@ def homepage(route):
         message_count=msg_count,
         new_message_count=new_msg_count,
         profile_url=current_user.profile_route,
-        form=form
+        form=ProfileForm()
     )
+
+
+@user.route('/update/<route>', methods=['POST'])
+def update(route):
+    user = User.query.filter_by(profile_route=route)
+    form = ProfileForm()
+
+    if form.validate_on_submit():
+        user.email = form.email.data
+        user.username = form.username.data
+
+        db.session.add(user)
+        db.session.commit()
+    else:
+        print('Something went wrong')
 
 
 @user.route('/inbox')
@@ -75,7 +88,7 @@ def profile_page(route):
         'username': userProfile.username
     }
     if userProfile is None:
-        return redirect(url_for('user.homepage'))
+        return redirect(url_for('registered_user.homepage'))
 
     return render_template('user/profile.html', user=user)
 

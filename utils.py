@@ -45,9 +45,9 @@ class Utils(object):
     @staticmethod
     def generate_validation_url(life=1440):
         '''
-        Generates a url that the user can use to validate and active their account
+        Generates a url that the registered_user can use to validate and active their account
         :param: life - This is the life of the url in minutes, after this the url will not be valid,
-                        and the user will need to start the registration process again
+                        and the registered_user will need to start the registration process again
         '''
         
 class Config:

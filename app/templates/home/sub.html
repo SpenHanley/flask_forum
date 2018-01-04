@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
-{% block container %}
+{% block content %}
     {% if include_control %}
         {% include 'inc/control.html' %}
     {% endif %}
     {% for post in posts %}
-        <div class="post-small">
+        <div class="m-1 p-2 border">
             <div class="post-data">
-                <a class="post-title" href="{{ url_for('home.view_post', route=post.route) }}">{{ post.title }}</a>
+                <a class="h4" href="{{ url_for('home.view_post', route=post.route) }}">{{ post.title }}</a>
                 <p>
                     {{ post.description }}
                 </p>

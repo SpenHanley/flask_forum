@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
 
-from ..models import User, Post, SubForum
+from app.models import User, Post, SubForum
 
 
 class EditUserForm(FlaskForm):
@@ -144,6 +144,7 @@ class AdminForm(FlaskForm):
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Update')
 
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():

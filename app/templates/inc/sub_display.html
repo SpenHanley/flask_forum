@@ -1,6 +1,6 @@
 {# subs file #}
 {% if current_user.is_authenticated %}
-    <div class="control">
+    <div class="m-1 border p-2">
         <a href="{{ url_for('auth.create_sub') }}">Create Sub Forum</a>
     </div>
 {% endif %}
@@ -8,7 +8,7 @@
 <div class="subs d-flex flex-column">
 {% for sub in forums %}
     <div class="m-1 p-2 border">
-            <a href="{{ url_for('home.view_sub', route=sub.route) }}" class="h2">{{ sub.title }}</a>
+            <a href="{{ url_for('home.view_sub', route=sub.route) }}" class="h4">{{ sub.title }}</a>
             <p>
                 {{ sub.description }}
             </p>

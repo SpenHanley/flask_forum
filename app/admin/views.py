@@ -1,9 +1,9 @@
-from flask import flash, redirect, render_template, url_for, request
-from flask_login import login_required, login_user, logout_user, current_user
+from flask import redirect, render_template, url_for, request
+from flask_login import login_required, current_user
 
 from . import admin
 from ..models import User
-from ..auth.forms import EditUserForm, CreateUserForm
+from app.forms import EditUserForm, CreateUserForm
 from .. import db
 from utils import Utils
 
@@ -14,7 +14,7 @@ def homepage():
     return render_template('admin/index.html')
 
 
-@admin.route('/user')
+@admin.route('/registered_user')
 @login_required
 def show_users():
     users = User.query.all()

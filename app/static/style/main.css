@@ -1,8 +1,34 @@
-* {
-  box-sizing: border-box;
+.sub .h4 {
+  color: darkcyan;
 }
 
-body {
-  font: 100% "Ubuntu", sans-serif;
+.sub .icons a {
+  font-size: 1rem;
+  color: #000;
+}
+
+button :hover {
+  background-color: darkcyan;
+}
+
+.footer {
+  bottom: 0;
+  position: fixed;
+}
+
+.brand {
+  color: chocolate!important;
+}
+
+.nav-item a{
+  color: darkcyan!important;
+}
+
+.nav-item.active a, a:hover{
+  color: chocolate!important;
+}
+
+textarea {
+  resize: none;
 }
 /*# sourceMappingURL=main.css.map */

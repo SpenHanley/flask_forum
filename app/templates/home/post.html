@@ -1,29 +1,41 @@
 {% extends 'layout.html' %}
-{% block container %}
+{% block content %}
     {% if post is defined %}
-        <div class="post">
-            <h2 class="post-title">{{ post.title }}</h2>
-            {# Controls will be implemented here if the person viewing the post is the author
+        <div class="post border m-2 p-2">
+        <h2 class="post-title">{{ post.title }}</h2>
+        {# Controls will be implemented here if the person viewing the post is the author
                 This is to allow them to update or edit the post as necessary. #}
-            <p>
-                {{ post.content }}
-            </p>
-            <p class="post-footer">
-                By {{ post.author }} - {{ post.created_on }}
-            </p>
-        </div>
+        <p>
+            {{ post.content }}
+        </p>
+        <p class="post-footer">
+            By {{ post.author }} - {{ post.created_on }}
+        </p>
     {% endif %}
-    {% if current_user.is_authenticated %}
+{% if current_user.is_authenticated %}
     <div class="post">
-        <h3 class="post-title">Create Comment</h3>
+        <span class="h5 p-3 mb-1">Create Comment</span>
         <form action="{{ url_for('home.view_post', route=post.route) }}" class="form" method="post">
-            {{ form.comment }}
-            {{ form.hidden_tag() }}
-            {{ form.submit }}
+            <div class="col-md-2">
+                {% for field in form %}
+                    {% if field.type == 'SubmitField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control btn btn-outline-info') }}
+                        </div>
+                    {% elif field.type != 'CSRFTokenField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control mt-2') }}
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+            </div>
         </form>
     </div>
-    {% endif %}
-    {% if comments is defined %}
+{% endif %}
+{% if comments is defined %}
+    <div class="border p-2">
         {% for comment in comments %}
             <div class="post">
                 <div class="post-data">
@@ -31,31 +43,36 @@
                         {{ comment.content }}
                     </p>
                     <p>
-                        By 
-                            {% if current_user.username != comment.author %}
-                                <a href="{{ url_for('user.profile_page', route=comment.route) }}">{{ comment.author }}</a>
-                            {% else %}
-                                You
-                            {% endif %}
-                            
-                            - 
+                        By
+                        {% if current_user.username != comment.author %}
+                            <a href="{{ url_for('user.profile_page', route=comment.route) }}">{{ comment.author }}</a>
+                        {% else %}
+                            You
+                        {% endif %}
 
-                            {% if comment.updated != None %}
-                                {{ comment.updated }}
-                            {% else %}
-                                {{ comment.date }}
-                            {% endif %}
+                        -
+
+                        {% if comment.updated != None %}
+                            {{ comment.updated }}
+                        {% else %}
+                            {{ comment.date }}
+                        {% endif %}
                     </p>
                 </div>
                 <div class="icons">
                     {% if current_user.is_authenticated %}
                         {% if current_user.username == comment.author %}
-                            <a href="{{ url_for('auth.delete_comment', id=comment.id) }}"><i class="fa fa-trash"></i></a>
-                            <a href="{{ url_for('auth.update_comment', id=comment.id) }}"><i class="fa fa-pencil"></i></a>
+                            <a href="{{ url_for('auth.delete_comment', id=comment.id) }}"><i
+                                    class="fa fa-trash"></i></a>
+                            <a href="{{ url_for('auth.update_comment', id=comment.id) }}"><i
+                                    class="fa fa-pencil"></i></a>
                         {% endif %}
                     {% endif %}
                 </div>
             </div>
         {% endfor %}
-    {% endif %}
+    </div>
+{% endif %}
+
+</div>
 {% endblock %}
