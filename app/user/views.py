@@ -1,7 +1,7 @@
 from flask import render_template, request, url_for, redirect
 from flask_login import login_required, current_user
 from ..models import Comment, Message, User
-from ..auth.forms import CommentForm
+from ..auth.forms import CommentForm, ProfileForm
 from .. import db
 from utils import Utils
 from sqlalchemy import desc
@@ -14,6 +14,7 @@ from . import user
 def homepage(route):
     messages = Message.query.filter_by(recipient=current_user.id)
     user = User.query.filter_by(profile_route=route)
+    form = ProfileForm
     new_msg_count = 0
     msg_count = 0
     for message in messages:
@@ -28,7 +29,8 @@ def homepage(route):
         title='Account',
         message_count=msg_count,
         new_message_count=new_msg_count,
-        profile_url=current_user.profile_route
+        profile_url=current_user.profile_route,
+        form=form
     )
 
 

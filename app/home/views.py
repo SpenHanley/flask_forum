@@ -8,16 +8,6 @@ from sqlalchemy import desc
 
 from . import home
 
-# TEMP ROUTING
-
-
-@home.route('/nav')
-def navigation():
-    return render_template('nav.html')
-
-# END TEMP ROUTING
-
-
 @home.route('/')
 def homepage():
     sub_forums = SubForum.query.order_by(desc('pinned'))

@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">FlaskForum</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        {% if current_user.is_authenticated %}
+            {% include 'inc/navigation/authenticated.html' ignore missing %}
+        {% else %}
+            {% include 'inc/navigation/unauthenticated.html' ignore missing %}
+        {% endif %}
+        <form action="search" class="form-inline my-2 my-lg-0">
+            <input type="search" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </form>
+    </div>
+</nav>

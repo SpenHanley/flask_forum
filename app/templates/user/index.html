@@ -1,34 +1,33 @@
 {% extends 'layout.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 {% set active_page = 'account' %}
-{% block container %}
-    {% if current_user is defined %}
-        <div class="profile">
-            <table>
-                <tr>
-                    <td class="lcol">Username: </td>
-                    <td>{{ current_user.username }}</td>
-                </tr>
-                <tr>
-                    <td class="lcol">Email: </td>
-                    <td>{{ current_user.email }}</td>
-                    <td>
-                        <!-- swapElement will swap out the text element and replace it with an input element -->
-                        <span onclick="swapElement()">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lcol">Messages:</td>
-                    <td>
-                        <a href="{{ url_for('user.inbox_page') }}">{{ new_message_count }}/{{ message_count }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Profile URL:</td>
-                    <td>{{ profile_url }}</td>
-                </tr>
-            </table>
-        </div>
-    {% endif %}
+{% block content %}
+    <div class="container">
+        {% if current_user is defined %}
+            <div class="profile">
+                    {{ wtf.quick_form(form, extra_classes='vert') }}
+                    <tr>
+                        <td class="lcol">Email: </td>
+                        <td>{{ current_user.email }}</td>
+                        <td>
+                            <!-- swapElement will swap out the text element and replace it with an input element -->
+                            <span onclick="swapElement()">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lcol">Messages:</td>
+                        <td>
+                            <a href="{{ url_for('user.inbox_page') }}">{{ new_message_count }}/{{ message_count }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Profile URL:</td>
+                        <td>{{ profile_url }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

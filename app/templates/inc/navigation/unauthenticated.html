@@ -1,0 +1,13 @@
+{% block nav %}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+        <a href="{{ url_for('home.homepage') }}" class="nav-link">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url_for('auth.register') }}" class="nav-link">Register</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+    </li>
+</ul>
+{% endblock %}
