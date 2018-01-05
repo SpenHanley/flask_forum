@@ -1,5 +1,13 @@
+{% extends 'layout.html' %}
+{% set res='search_results' %}
+{% block content %}
 {% if posts is defined %}
-    {% for post in posts %}
-        {% include 'home/sub.html' %}
-    {% endfor %}
+    {% include 'home/sub.html' %}
+{% elif users is defined %}
+    {% include 'user/profiles.html' %}
+{% else %}
+    <div class="container mt-2">
+        <span class="h3 align-middle">No Posts Found</span>
+    </div>
 {% endif %}
+{% endblock %}

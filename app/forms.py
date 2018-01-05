@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField, FileField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from app.models import User, Post, SubForum
@@ -63,12 +63,13 @@ class EditCommentForm(FlaskForm):
     content = StringField('Comment')
     submit = SubmitField('Update Comment')
 
+
 class SearchForm(FlaskForm):
     search = StringField('Search')
+    submit = SubmitField('Search')
 
 
 class RegistrationForm(FlaskForm):
-
     email = StringField(
         'Email',
         validators=[
@@ -80,7 +81,7 @@ class RegistrationForm(FlaskForm):
     # TODO: Attempt to check email as it is being entered to ensure that it is available
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password')
-    
+
     confirm_password = PasswordField(
         'Confirm Password',
         validators=[
@@ -88,7 +89,7 @@ class RegistrationForm(FlaskForm):
             EqualTo('password', message='Passwords must match')
         ]
     )
-    
+
     submit = SubmitField('Register')
 
     def validate_email(self, field):
@@ -118,7 +119,7 @@ class SubForm(FlaskForm):
     submit = SubmitField('Create Sub Forum')
 
     def validate_title(self, field):
-        if SubForum.query.filter_by(name=field.data).first():
+        if SubForum.query.filter_by(title=field.data).first():
             raise ValidationError('Sub name in use')
 
 
@@ -141,9 +142,11 @@ class AdminForm(FlaskForm):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username is already in use')
 
+
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    profile_image = FileField()
     submit = SubmitField('Update')
 
     def validate_username(self, field):

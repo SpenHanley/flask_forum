@@ -1,11 +1,12 @@
 from flask import render_template, url_for, redirect
 from flask_login import current_user
-from ..models import Post, SubForum, Comment, User
-from app.forms import CommentForm, SearchForm
-from .. import db
 from sqlalchemy import desc
 
+from app.forms import CommentForm, SearchForm
 from . import home
+from .. import db
+from ..models import Post, SubForum, Comment, User
+
 
 @home.route('/')
 def homepage():
@@ -26,7 +27,6 @@ def view_post(route):
     form = CommentForm()
 
     if form.validate_on_submit():
-
         comment = Comment(
             author=current_user.id,
             content=form.comment.data,
@@ -64,7 +64,7 @@ def view_post(route):
 @home.route('/sub/<route>')
 def view_sub(route):
     sub = SubForum.query.filter_by(route=route).first()
-    
+
     posts_arr = Post.query.filter_by(
         sub_id=sub.id
     ).order_by(desc('pinned'))
@@ -85,6 +85,7 @@ def view_sub(route):
         include_control=True
     )
 
+
 # TODO: Reimplement pinning sub forums
 @home.route('/pin_sub/<route>', methods=['GET', 'POST'])
 def pin_sub(route):
@@ -97,6 +98,7 @@ def pin_sub(route):
     sub.pinned = pinned
     db.session.commit()
     return redirect(url_for('home.homepage'))
+
 
 # TODO: Reimplement pinning posts
 @home.route('/pin_post/<route>', methods=['GET', 'POST'])
@@ -111,16 +113,24 @@ def pin_post(route):
     db.session.commit()
     return redirect(url_for('home.homepage'))
 
+
 # TODO: Reimplement search functionality
-@home.route('/search', methods=['POST', 'GET'])
+@home.route('/search', methods=['GET', 'POST'])
 def search():
     form = SearchForm()
     if form.validate_on_submit():
+        term = form.search.data
+        users = None
+        posts = None
 
-        print('Search term passed | {}'.format(form.search.data))
-        posts = Post.query.filter(
-            Post.title.like("%" + form.search.data + "%")
-        ).all()
+        print('Search term passed | {}'.format(term))
+
+        if term.startswith('@'):
+            users = User.username.like("%" + term + "%")
+        else:
+            posts = Post.query.filter(
+                Post.title.like("%" + term + "%")
+            ).all()
 
         subs = []
         for post in posts:
@@ -131,8 +141,9 @@ def search():
             posts=posts,
             term=form.search.data,
             search_form=form,
-            subs=subs
+            subs=subs,
+            users=users
         )
     else:
         print(form.errors)
-    return render_template('home/results.html')
+        return render_template('home/results.html', posts={}, search_form=SearchForm())

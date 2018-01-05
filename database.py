@@ -2,8 +2,8 @@
 Docstring
 """
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 engine = create_engine(
     'mysql+pymysql://root@localhost/fforum_db',
@@ -29,7 +29,6 @@ def init_db():
     you will have to import them first before calling init_db()
     """
 
-    import app.models
     Base.metadata.create_all(bind=engine)
     print(Base.query)
 

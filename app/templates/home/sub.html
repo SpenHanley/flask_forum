@@ -1,4 +1,6 @@
-{% extends 'layout.html' %}
+{% if res is not defined %}
+    {% extends 'layout.html' %}
+{% endif %}
 {% block content %}
     {% if include_control %}
         {% include 'inc/control.html' %}
@@ -18,7 +20,7 @@
                 <p>
                     {{ post.count }} <i class="fa fa-comments" aria-hidden="true"></i>
                     {% if current_user.is_authenticated and current_user.is_admin %}
-                        <a href="{{ url_for('auth.del_post', route=post.route)}}">
+                        <a href="{{ url_for('auth.del_post', route=post.route) }}">
                             <i class="fa fa-trash"></i>
                         </a>
                         <a href="{{ url_for('home.pin_post', route=post.route) }}">

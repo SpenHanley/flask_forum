@@ -1,22 +1,24 @@
 from flask import Flask
-from flask_mail import Mail
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from config import app_config
 
-db = SQLAlchemy()
 app = Flask(__name__, instance_relative_config=True)
 mail = Mail(app)
-
 login_manager = LoginManager()
 
 
 def create_app(config_name):
+    global db
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/fforum_db'
+    app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+    db = SQLAlchemy(app)
 
     db.init_app(app)
 

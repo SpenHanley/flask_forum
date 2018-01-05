@@ -9,9 +9,20 @@
         {% else %}
             {% include 'inc/navigation/unauthenticated.html' ignore missing %}
         {% endif %}
-        <form action="search" class="form-inline my-2 my-lg-0">
-            <input type="search" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        <form action="{{ url_for('home.search') }}" method="post" class="form-inline my-2 my-lg-0">
+                {% for field in search_form %}
+                    {% if field.type == 'SubmitField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control btn btn-outline-success my-2 my-sm-0') }}
+                        </div>
+                    {% elif field.type != 'CSRFTokenField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control mr-sm-2') }}
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
         </form>
     </div>
 </nav>

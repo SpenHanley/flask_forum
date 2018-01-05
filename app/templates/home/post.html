@@ -34,7 +34,7 @@
         </form>
     </div>
 {% endif %}
-{% if comments is defined %}
+{% if comments is defined and comments|length > 0 %}
     <div class="border p-2">
         {% for comment in comments %}
             <div class="post">

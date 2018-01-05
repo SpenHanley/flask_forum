@@ -1,8 +1,24 @@
 {% extends 'layout.html' %}
-{% block container %}
-    <form class="vert vert-form" action="{{ url_for('auth.send_message') }}" method="post">
-        {% for field in form %}
-            {{ field(placeholder=field.label.text) }}
-        {% endfor %}
-    </form>
+{% block content %}
+    <div class="container">
+        <form class="mt-2" action="{{ url_for('auth.send_message') }}" method="post">
+            {% for field in form %}
+                {% if field.type == 'SubmitField' %}
+                    <div class="row form-group">
+                        <div class="col">
+                            <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}"
+                               class="form-control btn btn-outline-danger">Cancel</a>
+                        </div>
+                        <div class="col">
+                            {{ field(class="form-control btn btn-outline-success") }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        {{ field(placeholder=field.label.text, class="form-control") }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </form>
+    </div>
 {% endblock %}

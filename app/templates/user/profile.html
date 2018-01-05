@@ -1,15 +1,11 @@
 {% extends 'layout.html' %}
-{% set active_page = 'account' %}
-{% block container %}
+{% block content %}
     {% if current_user is defined %}
-        <div class="profile">
-            <table>
-                <tr>
-                    <td class="lcol">Username: </td>
-                    <td>{{ user.username }}</td>
-                    <!-- More fields will be added as I work out what content is going to be in the profile -->
-                </tr>
-            </table>
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col-sm-2">Username:</div>
+                <div class="col-sm-2">{{ user.username }}</div>{
+            </div>
         </div>
     {% endif %}
 {% endblock %}

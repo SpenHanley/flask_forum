@@ -1,14 +1,15 @@
 import datetime
+
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 
-from . import auth
-from ..forms import *
-from .. import db
-from ..models import User, Message, Comment
 from utils import Utils
-from ..token import generate_confirmation_token, confirm_token
+from . import auth
+from app import db
 from ..email import send_mail
+from ..forms import *
+from ..models import User, Message, Comment
+from ..token import generate_confirmation_token, confirm_token
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -33,7 +34,7 @@ def register():
 
         flash('Confirmation email sent', 'Success')
         return redirect(url_for('auth.login'))
-    
+
     return render_template('auth/register.html', form=form)
 
 
@@ -93,7 +94,7 @@ def create_sub():
             db.session.commit()
             print('It worked')
             flash('Sub Forum Created')
-            return redirect(url_for('home.view_sub', route=sUrl))
+            return redirect(url_for('home.view_sub', route=Utils.generate_url(8)))
         else:
             print(form.errors)
             print(form.title.errors)
@@ -137,8 +138,8 @@ def del_post(route):
             sender=current_user.id,
             subject='Post Deletion',
             message='Your post: ' +
-            post.title + ' was deleted for: ' +
-            form.reason.data + '.'
+                    post.title + ' was deleted for: ' +
+                    form.reason.data + '.'
         )
 
         db.session.add(message)
@@ -213,14 +214,13 @@ def delete_comment(id):
     form = DeleteCommentForm()
 
     if form.validate_on_submit():
-
         message = Message(
             recipient=comment.author,
             sender=current_user.id,
             subject='Post Deletion',
             message='Your comment on: ' +
-            post.title + ' was deleted for: ' +
-            form.reason.data + '.'
+                    post.title + ' was deleted for: ' +
+                    form.reason.data + '.'
         )
 
         Comment.query.filter_by(id=id).delete()
