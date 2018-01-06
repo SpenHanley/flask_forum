@@ -21,3 +21,6 @@ The second command can also be ran to apply any changes to the database. To help
 
 Use of a virtualenv is suggested and all the project requirements have been frozen to requirements. To install the dependancies run
 > pip install -r requirements.txt
+
+Then to run the project run
+> flask run
