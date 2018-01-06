@@ -1,16 +1,20 @@
 {% extends 'layout.html' %}
-{% block container %}
-    <div>
-        <form class="vert vert-form" action="{{ url_for('auth.create_post', sub_route=sub.route) }}" method="post">
+{% block content %}
+    <div class="container">
+        <form class="mt-2" action="{{ url_for('auth.create_post', sub_route=sub.route) }}" method="post">
             {% for field in form %}
                 {% if field.type == 'BooleanField' %}
-                    <div class="inline">
-                        {{ field }}{{ field.label }}
+                    <div class="form-check">
+                        {{ field(class="form-check-input") }}{{ field.label }}
                     </div>
                 {% elif field.type == 'SubmitField' %}
+                    {{ field(class="form-control btn btn-outline-success") }}
+                {% elif field.type == 'CSRFTokenField' %}
                     {{ field }}
                 {% else %}
-                    {{ field(placeholder=field.label.text) }}
+                    <div class="form-group">
+                        {{ field(placeholder=field.label.text, class="form-control") }}
+                    </div>
                 {% endif %}
             {% endfor %}
         </form>

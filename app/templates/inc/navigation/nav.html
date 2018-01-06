@@ -4,25 +4,25 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
-        {% if current_user.is_authenticated %}
-            {% include 'inc/navigation/authenticated.html' ignore missing %}
+        {% if current_user.is_anonymous %}
+            {% include 'inc/navigation/unauthenticated.html' %}
         {% else %}
-            {% include 'inc/navigation/unauthenticated.html' ignore missing %}
+            {% include 'inc/navigation/authenticated.html' %}
         {% endif %}
         <form action="{{ url_for('home.search') }}" method="post" class="form-inline my-2 my-lg-0">
-                {% for field in search_form %}
-                    {% if field.type == 'SubmitField' %}
-                        <div class="form-group">
-                            {{ field(class='form-control btn btn-outline-success my-2 my-sm-0') }}
-                        </div>
-                    {% elif field.type != 'CSRFTokenField' %}
-                        <div class="form-group">
-                            {{ field(class='form-control mr-sm-2') }}
-                        </div>
-                    {% else %}
-                        {{ field }}
-                    {% endif %}
-                {% endfor %}
+            {% for field in search_form %}
+                {% if field.type == 'SubmitField' %}
+                    <div class="form-group">
+                        {{ field(class='form-control btn btn-outline-success my-2 my-sm-0') }}
+                    </div>
+                {% elif field.type != 'CSRFTokenField' %}
+                    <div class="form-group">
+                        {{ field(class='form-control mr-sm-2') }}
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
         </form>
     </div>
 </nav>

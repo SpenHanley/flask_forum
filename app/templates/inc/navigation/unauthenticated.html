@@ -1,13 +1,35 @@
 {% block nav %}
 <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-        <a href="{{ url_for('home.homepage') }}" class="nav-link">Home <span class="sr-only">(current)</span></a>
-    </li>
+{% if active_page == 'register' %}
     <li class="nav-item">
+        <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item active">
         <a href="{{ url_for('auth.register') }}" class="nav-link">Register</a>
     </li>
     <li class="nav-item">
         <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
     </li>
+{% elif active_page == 'login' %}
+    <li class="nav-item">
+        <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url_for('auth.register') }}" class="nav-link">Register</a>
+    </li>
+    <li class="nav-item active">
+        <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+    </li>
+{% else %}
+    <li class="nav-item active">
+        <a href="{{ url_for('home.homepage') }}" class="nav-link">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" class="nav-link">Register</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url_for('auth.logout') }}" class="nav-link">Login</a>
+    </li>
+{% endif %}
 </ul>
 {% endblock %}

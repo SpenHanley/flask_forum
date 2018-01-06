@@ -85,7 +85,8 @@ def profile_page(route):
     userProfile = User.query.filter_by(profile_route=route).first()
     print(userProfile)
     user = {
-        'username': userProfile.username
+        'username': userProfile.username,
+        'uid': userProfile.id
     }
     if userProfile is None:
         return redirect(url_for('registered_user.homepage'))

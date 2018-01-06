@@ -26,11 +26,11 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        token = generate_confirmation_token(user.email)
-        confirm_url = url_for('auth.confirm_email', token=token, _external=True)
-        html = render_template('emails/confirm.html', confirm_url=confirm_url)
-        subject = 'Please confirm your email!'
-        asd = send_mail(user.email, subject, html)
+        # token = generate_confirmation_token(user.email)
+        # confirm_url = url_for('auth.confirm_email', token=token, _external=True)
+        # html = render_template('emails/confirm.html', confirm_url=confirm_url)
+        # subject = 'Please confirm your email!'
+        # asd = send_mail(user.email, subject, html)
 
         flash('Confirmation email sent', 'Success')
         return redirect(url_for('auth.login'))
@@ -122,6 +122,8 @@ def create_post(sub_route):
         db.session.commit()
         flash('Post Created')
         return redirect(url_for('home.view_post', route=post.route))
+    else:
+        print(form.errors)
     return render_template('auth/post.html', form=form, sub=sub)
 
 
@@ -168,7 +170,6 @@ def send_message():
         flash('Message sent')
         return redirect(url_for('home.dash'))
     return render_template('auth/send_message.html', form=form)
-
 
 @auth.route('/send/<id>', methods=['GET', 'POST'])
 @login_required

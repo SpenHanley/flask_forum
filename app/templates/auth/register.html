@@ -2,7 +2,7 @@
 {% set active_page = 'register' %}
 {% block content %}
     <div class="container">
-        <form class="mt-2" action="">
+        <form class="mt-2" action="{{ url_for('auth.register') }}" method="post">
             {% for field in form %}
                 {% if field.type == 'SubmitField' %}
                     <div class="form-group">
@@ -10,8 +10,8 @@
                     </div>
                 {% elif field.type != 'CSRFTokenField' %}
                     <div class="form-group">
-                        {{ field.label }}
-                        {{ field(class='form-control') }}
+                        {{ field.label(class="sr-only") }}
+                        {{ field(class='form-control', placeholder=field.label.text) }}
                     </div>
                 {% else %}
                     {{ field }}
