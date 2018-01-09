@@ -1,10 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% macro m_user(username, profile_url) -%}
+    <div class="m-1 p-2 border">
+        <a href="{{ url_for('user.profile', route=profile_url) }}" class="h4">{{ username }}</a>
+    </div>
+{%- endmacro %}
 
-</body>
-</html>
+{% macro m_post(post_title, post_route, created, comments) -%}
+    <div class="m-1 p-2 border">
+        <a href="{{ url_for('home.view_post', route=post_route) }}" class="h4">{{ post_title }}</a>
+        <p class="h6">{{ created }}</p>
+        <p class="h6">
+            {{ comments }} <i class="fa fa-comment"></i>
+        </p>
+    </div>
+{%- endmacro %}
+
+{% macro m_sub(title, description, sub_route) %}
+    <div class="m-1 p-2 border">
+        <a href="{{ url_for('home.view_sub', route=sub_route) }}" class="h4">{{ title }}</a>
+        <p>
+            {{ description }}
+        </p>
+    </div>
+{%- endmacro %}
+
+{% macro m_comment(comment_content, comment_author, comment_author_root, comment_created, comment_id, edited=False) %}
+    <div class="border p-2">
+        <p>
+            {{ comment_content }}
+        </p>
+        <p>
+            By <a href="{{ url_for('user.profile_page', route=comment_author_route) }}">{{ comment_author }}</a> - {{ comment_created }}
+        </p>
+        {% if edited %}
+            <p class="text-muted">
+                Edited
+            </p>
+        {% endif %}
+        {% if current_user is defined and current_user.is_authenticated %}
+            {% if current_user.username == comment_author %}
+                <a href="{{ url_for('auth.delete_comment', id=comment_id) }}"><i class="fa fa-trash"></i></a>
+                <a href="{{ url_for('auth.update_comment', id=comment_id) }}"><i class="fa fa-pencil"></i></a>
+            {% endif %}
+        {% endif %}
+    </div>
+{%- endmacro %}
+
+{% macro m_primary_form(form) -%}
+    {% for field in form %}
+        {% if field.type == 'SubmitField' %}
+            <div class="form-group">
+                {{ field(class='form-control btn btn-outline-primary') }}
+            </div>
+        {% elif field.type == 'BooleanField' %}
+            <div class="form-check mb-3">
+                {{ field(class="form-check-input") }}{{ field.label(class="form-check-label") }}
+            </div>
+        {% elif field.type == 'FileField' %}
+            <div class="form-group row">
+                <div class="col-2">
+                    {{ field.label }}
+                </div>
+                <div class="col-md">
+                    {{ field(class="form-control-file") }}
+                </div>
+            </div>
+        {% elif field.type != 'CSRFTokenField' %}
+            <div class="form-group">
+                {{ field.label(class="sr-only") }}
+                {{ field(class="form-control", placeholder=field.label.text) }}
+            </div>
+        {% else %}
+            {{ field }}
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}

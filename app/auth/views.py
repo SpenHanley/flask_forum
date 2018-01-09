@@ -65,7 +65,11 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             if request.args.get('next'):
-                return redirect(request.args.get('next'))
+                if not 'logout' in request.args.get('next'):
+                    return redirect(request.args.get('next'))
+                else:
+                    return redirect(url_for('user.homepage', route=user.profile_route))
+
             return redirect(url_for('user.homepage', route=user.profile_route))
         else:
             flash('Invalid email or password')

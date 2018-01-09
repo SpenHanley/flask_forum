@@ -1,4 +1,5 @@
 {# subs file #}
+{% import 'macros.html' as macros %}
 {% if standalone %}
     {% extends 'layout.html' %}
     {% if current_user.is_authenticated %}
@@ -9,11 +10,5 @@
 {% endif %}
 
 {% for sub in forums %}
-    <div class="m-1 p-2 border">
-        <a href="{{ url_for('home.view_sub', route=sub.route) }}" class="h4">{{ sub.title }}</a>
-        <p>
-            {{ sub.description }}
-        </p>
-    </div>
-    </div>
+    {{ macros.m_sub(sub.title, sub.description, sub.route) }}
 {% endfor %}

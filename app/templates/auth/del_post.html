@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
-{% block container %}
-    {% for field in form %}
-    {% endfor %}
+{% import 'macros.html' as macros %}
+{% block content %}
+    <form action="{{ url_for('auth.del_post', route=route) }}" method="post">
+        {{ macros.m_primary_form(form) }}
+    </form>
 {% endblock %}

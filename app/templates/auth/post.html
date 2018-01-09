@@ -1,22 +1,9 @@
 {% extends 'layout.html' %}
+{% import 'macros.html' as macros %}
 {% block content %}
     <div class="container">
         <form class="mt-2" action="{{ url_for('auth.create_post', sub_route=sub.route) }}" method="post">
-            {% for field in form %}
-                {% if field.type == 'BooleanField' %}
-                    <div class="form-check">
-                        {{ field(class="form-check-input") }}{{ field.label }}
-                    </div>
-                {% elif field.type == 'SubmitField' %}
-                    {{ field(class="form-control btn btn-outline-success") }}
-                {% elif field.type == 'CSRFTokenField' %}
-                    {{ field }}
-                {% else %}
-                    <div class="form-group">
-                        {{ field(placeholder=field.label.text, class="form-control") }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+            {{ macros.m_primary_form(form) }}
         </form>
     </div>
 {% endblock %}

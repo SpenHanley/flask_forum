@@ -26,6 +26,10 @@ def view_post(route):
     sub = SubForum.query.filter_by(id=post.sub_id).first()
     form = CommentForm()
 
+    postAuthor = User.query.filter_by(id=post.author_id).first()
+
+    post.author = postAuthor.username
+
     if form.validate_on_submit():
         comment = Comment(
             author=current_user.id,
@@ -125,17 +129,22 @@ def search():
 
         print('Search term passed | {}'.format(term))
 
+        # If the user uses the '@' symbol in the search they are looking for a user
         if term.startswith('@'):
-            users = User.username.like("%" + term + "%")
+            term = form.search.data[1:]
+            users = User.query.filter(User.username.like("%" + term + "%")).all()
+            print('Searched for user')
+            print('Found {} users'.format(len(users)))
         else:
             posts = Post.query.filter(
                 Post.title.like("%" + term + "%")
             ).all()
 
         subs = []
-        for post in posts:
-            sub = SubForum.query.filter_by(id=post.sub_id)
-            subs.append(sub)
+        if posts is not None:
+            for post in posts:
+                sub = SubForum.query.filter_by(id=post.sub_id)
+                subs.append(sub)
         return render_template(
             'home/results.html',
             posts=posts,

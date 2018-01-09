@@ -1,22 +1,10 @@
 {% extends 'layout.html' %}
+{% import 'macros.html' as macros %}
 {% set active_page = 'login' %}
 {% block content %}
     <div class="container">
         <form class="mt-2" method="post" action="{{ url_for('auth.login') }}">
-            {% for field in form %}
-                {% if field.type == 'SubmitField' %}
-                    <div class="form-group">
-                        {{ field(class='form-control btn btn-outline-primary') }}
-                    </div>
-                {% elif field.type != 'CSRFTokenField' %}
-                    <div class="form-group">
-                        {{ field.label(class="sr-only") }}
-                        {{ field(class='form-control', placeholder=field.label.text) }}
-                    </div>
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            {% endfor %}
+            {{ macros.m_primary_form(form) }}
         </form>
     </div>
 {% endblock %}
