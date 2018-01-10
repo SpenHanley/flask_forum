@@ -4,6 +4,9 @@
 {% block content %}
     <div class="container">
         {% if current_user is defined %}
+            {% if current_user.is_admin %}
+                
+            {% endif %}
             <div class="mt-2">
                     <form action="{{ url_for('user.update', route='current_user.profile_route') }}" method="post">
                         {{ macros.m_primary_form(form) }}

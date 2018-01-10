@@ -20,6 +20,11 @@
         <p>
             {{ description }}
         </p>
+        {% if current_user.is_admin %}
+            <p>
+                <a href="{{ url_for('auth.delete_sub', route=sub_route) }}"><i class="fa fa-trash"></i><span class="sr-only">Delete Subforum</span></a>
+            </p>
+        {% endif %}
     </div>
 {%- endmacro %}
 

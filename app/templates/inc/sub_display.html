@@ -1,14 +1,9 @@
 {# subs file #}
-{% import 'macros.html' as macros %}
+{% import 'macros.html' as macros with context %}
 {% if standalone %}
+{# These elements are only needed when we aren't searching for subs/posts #}
     {% extends 'layout.html' %}
-    {% if current_user.is_authenticated %}
-        <div class="m-1 p-2 border">
-            <a href="{{ url_for('auth.create_sub') }}">Create Sub Forum</a>
-        </div>
-    {% endif %}
 {% endif %}
-
 {% for sub in forums %}
     {{ macros.m_sub(sub.title, sub.description, sub.route) }}
 {% endfor %}

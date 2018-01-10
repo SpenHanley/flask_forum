@@ -1,4 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
+    {% if current_user.is_authenticated%}
+        <div class="m-1 p-2 border">
+            <a href="{{ url_for('auth.create_sub') }}">Create Sub Forum</a>
+        </div>
+    {% endif %}
+
+    {% if current_user.is_admin %}
+    {% endif %}
     {% include 'inc/sub_display.html' %}
 {% endblock %}

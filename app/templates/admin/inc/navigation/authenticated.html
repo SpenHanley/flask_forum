@@ -1,0 +1,33 @@
+<ul class="navbar-nav mr-auto">
+    {% if active_page == 'account' %}
+        <li class="nav-item">
+            <a href="{{ url_for('admin.homepage') }}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item active">
+            <a href="{{ url_for('admin.users') }}" class="nav-link">Users <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('admin.logout') }}" class="nav-link">Logout</a>
+        </li>
+    {% elif active_page == 'logout' %}
+        <li class="nav-item">
+            <a href="{{ url_for('admin.homepage') }}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('admin.users') }}" class="nav-link">Users</a>
+        </li>
+        <li class="nav-item active">
+            <a href="{{ url_for('admin.logout') }}" class="nav-link">Logout <span class="sr-only">(current)</span></a>
+        </li>
+    {% else %}
+        <li class="nav-item active">
+            <a href="{{ url_for('admin.homepage') }}" class="nav-link">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('admin.users') }}" class="nav-link">Users</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('admin.logout') }}" class="nav-link">Logout</a>
+        </li>
+    {% endif %}
+</ul>

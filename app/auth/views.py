@@ -98,7 +98,7 @@ def create_sub():
             db.session.commit()
             print('It worked')
             flash('Sub Forum Created')
-            return redirect(url_for('home.view_sub', route=Utils.generate_url(8)))
+            return redirect(url_for('home.view_sub', route=forum.route))
         else:
             print(form.errors)
             print(form.title.errors)
@@ -133,7 +133,7 @@ def create_post(sub_route):
 
 @auth.route('/delete_post/<route>', methods=['GET', 'POST'])
 @login_required
-def del_post(route):
+def delete_post(route):
     form = DestroyPostForm()
     if form.validate_on_submit():
         post = Post.query.filter_by(route=route).first()
@@ -152,7 +152,7 @@ def del_post(route):
         db.session.commit()
         sub = SubForum.query.filter_by(id=post.sub_id).first()
         return redirect(url_for('home.view_sub', route=sub.route))
-    return render_template('auth/del_post.html', form=form, route=route)
+    return render_template('auth/delete_post.html', form=form, route=route)
 
 
 @auth.route('/send', methods=['GET', 'POST'])
@@ -233,7 +233,7 @@ def delete_comment(id):
         return redirect(url_for('home.view_post', route=post.route))
 
     if current_user.id is not comment.author:
-        return render_template('auth/del_comment.html', form=form, id=id)
+        return render_template('auth/delete_comment.html', form=form, id=id)
     else:
         Comment.query.filter_by(id=id).delete()
         db.session.commit()
@@ -262,3 +262,9 @@ def update_comment(id):
         print('Comment not updated, form did not validate!')
 
     return render_template('auth/update_comment.html', form=form, comment=comment)
+
+
+@auth.route('/delete_sub/<route>')
+def delete_sub(route):
+    sub = SubForm.query.filter_by(route=route).first()
+    form = DeleteSubForm()

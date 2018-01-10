@@ -42,10 +42,14 @@ class PostForm(FlaskForm):
             raise ValidationError('Post name already in use')
 
 
-class DestroyPostForm(FlaskForm):
+class DeletePostForm(FlaskForm):
     reason = TextAreaField('Reason for deletion')
     submit = SubmitField('Delete Comment')
 
+
+class DeleteSubForm(FlaskForm):
+    reason = TextAreaField('Reason for deletion')
+    submit = SubmitField('Delete Sub')
 
 class DeleteCommentForm(FlaskForm):
     reason = TextAreaField('Reason for deletion')
