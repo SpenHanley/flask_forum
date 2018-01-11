@@ -4,11 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
-        {% if current_user.is_anonymous %}
-            {% include 'inc/navigation/unauthenticated.html' %}
-        {% else %}
-            {% include 'inc/navigation/authenticated.html' %}
-        {% endif %}
+        {% include 'admin/inc/navigation/authenticated.html' %}
         <form action="{{ url_for('home.search') }}" method="post" class="form-inline my-2 my-lg-0">
             {% for field in search_form %}
                 {% if field.type == 'SubmitField' %}

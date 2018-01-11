@@ -1,37 +1,42 @@
-{% extends 'admin/layout.html' %}
-{% block container %}
-    {% if users is defined %}
-        <div class="control">
-            <a href="{{ url_for('admin.create_user') }}">Create User</a>
-        </div>
-        <table class="users">
-            <thead>
+{% extends 'admin/layout.html' %} 
+{% set active_page = 'users' %}
+{% block content %} {% if users is defined %}
+<div class="m-2 p-2 border">
+    <a href="{{ url_for('admin.create_user') }}">Create User</a>
+</div>
+<div class="mx-2">
+    <table class="table table-responsive-md border-md table-striped">
+        <thead>
             <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Username</th>
-                <th>Admin</th>
-                <th>Confirmed</th>
-                <th>Confirmed On</th>
-                <th></th>
+                <th scope="col">ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Username</th>
+                <th scope="col">Admin</th>
+                <th scope="col">Confirmed</th>
+                <th scope="col">Confirmed On</th>
+                <th scope="col">Actions</th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.is_admin }}</td>
-                    <td>{{ user.is_confirmed }}</td>
-                    <td>{{ user.confirmed_on }}</td>
-                    <td>
-                        <a href="{{ url_for('admin.edit_user', id=user.id ) }}"><i class="fa fa-pencil"></i></a>
-                        <a href="{{ url_for('admin.delete_user', id=user.id) }}"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.email }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.is_admin }}</td>
+                <td>{{ user.is_confirmed }}</td>
+                <td>{{ user.confirmed_on }}</td>
+                <td>
+                    <a href="{{ url_for('admin.edit_user', id=user.id ) }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="{{ url_for('admin.delete_user', id=user.id) }}">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-{% endblock %}
+        </tbody>
+    </table>
+</div>
+{% endif %} {% endblock %}

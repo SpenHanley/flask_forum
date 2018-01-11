@@ -59,8 +59,8 @@ def create_user():
                         email=form.email.data,
                         username=form.username.data,
                         password=form.password.data,
-                        is_admin=form.admin.data,
-                        is_confirmed=True,
+                        admin=form.admin.data,
+                        confirmed=True,
                         confirmed_on=confirmed_on
                     )
                 else:
@@ -68,8 +68,8 @@ def create_user():
                         email=form.email.data,
                         username=form.username.data,
                         password=form.password.data,
-                        is_admin=form.admin.data,
-                        is_confirmed=False
+                        admin=form.admin.data,
+                        confirmed=False
                     )
                 db.session.add(user)
                 db.session.commit()
