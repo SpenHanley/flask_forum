@@ -134,7 +134,7 @@ def create_post(sub_route):
 @auth.route('/delete_post/<route>', methods=['GET', 'POST'])
 @login_required
 def delete_post(route):
-    form = DestroyPostForm()
+    form = DeletePostForm()
     if form.validate_on_submit():
         post = Post.query.filter_by(route=route).first()
         post.is_deleted = True
@@ -175,11 +175,12 @@ def send_message():
         return redirect(url_for('home.dash'))
     return render_template('auth/send_message.html', form=form)
 
-@auth.route('/send/<id>', methods=['GET', 'POST'])
+
+@auth.route('/send/<user_id>', methods=['GET', 'POST'])
 @login_required
-def send_message_with_rec(id):
+def send_message_with_rec(user_id):
     form = MessageForm()
-    recipient = User.query.filter_by(id=id).first()
+    recipient = User.query.filter_by(id=user_id).first()
     form.recipient.data = recipient.username
     if form.validate_on_submit():
 
@@ -200,21 +201,21 @@ def send_message_with_rec(id):
     return render_template('auth/send_message.html', form=form)
 
 
-@auth.route('/delete_message/<id>')
-def delete_message(id):
-    Message.query.filter_by(id=id).delete()
+@auth.route('/delete_message/<message_id>')
+def delete_message(message_id):
+    Message.query.filter_by(id=message_id).delete()
     db.session.commit()
     return redirect(url_for('home.view_inbox'))
 
 
-@auth.route('/reply_message/<id>')
-def reply_message(id):
-    return redirect(url_for('auth.send_message_with_rec', id=id))
+@auth.route('/reply_message/<message_id>')
+def reply_message(message_id):
+    return redirect(url_for('auth.send_message_with_rec', id=message_id))
 
 
-@auth.route('/delete_comment/<id>', methods=['GET', 'POST'])
-def delete_comment(id):
-    comment = Comment.query.filter_by(id=id).first()
+@auth.route('/delete_comment/<comment_id>', methods=['GET', 'POST'])
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
     post = Post.query.filter_by(id=comment.post_id).first()
     form = DeleteCommentForm()
 
@@ -240,9 +241,9 @@ def delete_comment(id):
         return redirect(url_for('home.view_post', route=post.route))
 
 
-@auth.route('/update_comment/<id>', methods=['GET', 'POST'])
-def update_comment(id):
-    comment = Comment.query.filter_by(id=id).first()
+@auth.route('/update_comment/<comment_id>', methods=['GET', 'POST'])
+def update_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
 
     print(comment)
 

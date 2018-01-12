@@ -14,7 +14,7 @@
     </div>
 {%- endmacro %}
 
-{% macro m_sub(title, description, sub_route) %}
+{% macro m_sub(title, description, sub_route) -%}
     <div class="m-1 p-2 border">
         <a href="{{ url_for('home.view_sub', route=sub_route) }}" class="h4">{{ title }}</a>
         <p>

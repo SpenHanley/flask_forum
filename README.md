@@ -23,4 +23,6 @@ Use of a virtualenv is suggested and all the project requirements have been froz
 > pip install -r requirements.txt
 
 Then to run the project run
-> flask run
+> python run.py
+
+Flask should now be running under https

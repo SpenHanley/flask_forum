@@ -1,11 +1,11 @@
 from flask import redirect, render_template, url_for, request
 from flask_login import login_required, current_user
 
-from . import admin
-from ..models import User
 from app.forms import EditUserForm, CreateUserForm
-from .. import db
 from utils import Utils
+from . import admin
+from .. import db
+from ..models import User
 
 
 @admin.route('')
@@ -38,9 +38,9 @@ def edit_user(id):
     return render_template('admin/edit_user.html', form=form, user=user)
 
 
-@admin.route('/delete_user/<id>')
+@admin.route('/delete_user/<user_id>')
 @login_required
-def delete_user(id):
+def delete_user(user_id):
     # TODO: Add confirmation dialog before acting on the delete
     raise Exception('Not implemented')
 

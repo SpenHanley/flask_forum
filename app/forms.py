@@ -51,6 +51,7 @@ class DeleteSubForm(FlaskForm):
     reason = TextAreaField('Reason for deletion')
     submit = SubmitField('Delete Sub')
 
+
 class DeleteCommentForm(FlaskForm):
     reason = TextAreaField('Reason for deletion')
     submit = SubmitField('Delete Post')

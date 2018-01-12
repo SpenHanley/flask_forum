@@ -189,3 +189,5 @@ flask_env/
 flask_env_w/
 
 # End of https://www.gitignore.io/api/python,pycharm,visualstudiocode
+.vs
+.vscode

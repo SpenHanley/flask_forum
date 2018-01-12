@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_sslify import SSLify
 
 from config import app_config
 
@@ -14,6 +15,7 @@ login_manager = LoginManager()
 def create_app(config_name):
     global db
     app = Flask(__name__, instance_relative_config=True)
+    sslify = SSLify(app)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/fforum_db'
