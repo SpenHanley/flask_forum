@@ -24,12 +24,16 @@ button :hover {
     color: darkcyan !important;
 }
 
-.nav-item.active a, a:hover {
+.nav-item.active a, .nav-item a:hover {
     color: chocolate !important;
 }
 
 textarea {
     resize: none;
+}
+
+a[role='button'] :hover {
+    color: #fff;
 }
 
 /*# sourceMappingURL=main.css.map */

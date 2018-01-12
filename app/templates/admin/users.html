@@ -24,15 +24,25 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.is_admin }}</td>
-                <td>{{ user.is_confirmed }}</td>
-                <td>{{ user.confirmed_on }}</td>
-                <td>
-                    <a href="{{ url_for('admin.edit_user', id=user.id ) }}">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="{{ url_for('admin.delete_user', id=user.id) }}">
-                        <i class="fa fa-trash"></i>
-                    </a>
+                <td>{{ user.confirmed }}</td>
+                {% if user.confirmed_on is not none %}
+                    <td>{{ user.confirmed_on }}</td>
+                {% else %}
+                    <td class="text-danger" >Not Confirmed</td>
+                {% endif %}
+                <td class="btn-group" role="group">
+                    <a href="{{ url_for('admin.edit_user', user_id=user.id ) }}" class="btn btn-info" role="button">Edit User</a>
+                    <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger" role="button">Delete User</a>
+                    {% if user.confirmed_on is none %}
+                        <!-- 
+                            Feature not yet implemented as need to work on sending initial confirmation email
+                            once that has been completed this feature should be pretty quick to implement
+                            since we will already have the framework implemented.
+                         -->
+                        <a class="btn btn-primary" role="button" href="#">Resend Confirmation Email</a>
+                    {% else %}
+                        <a class="btn btn-primary disabled" tabindex="-1" role="button" href="#">Resend Confirmation Email</a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

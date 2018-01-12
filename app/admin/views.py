@@ -21,13 +21,13 @@ def show_users():
     return render_template('admin/users.html', users=users)
 
 
-@admin.route('/edit_user/<id>', methods=['GET', 'POST'])
+@admin.route('/edit_user/<user_id>', methods=['GET', 'POST'])
 @login_required
-def edit_user(id):
+def edit_user(user_id):
     form = EditUserForm()
-    user = User.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=user_id).first()
     if form.validate_on_submit():
-        user = User.query.filter_by(id=id).first()
+        user = User.query.filter_by(id=user_id).first()
         user.email = form.email.data
         user.username = form.username.data
         user.is_admin = form.admin.data
