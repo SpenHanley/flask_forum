@@ -20,6 +20,7 @@
 .idea/**/uiDesigner.xml
 
 flask_env/
+migrations/version/
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
