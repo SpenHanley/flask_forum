@@ -41,17 +41,25 @@ class User(UserMixin, db.Model):
 
     is_admin = db.Column(
         db.Boolean,
-        default=False
+        default=False,
+        nullable=False
     )
 
     confirmed = db.Column(
         db.Boolean,
-        default=False
+        default=False,
+        nullable=False
     )
 
     confirmed_on = db.Column(
         db.DateTime,
         nullable=True
+    )
+
+    use_icons = db.Column(
+        db.Boolean,
+        default=True,
+        nullable=False
     )
 
     def __init__(self, email, username, password, confirmed, paid=False, admin=False, confirmed_on=None):
@@ -102,7 +110,9 @@ class SubForum(db.Model):
     description = db.Column(db.String(128))
     route = db.Column(db.String(8), unique=True)
     modified = db.Column(db.DateTime)
-    pinned = db.Column(db.Boolean)
+    pinned = db.Column(db.Boolean,
+                       default=False,
+                       nullable=False)
 
     def __init__(self, title, description, pinned=False):
         self.title = title
@@ -132,7 +142,10 @@ class Post(db.Model):
 
     anonymous = db.Column(db.Boolean)
     created_on = db.Column(db.DateTime)
-    pinned = db.Column(db.Boolean, nullable=False)
+    pinned = db.Column(db.Boolean,
+                       default=False,
+                       nullable=False)
+
     is_deleted = db.Column(db.Boolean)
 
     def __init__(self, title, content, sub_id, author_id, anonymous=False, pinned=False, is_deleted=False):
@@ -156,7 +169,9 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     date = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)  # Displays when the comment was updated
-    edited = db.Column(db.Boolean, default=False)
+    edited = db.Column(db.Boolean,
+                       default=False,
+                       nullable=False)
 
     def __init__(self, author, content, post_id, edited=False):
         self.author = author
@@ -177,7 +192,7 @@ class Message(db.Model):
     sender = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     subject = db.Column(db.String(64), nullable=False)
     message = db.Column(db.String(256), nullable=False)
-    is_read = db.Column(db.Boolean, default=False)
+    is_read = db.Column(db.Boolean, default=False, nullable=False)
     sent = db.Column(db.DateTime)
 
     def __init__(self, recipient, sender, subject, message, is_read=False):
@@ -196,3 +211,23 @@ class ErrorLogs(db.Model):
     error = db.Column(db.String(16))
     details = db.Column(db.String(128))
     timestamp = db.Column(db.DateTime)
+
+
+class Complaint(db.Model):
+    __tablename__ = 'complaint'
+
+    id = db.Column(db.Integer, primary_key=True)
+    plaintiff_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    suspect_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comment_id = db.Column(db.Integer, nullable=True)
+    message_id = db.Column(db.Integer, nullable=True)
+    complaint_body = db.Column(db.String(512), nullable=False)
+    assigned = db.Column(db.Boolean, default=False, nullable=False)
+    assigned_to = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, plaintiff, suspect, complaint_body, comment_id=None, message_id=None):
+        self.plaintiff_id = plaintiff
+        self.suspect_id = suspect
+        self.complaint_body = complaint_body
+        self.comment_id = comment_id
+        self.message_id = message_id

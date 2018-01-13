@@ -9,20 +9,26 @@
         {% else %}
             {% include 'inc/navigation/authenticated.html' %}
         {% endif %}
-        <form action="{{ url_for('home.search') }}" method="post" class="form-inline my-2 my-lg-0">
-            {% for field in search_form %}
-                {% if field.type == 'SubmitField' %}
-                    <div class="form-group">
-                        {{ field(class='form-control btn btn-outline-success my-2 my-sm-0') }}
-                    </div>
-                {% elif field.type != 'CSRFTokenField' %}
-                    <div class="form-group">
-                        {{ field(class='form-control mr-sm-2') }}
-                    </div>
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            {% endfor %}
-        </form>
+        {% if search_form is defined %}
+            <form action="{{ url_for('home.search') }}" method="post" class="form-inline my-2 my-lg-0">
+                {% for field in search_form %}
+                    {% if field.type == 'SubmitField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control btn btn-outline-success my-2 my-sm-0') }}
+                        </div>
+                    {% elif field.type != 'CSRFTokenField' %}
+                        <div class="form-group">
+                            {{ field(class='form-control mr-sm-2') }}
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+            </form>
+        {% else %}
+            <div class="my-2 my-lg-0">
+                {{ current_user.username }}
+            </div>
+        {% endif %}
     </div>
 </nav>

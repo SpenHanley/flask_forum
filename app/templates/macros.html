@@ -22,19 +22,21 @@
         </p>
         {% if current_user.is_admin %}
             <p>
-                <a href="{{ url_for('auth.delete_sub', route=sub_route) }}"><i class="fa fa-trash"></i><span class="sr-only">Delete Subforum</span></a>
+                <a href="{{ url_for('auth.delete_sub', route=sub_route) }}"><i class="fa fa-trash"></i><span
+                        class="sr-only">Delete Subforum</span></a>
             </p>
         {% endif %}
     </div>
 {%- endmacro %}
 
 {% macro m_comment(comment_content, comment_author, comment_author_route, comment_created, comment_id, edited=False) %}
-    <div class="border p-2">
+    <div>
         <p>
             {{ comment_content }}
         </p>
         <p>
-            By <a href="{{ url_for('user.profile_page', route=comment_author_route) }}">{{ comment_author }}</a> - {{ comment_created }}
+            By <a href="{{ url_for('user.profile_page', route=comment_author_route) }}">{{ comment_author }}</a>
+            - {{ comment_created }}
         </p>
         {% if edited %}
             <p class="text-muted">
@@ -43,8 +45,22 @@
         {% endif %}
         {% if current_user is defined and current_user.is_authenticated %}
             {% if current_user.username == comment_author %}
-                <a href="{{ url_for('auth.delete_comment', id=comment_id) }}"><i class="fa fa-trash"></i></a>
-                <a href="{{ url_for('auth.update_comment', id=comment_id) }}"><i class="fa fa-pencil"></i></a>
+                {% if current_user.use_icons %}
+                    <a href="{{ url_for('auth.delete_comment', id=comment_id) }}">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <a href="{{ url_for('auth.update_comment', id=comment_id) }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                {% else %}
+                    <div class="button-group">
+                        <a href="{{ url_for('auth.delete_comment', id=comment_id) }}" role="button" class="btn btn-danger">
+                        </a>
+                        <a href="{{ url_for('auth.update_comment', id=comment_id) }}" role="button" class="btn btn-success"></a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('auth.report_user', comment_id=comment_id, suspect_id=author_id, plaintiff_id=current_user.id) }}"></a>
             {% endif %}
         {% endif %}
     </div>
@@ -78,4 +94,13 @@
             {{ field }}
         {% endif %}
     {% endfor %}
+{%- endmacro %}
+
+{% macro m_complaints(complaints) -%}
+    {% for complaint in complaints %}
+        
+    {% endfor %}
+{%- endmacro %}
+
+{% macro m_account(form) -%}
 {%- endmacro %}

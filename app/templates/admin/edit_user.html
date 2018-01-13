@@ -1,17 +1,26 @@
 {% extends 'admin/layout.html' %}
-{% block container %}
-    <div>
-        <form class="vert vert-form" action="{{ url_for('admin.edit_user', id=user.id) }}" method="post">
-            {{ form.email(value=user.email) }}
-            {{ form.username(value=user.username) }}
-            <div class="inline">
-                {{ form.admin(checked=user.is_admin) }}{{ form.admin.label }}
+{% import 'macros.html' as macros with context %}
+{% block content %}
+    <div class="container">
+        <form class="mt-1 p-2" action="{{ url_for('admin.edit_user', user_id=user.id) }}" method="post">
+            <div class="form-group">
+                {{ form.email.label(class="sr-only") }}
+                {{ form.email(value=user.email, class="form-control") }}
             </div>
-            <div class="inline">
-                {{ form.confirmed(checked=user.is_confirmed) }}{{ form.confirmed.label }}
+            <div class="form-group">
+                {{ form.username.label(class="sr-only") }}
+                {{ form.username(value=user.username, class="form-control") }}
             </div>
-            {{ form.hidden_tag() }}
-            {{ form.submit }}
+            <div class="form-check">
+                {{ form.admin(checked=user.is_admin, class="form-check-input") }}{{ form.admin.label(class="form-check-labvel") }}
+            </div>
+            <div class="form-check mb-3">
+                {{ form.confirmed(checked=user.is_confirmed, class="form-check-input") }}{{ form.confirmed.label(class="form-check-label") }}
+            </div>
+            <div class="form-group">
+                {{ form.hidden_tag() }}
+                {{ form.submit(class="btn btn-primary form-control") }}
+            </div>
         </form>
     </div>
 {% endblock %}

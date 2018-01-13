@@ -1,5 +1,6 @@
 alembic==0.9.6
 asn1crypto==0.24.0
+bcrypt==3.1.4
 blinker==1.4
 cffi==1.11.3
 click==6.7
@@ -13,6 +14,7 @@ Flask-Migrate==2.1.1
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 Flask-SSLify==0.1.5
+Flask-User==0.6.19
 Flask-WTF==0.14.2
 idna==2.6
 itsdangerous==0.24
@@ -20,8 +22,10 @@ Jinja2==2.10
 libsass==0.13.4
 Mako==1.0.7
 MarkupSafe==1.0
+passlib==1.7.1
 pip-tools==1.11.0
 pycparser==2.18
+pycryptodome==3.4.7
 PyMySQL==0.8.0
 pyOpenSSL==17.5.0
 python-dateutil==2.6.1

@@ -36,9 +36,11 @@
     </div>
 {% endif %}
 {% if comments is defined and comments|length > 0 %}
+    <div class="m-1 p-2 border">
     {% for comment in comments %}
-        {{ macros.m_comment(comment.content, comment.author, comment.route, comment.date, comment) }}
+        {{ macros.m_comment(comment.content, comment.author, comment.route, comment.date, comment, author_id) }}
     {% endfor %}
+    </div>
 {% endif %}
 
 </div>

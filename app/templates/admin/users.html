@@ -32,7 +32,7 @@
                 {% endif %}
                 <td class="btn-group" role="group">
                     <a href="{{ url_for('admin.edit_user', user_id=user.id ) }}" class="btn btn-info" role="button">Edit User</a>
-                    <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-danger" role="button">Delete User</a>
+                    <button class="btn btn-danger" role="button" data-toggle="modal" data-target="#deleteUserModal">Delete User</button>
                     {% if user.confirmed_on is none %}
                         <!-- 
                             Feature not yet implemented as need to work on sending initial confirmation email
@@ -48,5 +48,25 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteUserModal" aria-hidden="true" id="deleteUserModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <!-- TODO: Pass the id of the selected user to the function so that it can post it to the server to delete the user -->
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %} {% endblock %}

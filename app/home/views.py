@@ -47,6 +47,7 @@ def view_post(route):
             comm = {
                 'content': comment.content,
                 'author': user.username,
+                'author_id': user.id,
                 'date': comment.date,
                 'id': comment.id,
                 'updated': comment.updated,

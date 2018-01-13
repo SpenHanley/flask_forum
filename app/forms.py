@@ -10,7 +10,7 @@ class EditUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     admin = BooleanField('Admin')
     confirmed = BooleanField('Set Confirmed')
-    submit = SubmitField('Edit')
+    submit = SubmitField('Apply Edit')
 
 
 class CreateUserForm(FlaskForm):
