@@ -1,4 +1,5 @@
 <ul class="navbar-nav mr-auto">
+    {# There has to be a better way to do this #}
     {% if active_page == 'account' %}
         <li class="nav-item">
             <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>

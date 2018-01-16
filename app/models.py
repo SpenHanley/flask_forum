@@ -1,9 +1,10 @@
+import datetime
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-import datetime
-from utils import Utils as utils
 
 from app import db, login_manager
+from utils import Utils as utils
 
 
 class User(UserMixin, db.Model):
@@ -62,7 +63,7 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
-    def __init__(self, email, username, password, confirmed, paid=False, admin=False, confirmed_on=None):
+    def __init__(self, email, username, password, confirmed, admin=False, confirmed_on=None):
         self.email = email
         self.username = username
         self.password = password
@@ -105,14 +106,24 @@ def load_user(user_id):
 class SubForum(db.Model):
     __tablename__ = 'subs'
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), unique=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    title = db.Column(
+        db.String(64),
+        unique=True
+    )
+
     description = db.Column(db.String(128))
     route = db.Column(db.String(8), unique=True)
     modified = db.Column(db.DateTime)
-    pinned = db.Column(db.Boolean,
-                       default=False,
-                       nullable=False)
+    pinned = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False
+    )
 
     def __init__(self, title, description, pinned=False):
         self.title = title
@@ -120,6 +131,10 @@ class SubForum(db.Model):
         self.route = utils.generate_url(8)
         self.modified = datetime.datetime.utcnow()
         self.pinned = pinned
+
+    @staticmethod
+    def get_all():
+        return SubForum.query.all()
 
     def __repr__(self):
         return 'Sub Name: {}'.format(self.title)
@@ -147,6 +162,13 @@ class Post(db.Model):
                        nullable=False)
 
     is_deleted = db.Column(db.Boolean)
+
+    @staticmethod
+    def get_all():
+        return Post.query.all()
+
+    def __repr__(self):
+        return 'Post Name: {}'.format(self.title)
 
     def __init__(self, title, content, sub_id, author_id, anonymous=False, pinned=False, is_deleted=False):
         self.title = title

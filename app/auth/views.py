@@ -9,7 +9,6 @@ from app import db
 from ..email import send_mail
 from ..forms import *
 from ..models import User, Message, Comment
-from ..token import generate_confirmation_token, confirm_token
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -38,23 +37,23 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-@auth.route('/confirm/<token>')
-@login_required
-def confirm_email(token):
-    try:
-        email = confirm_token(token)
-    except:
-        flash('Confirmation token invalid or has expired.', 'danger')
-    user = User.query.filter_by(email=email).first_or_404()
-    if user.confirmed:
-        flash('Account already confirmed. Please login.', 'success')
-    else:
-        user.confirmed = True
-        user.confirmed_on = datetime.datetime.utcnow()
-        db.session.add(user)
-        db.session.commit()
-        flash('You have confirmed your account. Thanks!', 'success')
-    return redirect(url_for('registered_user.home', route=user.profile_route))
+# @auth.route('/confirm/<token>')
+# @login_required
+# def confirm_email(token):
+#     try:
+#         # email = confirm_token(token)
+#     except:
+#         flash('Confirmation token invalid or has expired.', 'danger')
+#     user = User.query.filter_by(email=email).first_or_404()
+#     if user.confirmed:
+#         flash('Account already confirmed. Please login.', 'success')
+#     else:
+#         user.confirmed = True
+#         user.confirmed_on = datetime.datetime.utcnow()
+#         db.session.add(user)
+#         db.session.commit()
+#         flash('You have confirmed your account. Thanks!', 'success')
+#     return redirect(url_for('registered_user.home', route=user.profile_route))
 
 
 @auth.route('/login', methods=['GET', 'POST'])

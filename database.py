@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 engine = create_engine(
-    'mysql+pymysql://root@localhost/fforum_db',
+    'postgresql://postgres:root@localhost/forum_db',
     convert_unicode=True
 )
 

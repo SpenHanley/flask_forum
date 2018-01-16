@@ -27,7 +27,7 @@ class Config(object):
     """
     Common configuration options
     """
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/fforum_db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:root@localhost/forum_db'
     SECRET_KEY = load_secret_key()
     # Need to find a way to generate this similar to the application salt
     SECURITY_PASSWORD_SALT = 'q+s|cP2Mr);ScNL;nXJa?Rw:Ji|JSlC&hXd2/wGG,6mh?4o8-K=_yV88g>eR/j:O'
@@ -60,6 +60,12 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:root@localhost/forum_db'
+    DEBUG = True
 
 
 class ProductionConfig(Config):
