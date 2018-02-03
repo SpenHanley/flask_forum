@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}"
+          integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    {% include 'inc/navigation/nav.html' %}
-    <main role="main" >
+{% include 'inc/navigation/nav.html' %}
+<main role="main">
     {% block content %}
     {% endblock %}
-    </main>
-    <footer class="footer">
-        <div class="container">
-            <span class="text-muted">&copy; 2018 Spen Hanley. All Rights Reserved.</span>
-        </div>
-    </footer>
-    <!-- Scripts -->
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</main>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">&copy; 2018 Spen Hanley. All Rights Reserved.</span>
+    </div>
+</footer>
+{% block scripts %}
+<!-- Scripts -->
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
 </body>
 </html>

@@ -1,11 +1,10 @@
-function toggle()
-{
-    var searchBar = document.getElementsByClassName('search')[0]
+function toggle() {
+    var searchBar = document.getElementsByClassName('search')[0];
 
-    if (searchBar.style.display != 'none')
-        searchBar.style.display = 'none'
+    if (searchBar.style.display !== 'none')
+        searchBar.style.display = 'none';
     else
-        searchBar.style.display = 'initial'
+        searchBar.style.display = 'initial';
 }
 
 function convert(ts) {
@@ -15,7 +14,17 @@ function convert(ts) {
     return d.toUTCString();
 }
 
-function limit(length, text) {
-    var container = document.getElementById('content');
-    return text.substring(0, length);
+function load(url) {
+    if (url !== null) {
+    }
+    else {
+        throw new Error("No url provided");
+    }
+
+    return 0;
+}
+
+function poll()
+{
+    return false;
 }

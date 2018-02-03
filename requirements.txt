@@ -13,10 +13,14 @@ Flask-Login==0.4.1
 Flask-Mail==0.9.1
 Flask-Migrate==2.1.1
 Flask-Script==2.0.6
+Flask-SocketIO==2.9.3
 Flask-SQLAlchemy==2.3.2
 Flask-SSLify==0.1.5
 Flask-User==0.6.19
 Flask-WTF==0.14.2
+gevent==1.2.2
+gevent-websocket==0.10.1
+greenlet==0.4.13
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
@@ -31,6 +35,8 @@ pycryptodome==3.4.7
 pyOpenSSL==17.5.0
 python-dateutil==2.6.1
 python-editor==1.0.3
+python-engineio==2.0.2
+python-socketio==1.8.4
 PyYAML==3.12
 six==1.11.0
 SQLAlchemy==1.2.0

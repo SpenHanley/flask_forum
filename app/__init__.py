@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_sslify import SSLify
 from flask_api import FlaskAPI
+from flask_socketio import SocketIO
 
 from config import app_config
 
@@ -12,6 +13,7 @@ app = Flask(__name__, instance_relative_config=True)
 mail = Mail(app)
 db = SQLAlchemy()
 login_manager = LoginManager()
+socketio = SocketIO()
 
 
 def create_app(config_name):
@@ -44,5 +46,7 @@ def create_app(config_name):
 
     from .registered_user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/user')
+
+    socketio.init_app(app)
 
     return app

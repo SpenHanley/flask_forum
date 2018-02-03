@@ -4,6 +4,9 @@
         <li class="nav-item">
             <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>
         </li>
+        <li class="nav-item">
+            <a href="{{ url_for('user.chat') }}" class="nav-link">Chat</a>
+        </li>
         <li class="nav-item active">
             <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" class="nav-link">Account <span class="sr-only">(current)</span></a>
         </li>
@@ -15,14 +18,33 @@
             <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
+            <a href="{{ url_for('user.chat') }}" class="nav-link">Chat</a>
+        </li>
+        <li class="nav-item">
             <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" class="nav-link">Account</a>
         </li>
         <li class="nav-item active">
             <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout <span class="sr-only">(current)</span></a>
         </li>
+    {% elif active_page == 'chat' %}
+        <li class="nav-item">
+            <a href="{{ url_for('home.homepage') }}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item active">
+            <a href="{{ url_for('user.chat') }}" class="nav-link">Chat</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" class="nav-link">Account</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout <span class="sr-only">(current)</span></a>
+        </li>
     {% else %}
         <li class="nav-item active">
             <a href="{{ url_for('home.homepage') }}" class="nav-link">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url_for('user.chat') }}" class="nav-link">Chat</a>
         </li>
         <li class="nav-item">
             <a href="{{ url_for('user.homepage', route=current_user.profile_route) }}" class="nav-link">Account</a>

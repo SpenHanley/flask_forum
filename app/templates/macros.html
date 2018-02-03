@@ -54,9 +54,11 @@
                     </a>
                 {% else %}
                     <div class="button-group">
-                        <a href="{{ url_for('auth.delete_comment', id=comment_id) }}" role="button" class="btn btn-danger">
+                        <a href="{{ url_for('auth.delete_comment', id=comment_id) }}" role="button"
+                           class="btn btn-danger">
                         </a>
-                        <a href="{{ url_for('auth.update_comment', id=comment_id) }}" role="button" class="btn btn-success"></a>
+                        <a href="{{ url_for('auth.update_comment', id=comment_id) }}" role="button"
+                           class="btn btn-success"></a>
                     </div>
                 {% endif %}
             {% else %}
@@ -98,7 +100,7 @@
 
 {% macro m_complaints(complaints) -%}
     {% for complaint in complaints %}
-        
+
     {% endfor %}
 {%- endmacro %}
 
