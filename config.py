@@ -47,9 +47,9 @@ class Config(object):
     MAIL_USE_SSL = conf.get('mail_use_ssl')
 
     # Mail authentication
-    MAIL_USERNAME = config.get('mail_username')
-    MAIL_PASSWORD = config.get('mail_password')
-    MAIL_SENDER = config.get('mail_sender_address')
+    MAIL_USERNAME = conf.get('mail_username')
+    MAIL_PASSWORD = conf.get('mail_password')
+    MAIL_SENDER = conf.get('mail_sender_address')
 
     UPLOAD_FOLDER = 'uploads'
 

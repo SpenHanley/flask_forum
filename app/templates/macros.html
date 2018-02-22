@@ -14,16 +14,20 @@
     </div>
 {%- endmacro %}
 
-{% macro m_sub(title, description, sub_route) -%}
-    <div class="m-1 p-2 border">
+{% macro m_sub(title, description, sub_route, pinned) -%}
+      {% if pinned %}
+        <span class="sr-only">Sub forum pinned</span>
+        <div class="m-1 p-2 border pinned">
+      {% else %}
+        <div class="m-1 p-2 border">
+      {% endif %}
         <a href="{{ url_for('home.view_sub', route=sub_route) }}" class="h4">{{ title }}</a>
         <p>
             {{ description }}
         </p>
         {% if current_user.is_admin %}
             <p>
-                <a href="{{ url_for('auth.delete_sub', route=sub_route) }}"><i class="fa fa-trash"></i><span
-                        class="sr-only">Delete Subforum</span></a>
+                <a href="{{ url_for('auth.delete_sub', route=sub_route) }}"><i class="fa fa-trash"></i><span class="sr-only">Delete Subforum</span></a>
             </p>
         {% endif %}
     </div>
@@ -98,7 +102,7 @@
 
 {% macro m_complaints(complaints) -%}
     {% for complaint in complaints %}
-        
+
     {% endfor %}
 {%- endmacro %}
 

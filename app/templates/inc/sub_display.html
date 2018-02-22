@@ -5,5 +5,6 @@
     {% extends 'layout.html' %}
 {% endif %}
 {% for sub in forums %}
-    {{ macros.m_sub(sub.title, sub.description, sub.route) }}
+    <!-- {{ sub.pinned }} -->
+    {{ macros.m_sub(sub.title, sub.description, sub.route, sub.pinned) }}
 {% endfor %}
