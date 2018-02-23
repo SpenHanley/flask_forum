@@ -2,9 +2,8 @@
     color: darkcyan;
 }
 
-.sub .icons a {
-    font-size: 1rem;
-    color: #000;
+.sub_links {
+    font-size: 1.35rem;
 }
 
 button :hover {

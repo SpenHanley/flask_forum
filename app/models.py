@@ -63,6 +63,11 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
+    timeformat = db.Column(
+        db.String(16),
+        default=True
+    )
+
     def __init__(self, email, username, password, confirmed, admin=False, confirmed_on=None):
         self.email = email
         self.username = username

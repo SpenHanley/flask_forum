@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <form class="mt-2" action="{{ url_for('auth.create_sub') }}" method="post">
-            {{ macros.m_primary_form(form) }}
+            {{ macros.m_primary_form(form, sub) }}
         </form>
     </div>
 {% endblock %}

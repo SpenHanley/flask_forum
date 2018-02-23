@@ -2,6 +2,7 @@ import datetime
 
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
+import datetime
 
 from utils import Utils
 from . import auth
@@ -266,5 +267,22 @@ def update_comment(comment_id):
 
 @auth.route('/delete_sub/<route>')
 def delete_sub(route):
-    sub = SubForm.query.filter_by(route=route).first()
+    sub = SubForum.query.filter_by(route=route).first()
     form = DeleteSubForm()
+
+@auth.route('/edit_sub/<route>', methods=['GET', 'POST'])
+def edit_sub(route):
+    sub = SubForum.query.filter_by(route=route).first()
+    form = EditSubForm()
+
+    if form.validate_on_submit():
+        sub.title = form.title.data
+        sub.description = form.description.data
+        sub.modified = datetime.datetime.utcnow()
+
+        db.session.add(sub)
+        db.session.commit()
+    else:
+        print('Sub not updated, form did not validate!')
+
+    return render_template('auth/update_sub.html', form=form, sub=sub)

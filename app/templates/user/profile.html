@@ -6,12 +6,20 @@
                 <div class="col-sm-2">Username:</div>
                 <div class="col-sm-10">{{ user.username }}</div>
             </div>
+            <div class="row">
+              <div class="col-sm-2">
+                Date Format:
+              </div>
+              <div class="col-sm-10">
+                
+              </div>
+            </div>
             <div class="row mt-3">
                 <div class="col-sm-2">
                     <a href="{{ url_for('auth.send_message_with_rec', id=user.uid) }}" class="btn btn-outline-primary" role="button">Send Message</a>
                 </div>
             </div>
         </div>
-        
+
     {% endif %}
 {% endblock %}
