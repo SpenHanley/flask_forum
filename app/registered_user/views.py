@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, session
 from flask_login import login_required, current_user
 from ..models import Message, User
 from app.forms import ProfileForm
@@ -11,6 +11,7 @@ from . import user
 @user.route('/<route>')
 @login_required
 def homepage(route):
+    session['room'] = 'global_chat'
     messages = Message.query.filter_by(recipient=current_user.id)
     user = User.query.filter_by(profile_route=route)
     new_msg_count = 0
@@ -105,4 +106,14 @@ def edit_profile(route):
     </p>
     '''
     return template
-    
+
+
+@user.route('/chat')
+@login_required
+def chat():
+    name = current_user.username
+    room = session.get('room', '')
+    if name == '' or room == '':
+        return redirect(url_for('home.homepage'))
+
+    return render_template('user/chat.html', name=name, room=room)

@@ -5,14 +5,21 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_sslify import SSLify
 from flask_api import FlaskAPI
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 from config import app_config
+
+import babel
 
 app = Flask(__name__, instance_relative_config=True)
 mail = Mail(app)
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+# env = Environment(
+#     loader=PackageLoader('app', 'templates'),
+#     autoescape=select_autoescape(['html', 'xml'])
+# )
 
 def create_app(config_name):
     global db

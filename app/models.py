@@ -118,6 +118,7 @@ class SubForum(db.Model):
 
     description = db.Column(db.String(128))
     route = db.Column(db.String(8), unique=True)
+    created = db.Column(db.DateTime)
     modified = db.Column(db.DateTime)
     pinned = db.Column(
         db.Boolean,
@@ -129,6 +130,7 @@ class SubForum(db.Model):
         self.title = title
         self.description = description
         self.route = utils.generate_url(8)
+        self.created = datetime.datetime.utcnow()
         self.modified = datetime.datetime.utcnow()
         self.pinned = pinned
 

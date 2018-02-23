@@ -5,7 +5,7 @@ from sqlalchemy import desc
 from app.forms import CommentForm, SearchForm
 from . import home
 from .. import db
-from ..models import Post, SubForum, Comment, User
+from ..models import SubForum, Post, User, Comment
 
 
 @home.route('/')

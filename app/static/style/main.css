@@ -40,4 +40,9 @@ a[role='button'] :hover {
   border: 1px solid #B1B3B5 !important;
 }
 
+.pinned:after {
+  background: url('../images/pinned.png') no-repeat;
+  display: block;
+}
+
 /*# sourceMappingURL=main.css.map */
