@@ -236,7 +236,7 @@ def delete_comment(comment_id):
     if current_user.id is not comment.author:
         return render_template('auth/delete_comment.html', form=form, id=id)
     else:
-        Comment.query.filter_by(id=id).delete()
+        Comment.query.filter_by(id=comment_id).delete()
         db.session.commit()
         return redirect(url_for('home.view_post', route=post.route))
 
@@ -286,3 +286,20 @@ def edit_sub(route):
         print('Sub not updated, form did not validate!')
 
     return render_template('auth/update_sub.html', form=form, sub=sub)
+
+@auth.route('/edit_post/<route>', methods=['GET', 'POST'])
+def edit_post(route):
+    post = Post.query.filter_by(route=route).first()
+
+    form = EditPostForm()
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+
+        post.modified = datetime.datetime.utcnow()
+
+        db.session.add(post)
+        db.session.commit()
+
+    return render_template('auth/edit_post.html', form=form, post=post)

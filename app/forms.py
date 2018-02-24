@@ -163,3 +163,9 @@ class EditSubForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
 
     submit = SubmitField('Update')
+
+class EditPostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = StringField('Content', validators=[DataRequired()])
+
+    submit = SubmitField('Update')

@@ -164,6 +164,8 @@ class Post(db.Model):
 
     anonymous = db.Column(db.Boolean)
     created_on = db.Column(db.DateTime)
+    modified = db.Column(db.DateTime)
+
     pinned = db.Column(db.Boolean,
                        default=False,
                        nullable=False)
@@ -184,6 +186,7 @@ class Post(db.Model):
         self.author_id = author_id
         self.anonymous = anonymous
         self.created_on = datetime.datetime.utcnow()
+        self.modified = datetime.datetime.utcnow()
         self.route = utils.generate_url(8)
         self.pinned = pinned
         self.is_deleted = is_deleted

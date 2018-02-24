@@ -10,8 +10,16 @@
             {{ post.content }}
         </p>
         <p>
-            By {{ post.author }} - {{ post.created_on }}
+            By {{ post.author }} - {{ post.created_on|datetime }}
         </p>
+        {% if current_user is defined and current_user.username == post.author %}
+          <p>
+            <a href="{{ url_for('auth.edit_post', route=post.route) }}">
+              <i class="fa fa-pencil" title="Edit post"></i>
+              <span class="sr-only">Edit post</span>
+            </a>
+          </p>
+        {% endif %}
     {% endif %}
 {% if current_user is defined and current_user.is_authenticated %}
     <div>
@@ -35,13 +43,13 @@
         </form>
     </div>
 {% endif %}
+</div>
 {% if comments is defined and comments|length > 0 %}
-    <div class="m-1 p-2 border">
+    <div class="m-2 p-2 border">
+      <h4>Comments</h4>
     {% for comment in comments %}
-        {{ macros.m_comment(comment.content, comment.author, comment.route, comment.date, comment, author_id) }}
+        {{ macros.m_comment(comment.content, comment.author, comment.route, comment.date, comment.id, author_id) }}
     {% endfor %}
     </div>
 {% endif %}
-
-</div>
 {% endblock %}

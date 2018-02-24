@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <form class="mt-2" action="{{ url_for('auth.edit_post', route=post.route) }}" method="post">
+          <div class="form-group row">
+              <div class="col-2">
+                {{ form.title.label }}
+              </div>
+              <div class="col-md">
+                {{ form.title(class="form-control", value=post.title) }}
+              </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-2">
+                {{ form.content.label }}
+              </div>
+              <div class="col-md">
+                {{ form.content(class="form-control", value=post.content) }}
+              </div>
+          </div>
+          <div class="form-group">
+              {{ form.hidden_tag() }}
+              {{ form.submit(class='form-control btn btn-outline-primary') }}
+          </div>
+        </form>
+    </div>
+{% endblock %}

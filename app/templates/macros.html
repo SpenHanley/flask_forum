@@ -7,7 +7,7 @@
 {% macro m_post(post_title, post_route, created, comments) -%}
 <div class="m-1 p-2 border">
     <a href="{{ url_for('home.view_post', route=post_route) }}" class="h4">{{ post_title }}</a>
-    <p class="h6">{{ created }}</p>
+    <p class="h6">{{ created|datetime }}</p>
     <p class="h6">
         {{ comments }}
         <i class="fa fa-comment"></i>
@@ -47,14 +47,17 @@
 {%- endmacro %}
 
 {% macro m_comment(comment_content, comment_author, comment_author_route, comment_created, comment_id, edited=False) %}
-<div>
+<div class="m-2 p-1">
     <p>
-        {{ comment_content }}
-    </p>
-    <p>
-        By
+      {% if current_user is defined and current_user.username == comment_author or current_user.is_anonymous %}
+        {{ comment_author }}
+      {% else %}
         <a href="{{ url_for('user.profile_page', route=comment_author_route) }}">{{ comment_author }}</a>
-        - {{ comment_created }}
+      {% endif %}
+      <br>
+      {{ comment_content }}
+      <br>
+      {{ comment_created|datetime }}
     </p>
     {% if edited %}
     <p class="text-muted">
@@ -64,17 +67,22 @@
     {% if current_user is defined and current_user.is_authenticated %}
         {% if current_user.username == comment_author %}
             {% if current_user.use_icons %}
-                <a href="{{ url_for('auth.delete_comment', id=comment_id) }}">
+                <a href="{{ url_for('auth.delete_comment', comment_id=comment_id) }}">
                     <i class="fa fa-trash"></i>
+                    <span class="sr-only">Delete comment</span>
                 </a>
-                <a href="{{ url_for('auth.update_comment', id=comment_id) }}">
+                <a href="{{ url_for('auth.update_comment', comment_id=comment_id) }}">
                     <i class="fa fa-pencil"></i>
+                    <span class="sr-only">Edit comment</span>
                 </a>
             {% else %}
                 <div class="button-group">
-                    <a href="{{ url_for('auth.delete_comment', id=comment_id) }}" role="button" class="btn btn-danger">
+                    <a href="{{ url_for('auth.delete_comment', comment_id=comment_id) }}" role="button" class="btn btn-danger">
+                      Delete Comment
                     </a>
-                    <a href="{{ url_for('auth.update_comment', id=comment_id) }}" role="button" class="btn btn-success"></a>
+                    <a href="{{ url_for('auth.update_comment', comment_id=comment_id) }}" role="button" class="btn btn-success">
+                      Edit Comment
+                    </a>
                 </div>
             {% endif %}
         {% else %}
