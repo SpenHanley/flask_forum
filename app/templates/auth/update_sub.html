@@ -19,6 +19,11 @@
                 {{ form.description(class="form-control", value=sub.description) }}
               </div>
           </div>
+          <div class="form-group row">
+              <div class="form-check mb-3">
+                  {{ form.pinned(class="form-check-input", checked=sub.pinned) }}{{ form.pinned.label(class="form-check-label") }}
+              </div>
+          </div>
           <div class="form-group">
               {{ form.hidden_tag() }}
               {{ form.submit(class='form-control btn btn-outline-primary') }}

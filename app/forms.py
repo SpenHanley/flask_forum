@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import PasswordField, StringField, SubmitField, ValidationError, TextAreaField, BooleanField, FileField
 from wtforms.validators import DataRequired, Email, EqualTo
 
@@ -86,6 +86,7 @@ class RegistrationForm(FlaskForm):
     # TODO: Attempt to check email as it is being entered to ensure that it is available
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password')
+    # recaptcha = RecaptchaField()
 
     confirm_password = PasswordField(
         'Confirm Password',
@@ -161,6 +162,7 @@ class ProfileForm(FlaskForm):
 class EditSubForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
+    pinned = BooleanField('Sticky')
 
     submit = SubmitField('Update')
 

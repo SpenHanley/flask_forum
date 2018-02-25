@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_sslify import SSLify
 from flask_api import FlaskAPI
 from jinja2 import Environment, PackageLoader, select_autoescape
+# from forms import SearchForm
 
 from config import app_config
 
@@ -15,6 +16,7 @@ app = Flask(__name__, instance_relative_config=True)
 mail = Mail(app)
 db = SQLAlchemy()
 login_manager = LoginManager()
+# search_form=SearchForm()
 
 # env = Environment(
 #     loader=PackageLoader('app', 'templates'),

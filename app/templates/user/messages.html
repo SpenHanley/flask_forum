@@ -11,17 +11,22 @@
                 <div class="vert-sub">
                     <p>
                         Sender: {{ message.message_sender_name }}
+                        &nbsp;
+                        {% if message.message_is_read %}
+                            <i class="fa fa-envelope-open-o"></i>
+                        {% else %}
+                            <i class="fa fa-envelope-o"></i>
+                        {% endif %}
                     </p>
                     <p>
                         Subject: <a href="{{ url_for('user.message_page', id=message.message_id) }}">{{ message.message_subject }}</a>
                     </p>
                 </div>
                 <div class="icons">
-                    {% if message.message_is_read %}
-                        <i class="fa fa-envelope-open-o"></i>
-                    {% else %}
-                        <i class="fa fa-envelope-o"></i>
-                    {% endif %}
+                    <a href="{{ url_for('auth.delete_message', message_id=message.message_id) }}">
+                      <i class="fa fa-trash-o"></i>
+                      <span class="sr-only">Delete message</span>
+                    </a>
                 </div>
             </div>
         {% endfor %}

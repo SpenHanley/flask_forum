@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, session
 from flask_login import login_required, current_user
 from ..models import Message, User
-from app.forms import ProfileForm
+from app.forms import ProfileForm, SearchForm
 from .. import db
 from sqlalchemy import desc
 
@@ -65,7 +65,7 @@ def inbox_page():
             'message_is_read': message.is_read
         }
         inbox.append(message_body)
-    return render_template('user/messages.html', messages=inbox)
+    return render_template('user/messages.html', messages=inbox, search_form=SearchForm())
 
 
 @user.route('/message/<id>')

@@ -40,7 +40,8 @@ a[role='button'] :hover {
 }
 
 .pinned:after {
-  background: url('../images/pinned.png') no-repeat;
+  content: "<i class='fa fa-thumbtack'></i>";
+  /* background: url('../images/pinned.png') no-repeat; */
   display: block;
 }
 

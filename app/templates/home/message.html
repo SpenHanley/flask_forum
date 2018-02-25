@@ -2,7 +2,7 @@
 {% set active_page = 'account' %}
 {% block container %}
 <div class="control">
-    <a href="{{ url_for('home.view_inbox') }}">Return to Inbox</a>
+    <a href="{{ url_for('user.inbox_page') }}">Return to Inbox</a>
 </div>
 {% include 'inc/msg_tools.html' %}
 <div class="message message-v">

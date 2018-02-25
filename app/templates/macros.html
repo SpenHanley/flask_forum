@@ -4,14 +4,27 @@
 </div>
 {%- endmacro %}
 
-{% macro m_post(post_title, post_route, created, comments) -%}
+{% macro m_post(post_title, post_route, created, comments, pinned=False) -%}
 <div class="m-1 p-2 border">
+    {% if pinned %}
+        <!-- The sub is pinned so add accessiblity information showing this -->
+        <span class="sr-only">Post pinned</span>
+        <p class="pull-right"><i class="fa fa-thumb-tack"></i></p>
+    {% endif %}
     <a href="{{ url_for('home.view_post', route=post_route) }}" class="h4">{{ post_title }}</a>
     <p class="h6">{{ created|datetime }}</p>
     <p class="h6">
         {{ comments }}
         <i class="fa fa-comment"></i>
     </p>
+    {% if current_user is defined and current_user.is_admin %}
+      <p>
+        <a href="{{ url_for('auth.sticky_post', route=post_route) }}">
+          <i class="fa fa-thumb-tack"></i>
+          <span class="sr-only">Make post sticky</span>
+        </a>
+      </p>
+    {% endif %}
 </div>
 {%- endmacro %}
 
@@ -20,7 +33,7 @@
     {% if pinned %}
         <!-- The sub is pinned so add accessiblity information showing this -->
         <span class="sr-only">Sub forum pinned</span>
-        <p class="pull-right"><img src="{{ url_for('static', filename='images/pinned.png') }}" alt="Visual clue that sub is pinned"></p>
+        <p class="pull-right"><i class="fa fa-thumb-tack"></i></p>
     {% endif %}
 
     <a href="{{ url_for('home.view_sub', route=sub_route) }}" class="h4">{{ title }}</a>

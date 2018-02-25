@@ -1,4 +1,4 @@
-{% import 'macros.html' as macros %}
+{% import 'macros.html' as macros with context %}
 {% if res is not defined %}
     {% extends 'layout.html' %}
 {% endif %}
@@ -7,6 +7,6 @@
         {% include 'inc/control.html' %}
     {% endif %}
     {% for post in posts %}
-        {{ macros.m_post(post.title, post.route, post.created_on, post.count) }}
+        {{ macros.m_post(post.title, post.route, post.created_on, post.count, post.pinned) }}
     {% endfor %}
 {% endblock %}

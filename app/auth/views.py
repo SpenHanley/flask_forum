@@ -3,6 +3,7 @@ import datetime
 from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import datetime
+from sqlalchemy.orm import load_only
 
 from utils import Utils
 from . import auth
@@ -172,7 +173,7 @@ def send_message():
         db.session.add(message)
         db.session.commit()
         flash('Message sent')
-        return redirect(url_for('home.dash'))
+        return redirect(url_for('user.homepage', route=current_user.profile_route))
     return render_template('auth/send_message.html', form=form)
 
 
@@ -194,7 +195,7 @@ def send_message_with_rec(user_id):
         db.session.add(message)
         db.session.commit()
         flash('Message sent')
-        return redirect(url_for('home.dash'))
+        return redirect(url_for('user.homepage', route=current_user.profile_route))
     else:
         print(form.errors)
 
@@ -205,7 +206,7 @@ def send_message_with_rec(user_id):
 def delete_message(message_id):
     Message.query.filter_by(id=message_id).delete()
     db.session.commit()
-    return redirect(url_for('home.view_inbox'))
+    return redirect(url_for('user.inbox_page'))
 
 
 @auth.route('/reply_message/<message_id>')
@@ -279,6 +280,7 @@ def edit_sub(route):
         sub.title = form.title.data
         sub.description = form.description.data
         sub.modified = datetime.datetime.utcnow()
+        sub.pinned = form.pinned.data
 
         db.session.add(sub)
         db.session.commit()
@@ -286,6 +288,26 @@ def edit_sub(route):
         print('Sub not updated, form did not validate!')
 
     return render_template('auth/update_sub.html', form=form, sub=sub)
+
+@auth.route('/sticky_post/<route>')
+def sticky_post(route):
+    post = Post.query.filter_by(route=route).first()
+    sub = SubForum.query.filter_by(id=post.sub_id).first()
+
+    sub_route = sub.route
+    sub = None
+
+    print(post.pinned)
+    if post.pinned:
+        post.pinned = 0
+    else:
+        post.pinned = 1
+
+    db.session.add(post)
+    db.session.commit()
+
+    # Not quite sure if this is necessary but to keep it here just incase
+    return redirect(url_for('home.view_sub', route=sub_route))
 
 @auth.route('/edit_post/<route>', methods=['GET', 'POST'])
 def edit_post(route):
