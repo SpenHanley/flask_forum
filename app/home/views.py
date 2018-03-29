@@ -26,9 +26,9 @@ def view_post(route):
     sub = SubForum.query.filter_by(id=post.sub_id).first()
     form = CommentForm()
 
-    postAuthor = User.query.filter_by(id=post.author_id).first()
+    post_author = User.query.filter_by(id=post.author_id).first()
 
-    post.author = postAuthor.username
+    post.author = post_author.username
 
     if form.validate_on_submit():
         comment = Comment(
@@ -58,6 +58,7 @@ def view_post(route):
     return render_template(
         'home/post.html',
         post=post,
+        author=post_author,
         comments=comments,
         form=form,
         sub=sub,

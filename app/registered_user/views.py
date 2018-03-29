@@ -1,9 +1,10 @@
 from flask import render_template, url_for, redirect, session
 from flask_login import login_required, current_user
-from ..models import Message, User
+from ..models import Message, User, Post
 from app.forms import ProfileForm, SearchForm
 from .. import db
 from sqlalchemy import desc
+from werkzeug.utils import secure_filename
 
 from . import user
 
@@ -13,7 +14,9 @@ from . import user
 def homepage(route):
     session['room'] = 'global_chat'
     messages = Message.query.filter_by(recipient=current_user.id)
-    user = User.query.filter_by(profile_route=route)
+    user = User.query.filter_by(profile_route=route).first()
+    if current_user != user:
+        return redirect(url_for('home.homepage'))
     new_msg_count = 0
     msg_count = 0
     for message in messages:
@@ -23,11 +26,16 @@ def homepage(route):
         # This is the total number of messages
         msg_count += 1
 
+    # Does the profile_image contain an external link
+    external = ('http://' in user.profile_image) or ('https://' in user.profile_image)
+
     return render_template(
         'user/index.html',
         title='Account',
         message_count=msg_count,
         new_message_count=new_msg_count,
+        external=external,
+        user=user,
         profile_url=current_user.profile_route,
         form=ProfileForm()
     )
@@ -42,6 +50,20 @@ def update(route):
         user.email = form.email.data
         user.username = form.username.data
 
+        # Let's move the and rename the uploaded file
+        f = form.profile_image.data
+        filename = secure_filename(f.filename)
+        f.save(os.path.join(
+                app.root_path,
+                'static',
+                'uploads',
+                'images',
+                filename
+            )
+        )
+        # Now we set the profile image path for the user
+        user.profile_image = 'uploads/images/'+filename
+        # Let's stick this in the database
         db.session.add(user)
         db.session.commit()
     else:
@@ -84,15 +106,19 @@ def message_page(id):
 @login_required
 def profile_page(route):
     userProfile = User.query.filter_by(profile_route=route).first()
+    posts = Post.query.filter_by(author_id=userProfile.id).filter_by(anonymous=False).all()
     print(userProfile)
     user = {
         'username': userProfile.username,
-        'uid': userProfile.id
+        'uid': userProfile.id,
+        'profile_image': userProfile.profile_image
     }
     if userProfile is None:
         return redirect(url_for('registered_user.homepage'))
 
-    return render_template('user/profile.html', user=user)
+    external = ('http://' in userProfile.profile_image) or ('https://' in userProfile.profile_image)
+
+    return render_template('user/profile.html', user=user, external=external, posts=posts)
 
 
 @user.route('/<route>/edit_profile')

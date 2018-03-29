@@ -152,7 +152,7 @@ class AdminForm(FlaskForm):
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    profile_image = FileField()
+    profile_image = FileField('Profile Image')
     submit = SubmitField('Update')
 
     def validate_username(self, field):

@@ -10,7 +10,7 @@
             {{ post.content }}
         </p>
         <p>
-            By {{ post.author }} - {{ post.created_on|datetime }}
+            By <a href="{{ url_for('user.profile_page', route=author.profile_route) }}">{{ post.author }}</a> - {{ post.created_on|datetime }}
         </p>
         {% if current_user is defined and current_user.username == post.author %}
           <p>

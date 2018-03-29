@@ -31,6 +31,7 @@ pip-tools==1.11.0
 psycopg2==2.7.3.2
 pycparser==2.18
 pycryptodome==3.4.7
+PyMySQL==0.8.0
 pyOpenSSL==17.5.0
 python-dateutil==2.6.1
 python-editor==1.0.3

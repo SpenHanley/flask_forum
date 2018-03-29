@@ -1,7 +1,2 @@
-import random
-import string
-import os
-
-
-
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost/fforum_db'
+SQLALCHEMY_DATABASE_URI = 'postgres://postgres:postgres@localhost/flask_db'
+FLASK_CONFIG='production'

@@ -68,6 +68,12 @@ class User(UserMixin, db.Model):
         default=True
     )
 
+    profile_image = db.Column(
+        db.String(128),
+        default='http://placehold.it/150x150',
+        nullable=False
+    )
+
     def __init__(self, email, username, password, confirmed, admin=False, confirmed_on=None):
         self.email = email
         self.username = username

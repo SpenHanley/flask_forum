@@ -29,7 +29,7 @@ def create_app(config_name):
     sslify = SSLify(app)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost/forum_db'
+    print(app.config['SQLALCHEMY_DATABASE_URI'])
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
     db.init_app(app)

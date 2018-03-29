@@ -1,28 +1,32 @@
-{% extends 'layout.html' %}
-{% import 'macros.html' as macros %}
-{% set active_page = 'account' %}
-{% block content %}
-    <div class="container">
-        {% if current_user is defined %}
-            {% if current_user.is_admin %}
-                
-            {% endif %}
-            <div class="mt-2">
-                    <form action="{{ url_for('user.update', route='current_user.profile_route') }}" method="post">
-                        {{ macros.m_primary_form(form) }}
-                    </form>
-                    <div class="row">
-                        <div class="col-md-2">Messages:</div>
-                        <div class="col-md-10">
-                            <a href="{{ url_for('user.inbox_page') }}">{{ new_message_count }}/{{ message_count }}</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">Profile URL:</div>
-                        <div class="col-md-10">{{ profile_url }}</div>
-                    </div>
-                </table>
+{% extends 'layout.html' %} {% import 'macros.html' as macros %} {% set active_page = 'account' %} {% block content %}
+<div class="container">
+    {% if current_user is defined %} {% if current_user.is_admin %} {% endif %}
+    <div class="mt-2">
+        <form action="{{ url_for('user.update', route='current_user.profile_route') }}" method="post" enctype="multipart/form-data">
+            {{ macros.m_primary_form(form) }}
+        </form>
+        <div class="row">
+            <div class="col-md-2">Messages:</div>
+            <div class="col-md-10">
+                <a href="{{ url_for('user.inbox_page') }}">{{ new_message_count }}/{{ message_count }}</a>
             </div>
-        {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-2">Profile URL:</div>
+            <div class="col-md-10">{{ profile_url }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Profile Image:</div>
+            <div class="col-md-10">
+                <script>console.log('{{user}}');</script>
+                {% if external %}
+                    <img src="{{ user.profile_image }}" alt="{{ user.username }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename=user.profile_image) }}" alt="{{ user.username }}">
+                {% endif %}
+            </div>
+        </div>
     </div>
+    {% endif %}
+</div>
 {% endblock %}

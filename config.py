@@ -17,6 +17,19 @@ def load_secret_key():
             s = key.read()
     return s
 
+def load_salt():
+    if not os.path.isfile('security.key'):
+        s = ''.join(
+            random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in
+            range(64))
+        with open('security.key', 'w') as key:
+            key.write(s)
+    else:
+        with open('security.key', 'r') as key:
+            s = key.read()
+    return s
+
+
 
 def create_upload_folder():
     if not os.path.isdir('uploads'):
@@ -27,10 +40,8 @@ class Config(object):
     """
     Common configuration options
     """
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:root@localhost/forum_db'
-    SECRET_KEY = load_secret_key()
     # Need to find a way to generate this similar to the application salt
-    SECURITY_PASSWORD_SALT = 'q+s|cP2Mr);ScNL;nXJa?Rw:Ji|JSlC&hXd2/wGG,6mh?4o8-K=_yV88g>eR/j:O'
+    SECURITY_PASSWORD_SALT = load_salt()
     BCRYPT_LOG_ROUNDS = 13
     WTF_CSRF_ENABLED = True
 
@@ -51,7 +62,13 @@ class Config(object):
     MAIL_PASSWORD = conf.get('mail_password')
     MAIL_SENDER = conf.get('mail_sender_address')
 
+    POSTGRES_USERNAME = conf.get('postgres_username')
+    POSTGRES_PASSWORD = conf.get('postgres_password')
+
     UPLOAD_FOLDER = 'uploads'
+
+    SQLALCHEMY_DATABASE_URI = 'postgres//{}:{}@localhost/flask_db'.format(POSTGRES_USERNAME, POSTGRES_PASSWORD)
+    SECRET_KEY = load_secret_key()
 
 
 class DevelopmentConfig(Config):
@@ -64,7 +81,6 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:root@localhost/forum_db'
     DEBUG = True
 
 

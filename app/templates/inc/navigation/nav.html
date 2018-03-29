@@ -12,9 +12,9 @@
 
         <div class="mr-auto">
           {% if post is defined %}
-            <a href="/">Home</a>/<a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.title }}</a>/{{ post.title }}
+            <a href="/">Home</a> / <a href="{{ url_for('home.view_sub', route=sub.route) }}">{{ sub.title }}</a> / {{ post.title }}
           {% elif sub is defined %}
-            <a href="/">Home</a>/{{ sub.title }}
+            <a href="/">Home</a> / {{ sub.title }}
           {% endif %}
         </div>
 

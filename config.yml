@@ -6,3 +6,5 @@ mail_tls_port: 587
 mail_username: flaskdevacc@gmail.com
 mail_password: M1litary4463
 mail_sender_address: flaskdevacc@gmail.com
+postgres_username: postgres
+postgres_password: postgres
