@@ -1,9 +1,0 @@
-{# subs file #}
-{% import 'macros.html' as macros with context %}
-{% if standalone %}
-{# These elements are only needed when we aren't searching for subs/posts #}
-    {% extends 'layout.html' %}
-{% endif %}
-{% for sub in forums %}
-    {{ macros.m_sub(sub.title, sub.description, sub.route, sub.pinned, sub.created) }}
-{% endfor %}

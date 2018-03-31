@@ -1,8 +1,0 @@
-{% extends 'layout.html' %}
-{% import 'macros.html' as macros %}
-{% set active_page = 'login' %}
-{% block content %}
-    <form action="{{ url_for('auth.delete_comment', route=route) }}" method="post">
-        {{ macros.m_primary_form(form) }}
-    </form>
-{% endblock %}

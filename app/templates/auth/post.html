@@ -1,9 +1,0 @@
-{% extends 'layout.html' %}
-{% import 'macros.html' as macros %}
-{% block content %}
-    <div class="container">
-        <form class="mt-2" action="{{ url_for('auth.create_post', sub_route=sub.route) }}" method="post">
-            {{ macros.m_primary_form(form) }}
-        </form>
-    </div>
-{% endblock %}

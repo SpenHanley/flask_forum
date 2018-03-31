@@ -1,7 +1,0 @@
-{% extends 'layout.html' %}
-{% import 'macros.html' as macros %}
-{% block content %}
-    <form action="{{ url_for('auth.delete_sub', route=route) }}" method="post">
-        {{ macros.m_primary_form(form) }}
-    </form>
-{% endblock %}

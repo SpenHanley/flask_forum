@@ -1,0 +1,5 @@
+
+Todo:
+
+  The reason for putting unique to true and nullable to false is that technically any null value is still considered to be unique
+  ☐ Properly map out what tables I want and how I want them to relate to each other

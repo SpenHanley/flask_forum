@@ -1,9 +1,0 @@
-{% extends 'admin/layout.html' %}
-{% import 'macros.html' as macros with context %}
-{% block content %}
-    <div class="container">
-        <form class="m-2" action="{{ url_for('admin.create_user') }}" method="POST">
-            {{ macros.m_primary_form(form) }}
-        </form>
-    </div>
-{% endblock %}
